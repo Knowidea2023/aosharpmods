@@ -24,6 +24,7 @@ using MahApps.Metro.Controls.Dialogs;
 using AOSharp.Data;
 using AOSharp.Models;
 using Serilog;
+using System.Collections;
 
 namespace AOSharp
 {
@@ -219,6 +220,29 @@ namespace AOSharp
             profile.Eject();
 
             PluginsDataGrid.IsEnabled = true;
+        }
+
+        private void EjectAllButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            foreach (Profile profile in (IEnumerable)this.ProfileListBox.Items)
+            {
+                if (profile == null)
+                    break;
+                profile.Eject();
+            }
+        }
+
+        private void InjectAllButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            foreach (object obj in (IEnumerable)this.ProfileListBox.Items)
+            {
+                Profile profile = (Profile)obj;
+                if (profile == null)
+                    break;
+                IEnumerable<string> strings = this.Config.Plugins.Where<KeyValuePair<string, PluginModel>>((Func<KeyValuePair<string, PluginModel>, bool>)(x => profile.EnabledPlugins.Contains(x.Key))).Select<KeyValuePair<string, PluginModel>, string>((Func<KeyValuePair<string, PluginModel>, string>)(x => x.Value.Path));
+                if (strings.Any<string>() && profile.Inject(strings))
+                    this.PluginsDataGrid.IsEnabled = false;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

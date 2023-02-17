@@ -56,17 +56,22 @@
         </ListBox>
         <DockPanel Grid.Column="1">
             <Grid DockPanel.Dock="Top">
-                <Grid Name="InjectButtonContainer" Visibility="{Binding HasProfileSelected, Converter={StaticResource BoolToVisibleConverter}}">
-                    <Button Width="70" 
-                            HorizontalAlignment="Left"
-                            Margin="3"
-                            Visibility="{Binding ActiveProfile.IsInjected, Converter={StaticResource BoolToVisibleConverter}}"
-                            Click="EjectButton_Clicked">Eject</Button>
-                    <Button Width="70" 
-                            HorizontalAlignment="Left"
-                            Margin="3"
-                            Visibility="{Binding ActiveProfile.IsInjected, Converter={StaticResource BoolToHiddenConverter}}"
-                            Click="InjectButton_Clicked">Inject</Button>
+                <Grid Name="InjectButtonContainer"
+              Visibility="{Binding HasProfileSelected, Converter={StaticResource BoolToVisibleConverter}}">
+                    <Button Click="EjectButton_Clicked" Width="70" HorizontalAlignment="Left" Margin="3"
+                  Visibility="{Binding ActiveProfile.IsInjected, Converter={StaticResource BoolToVisibleConverter}}">Eject</Button>
+                    <Button Click="InjectButton_Clicked" Width="70" HorizontalAlignment="Left" Margin="3"
+                  Visibility="{Binding ActiveProfile.IsInjected, Converter={StaticResource BoolToHiddenConverter}}">Inject</Button>
+                    <Button Click="InjectButton_Clicked" Width="70" HorizontalAlignment="Left" Margin="3,3,0,3"
+                  Content="Inject"
+                  Visibility="{Binding ActiveProfile.IsInjected, Converter={StaticResource BoolToHiddenConverter}}"/>
+                </Grid>
+                <Grid Name="InjectAllButtonContainer">
+                    <Button Click="EjectAllButton_Clicked" Width="70" HorizontalAlignment="Left" Margin="78,3,0,3"
+                  Visibility="{Binding ActiveProfile.IsInjected, Converter={StaticResource BoolToVisibleConverter}}">Eject All</Button>
+                    <Button Click="InjectAllButton_Clicked" Width="70" HorizontalAlignment="Left" Margin="78,3,0,3"
+                  Content="Inject All"
+                  Visibility="{Binding ActiveProfile.IsInjected, Converter={StaticResource BoolToHiddenConverter}}"/>
                 </Grid>
                 <Button Width="100" 
                         HorizontalAlignment="Right"
