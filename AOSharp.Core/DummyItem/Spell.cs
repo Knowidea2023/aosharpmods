@@ -49,6 +49,8 @@ namespace AOSharp.Core
             if(setTarget)
                 target.Target();
 
+            Chat.WriteLine("Executing Nano Program: " + Name + ".", ChatColor.LightBlue);
+
             Network.Send(new CharacterActionMessage()
             {
                 Action = CharacterActionType.CastNano,
