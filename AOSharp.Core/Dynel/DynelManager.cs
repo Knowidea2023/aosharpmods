@@ -12,16 +12,15 @@ namespace AOSharp.Core
         public static EventHandler<Dynel> DynelSpawned;
         public static EventHandler<SimpleChar> CharInPlay;
 
-        public static LocalPlayer LocalPlayer => GetLocalPlayer();
+        public static LocalPlayer LocalPlayer { private set; get; } = GetLocalPlayer();
 
-        public static List<Dynel> AllDynels => GetDynels();
+        public static List<Dynel> AllDynels { private set; get; } = new List<Dynel>();
 
-        internal static IEnumerable<Door> Doors => GetDynels().Where(x => x.Identity.Type == IdentityType.Door).Select(x => new Door(x));
-        public static IEnumerable<SimpleChar> Characters => GetDynels().Where(x => x.Identity.Type == IdentityType.SimpleChar).Select(x => new SimpleChar(x));
-        public static IEnumerable<Corpse> Corpses => GetDynels().Where(x => x.Identity.Type == IdentityType.Corpse).Select(x => new Corpse(x));
-        public static IEnumerable<SimpleChar> NPCs => Characters.Where(x => x.IsNpc && !x.IsPet);
-
-        public static IEnumerable<SimpleChar> Players => Characters.Where(x => x.IsPlayer);
+        internal static IEnumerable<Door> Doors { private set; get; } = new List<Door>();
+        public static IEnumerable<SimpleChar> Characters { private set; get; } = new List<SimpleChar>();
+        public static IEnumerable<Corpse> Corpses { private set; get; } = new List<Corpse>();
+        public static IEnumerable<SimpleChar> NPCs { private set; get; } = new List<SimpleChar>();
+        public static IEnumerable<SimpleChar> Players { private set; get; } = new List<SimpleChar>();
 
         private static Queue<Dynel> _queuedDynelSpawns = new Queue<Dynel>();
 
@@ -29,6 +28,14 @@ namespace AOSharp.Core
         {
             try
             {
+                LocalPlayer = GetLocalPlayer();
+                AllDynels = GetDynels();
+                Doors = AllDynels.Where(x => x.Identity.Type == IdentityType.Door).Select(x => new Door(x));
+                Characters = AllDynels.Where(x => x.Identity.Type == IdentityType.SimpleChar).Select(x => new SimpleChar(x));
+                Corpses = AllDynels.Where(x => x.Identity.Type == IdentityType.Corpse).Select(x => new Corpse(x));
+                NPCs = Characters.Where(x => x.IsNpc && !x.IsPet);
+                Players = Characters.Where(x => x.IsPlayer);
+
                 while (_queuedDynelSpawns.Count > 0)
                 {
                     Dynel dynel = _queuedDynelSpawns.Dequeue();

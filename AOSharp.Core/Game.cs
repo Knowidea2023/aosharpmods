@@ -115,10 +115,10 @@ namespace AOSharp.Core
 
         private static void OnUpdateInternal(float deltaTime)
         {
+            DynelManager.Update();
+
             if (DynelManager.LocalPlayer == null)
                 return;
-
-            DynelManager.Update();
 
             Network.Update();
             IPCChannel.Update();
