@@ -53,6 +53,8 @@ namespace AOSharp.Core.Inventory
             if (setTarget)
                 target.Target();
 
+            Chat.WriteLine("Using item: " + Name + ".", ChatColor.Orange);
+
             Network.Send(new GenericCmdMessage()
             {
                 Action = GenericCmdAction.Use,
