@@ -401,6 +401,5 @@
     <Compile Include="Unmanaged\Interfaces\N3EngineClientAnarchy.cs" />
     <Compile Include="Unmanaged\Interfaces\ResourceDatabase.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
