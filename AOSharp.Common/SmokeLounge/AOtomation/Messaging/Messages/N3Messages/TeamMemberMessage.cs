@@ -35,31 +35,22 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         #region AoMember Properties
 
         [AoMember(0)]
-        public byte Unknown1 { get; set; }
-
-        [AoMember(1)]
-        public short Unknown2 { get; set; }
-
-        [AoMember(2)]
         public Identity Character { get; set; }
 
-        [AoMember(3)]
+        [AoMember(1)]
         public Identity Team { get; set; }
 
+        [AoMember(2)]
+        public uint Unknown1 { get; set; }
+
+        [AoMember(3)]
+        public int Unknown2 { get; set; }
+
         [AoMember(4)]
-        public uint Unknown3 { get; set; }
+        public int Unknown3 { get; set; }
 
-        [AoMember(5)]
-        public int Unknown4 { get; set; }
-
-        [AoMember(6)]
-        public short Unknown5 { get; set; }
-
-        [AoMember(7, SerializeSize = ArraySizeType.Int32)]
+        [AoMember(5, SerializeSize = ArraySizeType.Int16)]
         public string Name { get; set; }
-
-        [AoMember(8)]
-        public short Unknown6 { get; set; }
 
         #endregion
     }

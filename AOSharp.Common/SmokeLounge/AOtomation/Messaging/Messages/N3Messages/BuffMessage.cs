@@ -8,25 +8,25 @@
 //   http://www.wtfpl.net/ for more details.
 // </copyright>
 // <summary>
-//   Defines the TeamMemberInfoMessage type.
+//   Defines the BuffMessage type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 using AOSharp.Common.GameData;
+using SmokeLounge.AOtomation.Messaging.Messages;
+using SmokeLounge.AOtomation.Messaging.Serialization;
+using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
-namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
+namespace AOSharp.Common.SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 {
-    using SmokeLounge.AOtomation.Messaging.GameData;
-    using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
-
-    [AoContract((int)N3MessageType.TeamMemberInfo)]
-    public class TeamMemberInfoMessage : N3Message
+    [AoContract((int)N3MessageType.Buff)]
+    public class BuffMessage : N3Message
     {
         #region Constructors and Destructors
 
-        public TeamMemberInfoMessage()
+        public BuffMessage()
         {
-            this.N3MessageType = N3MessageType.TeamMemberInfo;
+            this.N3MessageType = N3MessageType.Buff;
         }
 
         #endregion
@@ -34,19 +34,10 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         #region AoMember Properties
 
         [AoMember(0)]
-        public Identity Character { get; set; }
+        public short Unknown1 { get; set; }
 
         [AoMember(1)]
-        public int Unknown2 { get; set; }
-
-        [AoMember(2)]
-        public int Unknown4 { get; set; }
-
-        [AoMember(3)]
-        public int Unknown6 { get; set; }
-
-        [AoMember(4)]
-        public int Unknown8 { get; set; }
+        public Identity Buff { get; set; }
 
         #endregion
     }

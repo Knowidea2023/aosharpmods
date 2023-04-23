@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TeamMemberInfoMessage.cs" company="SmokeLounge">
+// <copyright file="PrivateMessage.cs" company="SmokeLounge">
 //   Copyright © 2013 SmokeLounge.
 //   This program is free software. It comes without any warranty, to
 //   the extent permitted by applicable law. You can redistribute it
@@ -8,25 +8,27 @@
 //   http://www.wtfpl.net/ for more details.
 // </copyright>
 // <summary>
-//   Defines the TeamMemberInfoMessage type.
+//   Defines the ChannelListMessage type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using AOSharp.Common.GameData;
-
-namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
+namespace SmokeLounge.AOtomation.Messaging.Messages.ChatMessages
 {
-    using SmokeLounge.AOtomation.Messaging.GameData;
+    using AOSharp.Common.GameData;
+    using SmokeLounge.AOtomation.Messaging.Serialization;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
-    [AoContract((int)N3MessageType.TeamMemberInfo)]
-    public class TeamMemberInfoMessage : N3Message
+    [AoContract((int)ChatMessageType.ChannelList)]
+    public class ChannelListMessage : ChatMessageBody
     {
-        #region Constructors and Destructors
+        #region Public Properties
 
-        public TeamMemberInfoMessage()
+        public override ChatMessageType PacketType
         {
-            this.N3MessageType = N3MessageType.TeamMemberInfo;
+            get
+            {
+                return ChatMessageType.ChannelList;
+            }
         }
 
         #endregion
@@ -34,19 +36,22 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         #region AoMember Properties
 
         [AoMember(0)]
-        public Identity Character { get; set; }
+        public byte Unk1 { get; set; }
 
         [AoMember(1)]
-        public int Unknown2 { get; set; }
+        public int ChannelId { get; set; }
 
-        [AoMember(2)]
-        public int Unknown4 { get; set; }
+        [AoMember(2, SerializeSize = ArraySizeType.Int16)]
+        public string ChannelName { get; set; }
 
         [AoMember(3)]
-        public int Unknown6 { get; set; }
+        public short Unk2 { get; set; }
 
         [AoMember(4)]
-        public int Unknown8 { get; set; }
+        public short Unk3 { get; set; }
+
+        [AoMember(5)]
+        public short Unk4 { get; set; }
 
         #endregion
     }

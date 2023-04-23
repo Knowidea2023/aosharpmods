@@ -42,6 +42,7 @@ namespace SmokeLounge.AOtomation.Messaging.GameData
             public string LastName { get; set; }
             // Size Int16
             public string OrgName { get; set; }
+            public int  OrgId { get; set; }
         }
 
         public class SpecialAttackData

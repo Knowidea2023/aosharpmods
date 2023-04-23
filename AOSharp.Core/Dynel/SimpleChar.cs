@@ -43,6 +43,8 @@ namespace AOSharp.Core
 
         public int Level => GetStat(Stat.Level);
 
+        public int PetOwnerId => IsPet ? GetStat(Stat.ConflictReputation) : 0;
+
         public bool IsInPlay => (*(MemStruct*)Pointer).IsInPlay;
 
         public bool IsAttacking => (*(MemStruct*)Pointer).WeaponHolder->AttackingState == 0x02;

@@ -25,6 +25,8 @@ namespace SmokeLounge.AOtomation.Messaging.Messages
         CharacterName = 20,
         LookupMessage = 21,
         PrivateMessage = 30,
-        VicinityMessage = 34
+        VicinityMessage = 34,
+        ChannelList = 60,
+        GroupMessage = 65
     }
 }

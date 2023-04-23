@@ -20,6 +20,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
     using System.Net;
 
     using SmokeLounge.AOtomation.Messaging.GameData;
+    using SmokeLounge.AOtomation.Messaging.Messages.ChatMessages;
     using SmokeLounge.AOtomation.Messaging.Messages.N3Messages;
     using SmokeLounge.AOtomation.Messaging.Serialization.Serializers;
     using SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom;
@@ -65,9 +66,8 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
             this.serializers.TryAdd(typeof(PlayfieldVendorInfo), new PlayfieldVendorInfoSerializer());
             this.serializers.TryAdd(typeof(SimpleCharFullUpdateMessage), new SimpleCharFullUpdateSerializer());
             this.serializers.TryAdd(typeof(GenericCmdMessage), new GenericCmdSerializer());
+            this.serializers.TryAdd(typeof(GroupMsgMessage), new GroupMessageSerializer());
             this.serializers.TryAdd(typeof(PlayfieldTowerUpdateClientMessage), new PlayfieldTowerUpdateClientSerializer());
-            //this.serializers.TryAdd(typeof(QuestAlternativeMessage), new QuestAlternativeSerializer());
-
         }
 
         #endregion
