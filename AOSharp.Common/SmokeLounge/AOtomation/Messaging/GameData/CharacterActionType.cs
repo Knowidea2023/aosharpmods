@@ -6,7 +6,8 @@
         CastNano = 0x13,
         TeamRequestReply = 0x1C,
         TeamKickMember = 0x16,
-        LeaveTeam = 0x20, //LeaveTeam = 0x18, - old one
+        LeaveTeam = 0x18,
+        TeamMemberLeft = 0x20,
         AcceptTeamRequest = 0x23,
         RemoveFriendlyNano = 0x41,
         UseItemOnItem = 0x51,

@@ -132,6 +132,7 @@
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatHeader.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\AbsorbMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\AttackInfoMessage.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\ContainerAddItem.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\DoorFullUpdateMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\CreateQuestMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\Header.cs" />

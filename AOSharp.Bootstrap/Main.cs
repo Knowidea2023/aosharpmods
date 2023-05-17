@@ -472,6 +472,7 @@ namespace AOSharp.Bootstrap
 
         public bool N3EngineClientAnarchy_SendInPlayMessage_Hook(IntPtr pThis)
         {
+            bool result = N3EngineClientAnarchy_t.SendInPlayMessage(pThis);
             try
             {
                 if (_pluginProxy != null)
@@ -479,7 +480,7 @@ namespace AOSharp.Bootstrap
             }
             catch (Exception) { }
 
-            return N3EngineClientAnarchy_t.SendInPlayMessage(pThis);
+            return result;
         }
 
         public void N3EngineClientAnarchy_PlayfieldInit_Hook(IntPtr pThis, uint id)

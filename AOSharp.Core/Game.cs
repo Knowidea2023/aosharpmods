@@ -32,7 +32,7 @@ namespace AOSharp.Core
         public static EventHandler<uint> PlayfieldInit;
 
         private static Dictionary<IntPtr, Delegate> _vtblCache = new Dictionary<IntPtr, Delegate>();
-
+        private static bool _notifiedTeleportEnded = false;
         private static unsafe void Init()
         {
             DummyItem_t.GetSpellList = Marshal.GetDelegateForFunctionPointer<DummyItem_t.GetSpellListDelegate>(Utils.FindPattern("Gamecode.dll", "55 8B EC 8B 41 24 8B 4D 08 8B 04 88 5D C2 04 00"));
@@ -115,6 +115,12 @@ namespace AOSharp.Core
 
         private static void OnUpdateInternal(float deltaTime)
         {
+            if(!_notifiedTeleportEnded)
+            {
+                TeleportEnded?.Invoke(null, EventArgs.Empty);
+                _notifiedTeleportEnded = true;
+            }
+
             DynelManager.Update();
 
             if (DynelManager.LocalPlayer == null)
@@ -153,8 +159,8 @@ namespace AOSharp.Core
 
         private static void OnTeleportEnded()
         {
+            _notifiedTeleportEnded = false;
             IsZoning = false;
-            TeleportEnded?.Invoke(null, EventArgs.Empty);
         }
 
         private static void OnTeleportFailed()

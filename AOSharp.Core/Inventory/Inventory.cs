@@ -192,6 +192,7 @@ namespace AOSharp.Core.Inventory
             IntPtr bankInventoryEntry = GetBankInventoryEntry();
 
             int i = 0;
+
             foreach (IntPtr pItem in (*(StdStructVector*)(bankInventoryEntry + 0xC)).ToList(sizeof(IntPtr)))
             {
                 IntPtr pActualItem = *(IntPtr*)pItem;
@@ -209,8 +210,9 @@ namespace AOSharp.Core.Inventory
                         items.Add(new Item(lowId, highId, ql, charges, unqiueIdentity, slot));
                     }
                     catch { }
-                    i++;
                 }
+
+                i++;
             }
 
             return items;
