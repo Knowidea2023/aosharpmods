@@ -34,7 +34,7 @@ namespace AOSharp.Common.GameData
 
         public override string ToString()
         {
-            return "(" + X + ", " + Y + ")";
+            return $"({X}, {Y})";
         }
 
         public Vector3 ToVector3()

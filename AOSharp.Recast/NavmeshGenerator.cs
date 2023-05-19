@@ -21,6 +21,11 @@ namespace AOSharp.Recast
     {
         public static async Task<Navmesh> BakeAsync(NMGenParams navmeshGenParams)
         {
+            return await BakeAsync(navmeshGenParams, ConnectionSet.CreateEmpty());
+        }
+
+        public static async Task<Navmesh> BakeAsync(NMGenParams navmeshGenParams, ConnectionSet connectionSet)
+        {
             return await Task.Run(() =>
             {
                 List<Mesh> terrainChunks = Playfield.IsDungeon ?
@@ -65,7 +70,7 @@ namespace AOSharp.Recast
                         }
 
                         NMGenAssets assets = builder.Result;
-                        TileBuildTask task = TileBuildTask.Create(x, z, assets.PolyMesh.GetData(false), null/*assets.DetailMesh.GetData(false)*/, ConnectionSet.CreateEmpty(), false, false, 0);
+                        TileBuildTask task = TileBuildTask.Create(x, z, assets.PolyMesh.GetData(false), null/*assets.DetailMesh.GetData(false)*/, connectionSet, false, false, 0);
                         task.Run();
                         tiles.Add(task.Result);
                         maxPolys = Math.Max(maxPolys, task.Result.PolyCount);

@@ -1,4 +1,8 @@
-﻿namespace AOSharp.Common.GameData
+﻿using System.Globalization;
+using System.Runtime.CompilerServices;
+using System;
+
+namespace AOSharp.Common.GameData
 {
     public struct Matrix4x4
     {
@@ -18,6 +22,94 @@
         public float m13;
         public float m23;
         public float m33;
+
+        public Matrix4x4(Vector4 column0, Vector4 column1, Vector4 column2, Vector4 column3)
+        {
+            this.m00 = column0.X; this.m01 = column1.X; this.m02 = column2.X; this.m03 = column3.X;
+            this.m10 = column0.Y; this.m11 = column1.Y; this.m12 = column2.Y; this.m13 = column3.Y;
+            this.m20 = column0.Z; this.m21 = column1.Z; this.m22 = column2.Z; this.m23 = column3.Z;
+            this.m30 = column0.W; this.m31 = column1.W; this.m32 = column2.W; this.m33 = column3.W;
+        }
+
+        public float this[int row, int column]
+        {
+            get
+            {
+                return this[row + column * 4];
+            }
+
+            set
+            {
+                this[row + column * 4] = value;
+            }
+        }
+
+        public float this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0: return m00;
+                    case 1: return m10;
+                    case 2: return m20;
+                    case 3: return m30;
+                    case 4: return m01;
+                    case 5: return m11;
+                    case 6: return m21;
+                    case 7: return m31;
+                    case 8: return m02;
+                    case 9: return m12;
+                    case 10: return m22;
+                    case 11: return m32;
+                    case 12: return m03;
+                    case 13: return m13;
+                    case 14: return m23;
+                    case 15: return m33;
+                    default:
+                        throw new IndexOutOfRangeException("Invalid matrix index!");
+                }
+            }
+
+            set
+            {
+                switch (index)
+                {
+                    case 0: m00 = value; break;
+                    case 1: m10 = value; break;
+                    case 2: m20 = value; break;
+                    case 3: m30 = value; break;
+                    case 4: m01 = value; break;
+                    case 5: m11 = value; break;
+                    case 6: m21 = value; break;
+                    case 7: m31 = value; break;
+                    case 8: m02 = value; break;
+                    case 9: m12 = value; break;
+                    case 10: m22 = value; break;
+                    case 11: m32 = value; break;
+                    case 12: m03 = value; break;
+                    case 13: m13 = value; break;
+                    case 14: m23 = value; break;
+                    case 15: m33 = value; break;
+
+                    default:
+                        throw new IndexOutOfRangeException("Invalid matrix index!");
+                }
+            }
+        }
+
+        public Vector4 GetColumn(int index)
+        {
+            switch (index)
+            {
+                case 0: return new Vector4(m00, m10, m20, m30);
+                case 1: return new Vector4(m01, m11, m21, m31);
+                case 2: return new Vector4(m02, m12, m22, m32);
+                case 3: return new Vector4(m03, m13, m23, m33);
+                default:
+                    throw new IndexOutOfRangeException("Invalid column index!");
+            }
+        }
 
         public Vector3 MultiplyPoint3x4(Vector3 point)
         {
@@ -113,6 +205,29 @@
             res.m33 = lhs.m30 * rhs.m03 + lhs.m31 * rhs.m13 + lhs.m32 * rhs.m23 + lhs.m33 * rhs.m33;
 
             return res;
+        }
+
+        public override string ToString()
+        {
+            return ToString(null, null);
+        }
+
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrEmpty(format))
+                format = "F5";
+            if (formatProvider == null)
+                formatProvider = CultureInfo.InvariantCulture.NumberFormat;
+            return String.Format("{0}\t{1}\t{2}\t{3}\n{4}\t{5}\t{6}\t{7}\n{8}\t{9}\t{10}\t{11}\n{12}\t{13}\t{14}\t{15}\n",
+                m00.ToString(format, formatProvider), m01.ToString(format, formatProvider), m02.ToString(format, formatProvider), m03.ToString(format, formatProvider),
+                m10.ToString(format, formatProvider), m11.ToString(format, formatProvider), m12.ToString(format, formatProvider), m13.ToString(format, formatProvider),
+                m20.ToString(format, formatProvider), m21.ToString(format, formatProvider), m22.ToString(format, formatProvider), m23.ToString(format, formatProvider),
+                m30.ToString(format, formatProvider), m31.ToString(format, formatProvider), m32.ToString(format, formatProvider), m33.ToString(format, formatProvider));
         }
     }
 }

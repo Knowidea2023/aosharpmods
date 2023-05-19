@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ChatPacketType.cs" company="SmokeLounge">
-//   Copyright © 2013 SmokeLounge.
+//   Copyright Â© 2013 SmokeLounge.
 //   This program is free software. It comes without any warranty, to
 //   the extent permitted by applicable law. You can redistribute it
 //   and/or modify it under the terms of the Do What The Fuck You Want
@@ -26,6 +26,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages
         LookupMessage = 21,
         PrivateMessage = 30,
         VicinityMessage = 34,
+        NpcMessage = 35,
         ChannelList = 60,
         GroupMessage = 65
     }

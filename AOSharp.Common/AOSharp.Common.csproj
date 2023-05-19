@@ -48,6 +48,7 @@
     <Compile Include="GameData\HitType.cs" />
     <Compile Include="GameData\ItemEnums.cs" />
     <Compile Include="GameData\ChatMessageEnums.cs" />
+    <Compile Include="GameData\Vector4.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\MissionInfo.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\MissionItemData.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\MissionSliders.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\ChatSelectCharacterMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\ChatLoginRequestMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\ChatServerSaltMessage.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\NpcMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\GroupMsgMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\ChannelListMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\VicinityMessage.cs" />
@@ -392,6 +394,7 @@
     <Compile Include="Unmanaged\Imports\Native\Kernel32.cs" />
     <Compile Include="Unmanaged\Imports\Native\MSVCR100.cs" />
     <Compile Include="Unmanaged\Imports\Native\Psapi.cs" />
+    <Compile Include="Unmanaged\Imports\Randy31\RCATMesh_t.cs" />
     <Compile Include="Unmanaged\Imports\Randy31\Debugger_t.cs" />
     <Compile Include="Unmanaged\Imports\Utils\Looper.cs" />
     <Compile Include="Unmanaged\Imports\Utils\Rect_c.cs" />
