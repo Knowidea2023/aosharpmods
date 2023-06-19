@@ -186,6 +186,18 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
                 };
             }
 
+            if (scfu.Flags.HasFlag(SimpleCharFullUpdateFlags.HasWaypoints))
+            {
+                streamReader.ReadUInt32();//Type
+                streamReader.ReadUInt32();//Id
+
+                scfu.Waypoints = new List<Vector3>();
+
+                int waypointCount = streamReader.ReadInt32();
+                for (var i = 0; i < waypointCount; i++)
+                    scfu.Waypoints.Add(new Vector3(streamReader.ReadSingle(), streamReader.ReadSingle(), streamReader.ReadSingle()));
+            }
+
             int texturesCount = (streamReader.ReadInt32() / 0x3F1) - 1;
             var texes = new List<Texture>();
             for (var i = 0; i < texturesCount; i++)
@@ -216,8 +228,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             scfu.Flags2 = (ScfuFlags2)streamReader.ReadInt32();
             scfu.ScfuUnk2 = streamReader.ReadByte();
 
-            // We don't know which flag this belongs too. So we match what we know
-            if (scfu.Flags2.HasFlag(ScfuFlags2.Unknown3) || scfu.Flags2.HasFlag(ScfuFlags2.Unknown4) || scfu.Flags2.HasFlag(ScfuFlags2.Unknown5) || scfu.Flags2.HasFlag(ScfuFlags2.Unknown6) || scfu.Flags2.HasFlag(ScfuFlags2.Unknown7) || scfu.Flags2.HasFlag(ScfuFlags2.Unknown8))
+            if (scfu.Flags2.HasFlag(ScfuFlags2.Unknown3))
             {
                 var count = streamReader.ReadByte();
                 scfu.SpecialAttacks = new SimpleCharInfo.SpecialAttackData[count];
@@ -236,15 +247,16 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
                 }
             }
 
-            if (scfu.Flags2.HasFlag(ScfuFlags2.Unknown2))
-            {
-                scfu.ScfuUnk3 = streamReader.ReadSingle();
-            }
+            //Commenting these out until we need them.
+            //if (scfu.Flags2.HasFlag(ScfuFlags2.Unknown2))
+            //{
+            //    scfu.ScfuUnk3 = streamReader.ReadSingle();
+            //}
 
-            if (scfu.Flags2.HasFlag(ScfuFlags2.Unknown1))
-            {
-                scfu.ScfuUnk4 = streamReader.ReadByte();
-            }
+            //if (scfu.Flags2.HasFlag(ScfuFlags2.Unknown1))
+            //{
+            //    scfu.ScfuUnk4 = streamReader.ReadByte();
+            //}
 
             return scfu;
         }

@@ -20,6 +20,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
     using SmokeLounge.AOtomation.Messaging.Serialization;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
     using System;
+    using System.Collections.Generic;
 
     [AoContract((int)N3MessageType.SimpleCharFullUpdate)]
     public class SimpleCharFullUpdateMessage : N3Message
@@ -131,6 +132,9 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 
         [AoMember(26)]
         public SimpleCharInfo.TextureOverride[] TextureOverrides { get; set; }
+
+        [AoMember(26)]
+        public List<Vector3> Waypoints { get; set; }
 
         #endregion
     }
