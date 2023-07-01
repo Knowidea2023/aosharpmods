@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SmokeLounge.AOtomation.Messaging.GameData;
 using SmokeLounge.AOtomation.Messaging.Messages.N3Messages;
 
 namespace AOSharp.Core
@@ -11,12 +12,21 @@ namespace AOSharp.Core
     {
         public static void JoinQueue(Side side)
         {
-            throw new NotImplementedException();
+            Network.Send(new CharacterActionMessage
+            {
+                Action = CharacterActionType.JoinBattlestationQueue,
+                Target = DynelManager.LocalPlayer.Identity,
+                Parameter2 = (int)side
+            });
         }
 
         public static void LeaveQueue()
         {
-            throw new NotImplementedException();
+            Network.Send(new CharacterActionMessage
+            {
+                Action = CharacterActionType.LeaveBattlestationQueue,
+                Target = DynelManager.LocalPlayer.Identity
+            });
         }
 
         public enum Side

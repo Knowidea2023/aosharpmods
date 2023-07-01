@@ -130,11 +130,15 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         public byte ScfuUnk4 { get; set; }
 
 
-        [AoMember(26)]
+        [AoMember(30)]
         public SimpleCharInfo.TextureOverride[] TextureOverrides { get; set; }
 
-        [AoMember(26)]
+        [AoMember(31)]
         public List<Vector3> Waypoints { get; set; }
+
+        [AoMember(32)]
+        public Identity PetOwner { get; set; }
+
 
         #endregion
     }
@@ -143,7 +147,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
     public enum ScfuFlags2
     {
         Unknown1 = 0x2,
-        Unknown2 = 0x4,
+        HasOwner = 0x4,
         Unknown3 = 0x40,
         Unknown4 = 0x80,
         Unknown5 = 0x100,

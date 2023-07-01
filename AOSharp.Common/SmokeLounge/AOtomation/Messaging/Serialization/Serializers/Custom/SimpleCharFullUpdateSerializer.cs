@@ -226,6 +226,10 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             scfu.Meshes = meshes.ToArray();
 
             scfu.Flags2 = (ScfuFlags2)streamReader.ReadInt32();
+
+            if (scfu.Flags2.HasFlag(ScfuFlags2.HasOwner))
+                scfu.PetOwner = new Identity(IdentityType.SimpleChar, streamReader.ReadInt32());
+
             scfu.ScfuUnk2 = streamReader.ReadByte();
 
             if (scfu.Flags2.HasFlag(ScfuFlags2.Unknown3))
@@ -248,10 +252,6 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             }
 
             //Commenting these out until we need them.
-            //if (scfu.Flags2.HasFlag(ScfuFlags2.Unknown2))
-            //{
-            //    scfu.ScfuUnk3 = streamReader.ReadSingle();
-            //}
 
             //if (scfu.Flags2.HasFlag(ScfuFlags2.Unknown1))
             //{
