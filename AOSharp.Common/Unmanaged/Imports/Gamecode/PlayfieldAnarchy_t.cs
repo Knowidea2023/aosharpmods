@@ -6,6 +6,12 @@ namespace AOSharp.Common.Unmanaged.Imports
 {
     public class PlayfieldAnarchy_t
     {
+        [DllImport("Gamecode.dll", EntryPoint = "?GetNumberOfWaters@PlayfieldAnarchy_t@@QAEHXZ", CallingConvention = CallingConvention.ThisCall)]
+        public static extern int GetNumberOfWaters(IntPtr pThis);
+
+        [DllImport("Gamecode.dll", EntryPoint = "?GetWaters@PlayfieldAnarchy_t@@QAEPAUn3WaterData_t@@XZ", CallingConvention = CallingConvention.ThisCall)]
+        public static extern IntPtr GetWaters(IntPtr pThis);
+
         [DllImport("Gamecode.dll", EntryPoint = "?AreVehiclesAllowed@PlayfieldAnarchy_t@@QBE_NXZ", CallingConvention = CallingConvention.ThisCall)]
         public static extern bool AreVehiclesAllowed(IntPtr pThis);
 

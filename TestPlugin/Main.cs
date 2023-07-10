@@ -28,6 +28,8 @@ using AOSharp.Common.SharedEventArgs;
 using SmokeLounge.AOtomation.Messaging.GameData;
 using AOSharp.Common.Unmanaged.Interfaces;
 using AOSharp.Common.Helpers;
+using AOSharp.Core.GMI;
+using System.IdentityModel.Metadata;
 
 namespace TestPlugin
 {
@@ -39,6 +41,9 @@ namespace TestPlugin
         Window testWindow;
         private Menu _menu;
         private int i = 0;
+
+        [DllImport("DisplaySystem.dll", EntryPoint = "?ClearAnimations@VisualCATMesh_t@@QAEXXZ", CallingConvention = CallingConvention.ThisCall)]
+        public static extern void ClearAnimations(IntPtr pVisualCatmesh);
 
         public override void Run(string pluginDir)
         {
@@ -246,6 +251,11 @@ namespace TestPlugin
                     }
                 });
 
+                Chat.RegisterCommand("kdtree", (string command, string[] param, ChatWindow chatWindow) =>
+                {
+                    VisualEnvFX_t.ToggleRandyDebuggerKDTreeDisplay(VisualEnvFX_t.GetInstance());
+                });
+
                 Chat.RegisterCommand("modlistspell", (string command, string[] param, ChatWindow chatWindow) =>
                 {
                     if (Spell.Find("Mongo Bash!", out Spell item))
@@ -307,6 +317,36 @@ namespace TestPlugin
                     //Chat.WriteLine(Window.GetActiveWindow().Name);
                     Chat.WriteLine($"{ItemListViewBase_c.Create(new Rect(999999, 999999, -999999,-999999),0,0,0, Identity.None).ToString("X4")}");
 
+                });
+
+                Chat.RegisterCommand("testmail", (string command, string[] param, ChatWindow chatWindow) =>
+                {
+                    SendShortMailMsg(MailMsgType.TakeAll, 0xEC36AD);
+
+                });
+
+                Chat.RegisterCommand("dumppf", (string command, string[] param, ChatWindow chatWindow) =>
+                {
+                    for (int i = 100; i < ushort.MaxValue; i++)
+                    {
+                        IntPtr pName = N3InterfaceModule_t.GetPFName(i);
+
+                        if (pName == IntPtr.Zero)
+                            continue;
+
+                        Chat.WriteLine($"{Utils.UnsafePointerToString(pName).Replace(" ", "").Replace("'", "")} = {i},");
+                        //break;
+                    }
+                });
+
+                Chat.RegisterCommand("testbsjoin", (string command, string[] param, ChatWindow chatWindow) =>
+                {
+                    Battlestation.JoinQueue(Battlestation.Side.Blue);
+                });
+
+                Chat.RegisterCommand("testbsleave", (string command, string[] param, ChatWindow chatWindow) =>
+                {
+                    Battlestation.LeaveQueue();
                 });
 
                 Chat.RegisterCommand("openwindow", (string command, string[] param, ChatWindow chatWindow) =>
@@ -382,20 +422,97 @@ namespace TestPlugin
 
                 Chat.RegisterCommand("test", (string command, string[] param, ChatWindow chatWindow) =>
                 {
+                    //foreach(Item item in Inventory.Bank.Items)
+                    //{
+                    //    Chat.WriteLine(item.Name);
+                    //}
+
+                    //DBIdentity identity = new DBIdentity((DBIdentityType)1000009, 4365);
+                    //DBIdentity identity = new DBIdentity((DBIdentityType)1000047, 5927);
+                    //IntPtr animPtr = ResourceDatabase.GetDbObject(identity);
+                    //Chat.WriteLine(animPtr.ToString("X"));
+
+                    //unsafe
+                    //{
+                    //    IntPtr pCatMesh = *(IntPtr*)(DynelManager.LocalPlayer.Pointer + 0xC0);
+                    //    ClearAnimations(pCatMesh);
+                    //}
+
+                    //Chat.WriteLine(DynelManager.LocalPlayer.Pets.Length);
+                    //Chat.WriteLine(Targeting.Target.Identity.Instance);
+
                     //foreach(Item aggroTool in Inventory.Items.Where(x => x.Name == "Aggression Enhancer"))
                     //    Chat.WriteLine($"QL {aggroTool.QualityLevel} - Low: {aggroTool.LowId} / High: {aggroTool.HighId}");
 
-                    if (DummyItem.TryGet(new Identity(IdentityType.NanoProgram, 55751), out NanoItem buff))
-                        Chat.WriteLine($"Loaded buff: {buff.Name} -> {buff.Id} -> NCU: {buff.NCU} -> StackingOrder: {buff.StackingOrder} -> Nanoline{buff.Nanoline}");
+                    //if (DummyItem.TryGet(new Identity(IdentityType.NanoProgram, 55751), out NanoItem buff))
+                    //    Chat.WriteLine($"Loaded buff: {buff.Name} -> {buff.Id} -> NCU: {buff.NCU} -> StackingOrder: {buff.StackingOrder} -> Nanoline{buff.Nanoline}");
 
-                    if(DynelManager.Find("Collected Essence", out SimpleChar boss))
+                    //if(DynelManager.Find("Collected Essence", out SimpleChar boss))
+                    //{
+                    //    Chat.WriteLine($"Essence: {boss.Identity}");
+                    //    foreach (Buff bbuff in boss.Buffs)
+                    //        Chat.WriteLine(bbuff.Name);
+                    //}
+
+                    //GMI.GetInventory().ContinueWith(marketInventory =>
+                    //{
+                    //    Chat.WriteLine($"!!GMI!!");
+                    //    Chat.WriteLine($"Credits: {marketInventory.Result.Credits}");
+                    //    Chat.WriteLine($"Items:");
+                    //    foreach (MarketInventoryItem item in marketInventory.Result.Items)
+                    //        Chat.WriteLine($"\t{item.Name}\tQL: {item.TemplateQL}\tCount: {item.Count}");
+                    //});
+
+                    //GMI.GetMarketOrders().ContinueWith(marketOrders =>
+                    //{
+                    //    Chat.WriteLine($"MySellOrders ({marketOrders.Result.SellOrders.Count}):");
+                    //    foreach (MyMarketSellOrder order in marketOrders.Result.SellOrders)
+                    //    {
+                    //        Chat.WriteLine($"\t{order.Id} - {order.Name} - Count: {order.Count}\tPrice: {order.Price}");
+
+                    //        if (order.Name == "Tear of Oedipus")
+                    //            order.Cancel();
+                    //    }
+
+                    //    Chat.WriteLine($"MyBuyOrders ({marketOrders.Result.BuyOrders.Count}):"); 
+                    //    foreach (MyMarketBuyOrder order in marketOrders.Result.BuyOrders)
+                    //        Chat.WriteLine($"\t{order.Id} - {order.Name} - Count: {order.Count}\tMinQL: {order.MinQl}\tMaxQL: {order.MaxQl}\tPrice: {order.Price}");
+                    //});
+
+                    //WITHDRAW CASH
+                    /*
+                    GMI.GetInventory().ContinueWith(marketInventory =>
                     {
-                        Chat.WriteLine($"Essence: {boss.Identity}");
-                        foreach (Buff bbuff in boss.Buffs)
-                            Chat.WriteLine(bbuff.Name);
-                    }
+                        if (marketInventory.Result == null)
+                            return;
 
-                    
+                        GMI.WithdrawCash(1000);
+                    });
+                    */
+
+                    //FIND ITEM AND WITHDRAW
+                    //GMI.GetInventory().ContinueWith(marketInventory =>
+                    //{
+                    //    if (marketInventory.Result == null)
+                    //        return;
+
+                    //    if(marketInventory.Result.Find("Health and Nano Stim", out MyMarketInventoryItem item))
+                    //    {
+                    //        Chat.WriteLine($"Withdrawing {item.Name}");
+
+                    //        item.Withdraw(1).ContinueWith(withdrawResult =>
+                    //        {
+                    //            if(withdrawResult.Result.Succeeded)
+                    //                Chat.WriteLine($"Successfully withdrew {item.Name}");
+                    //            else
+                    //                Chat.WriteLine($"Failed to withdraw {item.Name}. The error is {withdrawResult.Result.Message}");
+                    //        });
+                    //    }
+                    //});
+
+
+                    //GMI.GetItemVisualsBatch(new List<MarketClusterItem>() { new MarketClusterItem() { ClusterId = 53656, Ql = 1 }, new MarketClusterItem() { ClusterId = 181670, Ql = 299 }, new MarketClusterItem() { ClusterId = 181670, Ql = 100 } });
+
 
                     //Settings["DrawStuff"] = true;
 
@@ -444,9 +561,10 @@ namespace TestPlugin
                     }
                     */
 
+                    /*
                     if (Mission.Find("Mission Assignment 7429-323-...", out Mission mission))
                         mission.UploadToMap(); 
-
+                    */
                     /*
                     foreach(Pet pet in DynelManager.LocalPlayer.Pets)
                     {
@@ -516,7 +634,7 @@ namespace TestPlugin
                 Network.N3MessageReceived += Network_N3MessageReceived;
                 //Network.N3MessageSent += Network_N3MessageSent;
                 Network.PacketReceived += Network_PacketReceived;
-                Network.PacketSent += Network_PacketSent;
+               // Network.PacketSent += Network_PacketSent;
                 Network.ChatMessageReceived += Network_ChatMessageReceived;
                 Team.TeamRequest += Team_TeamRequest;
                 Team.MemberLeft += Team_MemberLeft;
@@ -587,7 +705,7 @@ namespace TestPlugin
 
          private void Network_N3MessageReceived(object s, SmokeLounge.AOtomation.Messaging.Messages.N3Message n3Msg)
         {
-            //Chat.WriteLine($"{n3Msg.N3MessageType} {n3Msg.Identity}");
+           // Chat.WriteLine($"{n3Msg.N3MessageType} {n3Msg.Identity}");
 
             /*
             if(n3Msg.N3MessageType == SmokeLounge.AOtomation.Messaging.Messages.N3MessageType.PlayfieldAnarchyF)
@@ -608,6 +726,15 @@ namespace TestPlugin
             */
 
 
+            //if (n3Msg.N3MessageType == N3MessageType.Stat)
+            //{
+            //    StatMessage ayy = (StatMessage)n3Msg;
+            //    Chat.WriteLine($"Stat Update for {ayy.Identity}");
+
+            //    foreach (var stat in ayy.Stats)
+            //        Chat.WriteLine($"\t{stat.Value1}: {stat.Value2}");
+            //}
+
             if (n3Msg.N3MessageType == N3MessageType.SpellList)
             {
                 SpellListMessage ayy = (SpellListMessage)n3Msg;
@@ -622,6 +749,15 @@ namespace TestPlugin
                 TradeMessage ayy = (TradeMessage)n3Msg;
                 Chat.WriteLine($"Trade: TradeAction: {ayy.Action}\tParam1: {ayy.Param1}\tParam2: {ayy.Param2}\tParam3: {ayy.Param3}\tParam4: {ayy.Param4}\t{ayy.Unknown1}");
             }
+
+            if (n3Msg.N3MessageType == N3MessageType.SimpleCharFullUpdate)
+            {
+                SimpleCharFullUpdateMessage scfu = (SimpleCharFullUpdateMessage)n3Msg;
+
+                if (scfu.Flags2 == ScfuFlags2.HasOwner)
+                    Chat.WriteLine($"{scfu.Name} has flag 4. Owner: {scfu.Owner}");
+            }
+
             /*
             if (n3Msg.N3MessageType == SmokeLounge.AOtomation.Messaging.Messages.N3MessageType.Feedback)
             {
@@ -805,9 +941,66 @@ namespace TestPlugin
             Chat.WriteLine($"{character.Name} is now in play.");
         }
 
+        public enum MailMsgType
+        {
+            Read = 1,
+            Delete = 2,
+            TakeAll = 3,
+        }
+
+        private void SendShortMailMsg(MailMsgType msgType, int msgId)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                using (BigEndianBinaryWriter writer = new BigEndianBinaryWriter(stream))
+                {
+                    //Header
+                    writer.Write((short)0);
+                    writer.Write((short)PacketType.N3Message);
+                    writer.Write((short)1);
+                    writer.Write((short)0);
+                    writer.Write(Game.ClientInst);
+                    writer.Write((int)2);
+                    writer.Write((int)N3MessageType.Mail);
+                    writer.Write((int)IdentityType.SimpleChar);
+                    writer.Write(Game.ClientInst);
+                    writer.Write((byte)0);
+
+                    //Body
+                    writer.Write((short)msgType);
+                    writer.Write((int)0);
+                    writer.Write(msgId);
+
+
+                    //Fix packet length
+                    short length = (short)writer.BaseStream.Position;
+                    writer.BaseStream.Position = 6;
+                    writer.Write(length);
+
+                    Network.Send(stream.ToArray());
+                }
+            }
+        }
+
+        public void DeleteMail(int msgId)
+        {
+            SendShortMailMsg(MailMsgType.Delete, msgId);
+        }
+
         private void Network_PacketReceived(object s, byte[] packet)
         {
             N3MessageType msgType = (N3MessageType)((packet[16] << 24) + (packet[17] << 16) + (packet[18] << 8) + packet[19]);
+
+            if (msgType == N3MessageType.SimpleCharFullUpdate)
+            {
+                SimpleCharFullUpdateFlags flags = (SimpleCharFullUpdateFlags)((packet[30] << 24) + (packet[31] << 16) + (packet[32] << 8) + packet[33]);
+                //Chat.WriteLine($"{flags} - IsPet: {flags.HasFlag(SimpleCharFullUpdateFlags.IsPet)}");
+                File.WriteAllBytes($"SCFU/{(int)((packet[24] << 24) + (packet[25] << 16) + (packet[26] << 8) + packet[27])}", packet);
+            }
+
+            //Chat.WriteLine($"{msgType} - {BitConverter.ToString(packet).Replace("-", "")}");
+
+            return;
             //Chat.WriteLine($"{msgType}");
 
             if (msgType == N3MessageType.QuestAlternative)

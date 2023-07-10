@@ -25,6 +25,8 @@ namespace AOSharp.Core.Movement
 
         private ConcurrentQueue<MovementAction> _movementActionQueue = new ConcurrentQueue<MovementAction>();
 
+        public EventHandler DestinationReached;
+
         public static MovementController Instance { get; internal set; }
 
         public MovementController(bool drawPath = true)
@@ -60,7 +62,10 @@ namespace AOSharp.Core.Movement
                     path.OnPathFinished();
 
                     if (_paths.Count == 0 && path.StopAtDest)
+                    {
                         SetMovement(MovementAction.ForwardStop);
+                        DestinationReached?.Invoke(null, null);
+                    }
 
                     return;
                 }

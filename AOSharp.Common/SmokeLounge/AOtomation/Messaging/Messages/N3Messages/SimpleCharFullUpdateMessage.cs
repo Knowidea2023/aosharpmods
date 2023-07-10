@@ -121,14 +121,11 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         [AoMember(27)]
         public byte ScfuUnk2 { get; set; }
 
-
         [AoMember(28)]
         public float ScfuUnk3 { get; set; }
 
-
         [AoMember(29)]
         public byte ScfuUnk4 { get; set; }
-
 
         [AoMember(30)]
         public SimpleCharInfo.TextureOverride[] TextureOverrides { get; set; }
@@ -137,8 +134,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         public List<Vector3> Waypoints { get; set; }
 
         [AoMember(32)]
-        public Identity PetOwner { get; set; }
-
+        public Identity? Owner { get; set; }
 
         #endregion
     }

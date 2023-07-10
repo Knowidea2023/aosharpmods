@@ -31,65 +31,44 @@ namespace AOSharp.Recast
         {
             List<Mesh> chunkMeshes = new List<Mesh>();
 
-            foreach(OutdoorRDBTilemap.Chunk chunk in tilemap.Chunks)
+            foreach (OutdoorRDBTilemap.Chunk chunk in tilemap.Chunks)
                 chunkMeshes.Add(CreateMesh(chunk, tilemap.TileSize, tilemap.HeightmapScale));
- 
+
             return chunkMeshes;
         }
 
         private static Mesh CreateMesh(OutdoorRDBTilemap.Chunk chunk, float tileSize, float heightMapScale)
         {
-            var lod = 0;
             var index = 0;
             var triIdx = 0;
 
-            if (chunk.ChunkSize == 16)
-                lod = 0;
+            var vertices = new Vector3[chunk.Size * chunk.Size];
 
-            var sizeMultiplier = 1;
-            var physicalSize = chunk.ChunkSize / sizeMultiplier;
-
-            for (int i = 0; i < lod; i++)
+            for (var y = 0; y < chunk.Size; y++)
             {
-                physicalSize /= 2;
-                sizeMultiplier *= 2;
-            }
-
-            if (lod != 0)
-            {
-                physicalSize++;
-            }
-
-            var vertices = new Vector3[physicalSize * physicalSize];
-
-            for (var y = 0; y < physicalSize; y++)
-            {
-                for (var x = 0; x < physicalSize; x++)
+                for (var x = 0; x < chunk.Size; x++)
                 {
-                    var heightPosX = (int)x * sizeMultiplier;
-                    var heightPosY = (int)y * sizeMultiplier;
-
                     vertices[index] = new Vector3(
-                        (x * sizeMultiplier) * tileSize,
-                        (float)chunk.Heightmap[heightPosX, heightPosY] * heightMapScale,
-                        (y * sizeMultiplier) * tileSize);
+                        (x) * tileSize,
+                        (float)chunk.Heightmap[x, y] * heightMapScale,
+                        (y) * tileSize);
 
                     index++;
                 }
             }
 
             var indices = new List<int>();
-            for (int y = 0; y < physicalSize - 1; y++)
+            for (int y = 0; y < chunk.Size - 1; y++)
             {
-                for (int x = 0; x < physicalSize - 1; x++)
+                for (int x = 0; x < chunk.Size - 1; x++)
                 {
-                    indices.Add((y * physicalSize) + x + 1);
-                    indices.Add((y * physicalSize) + x);
-                    indices.Add(((y + 1) * physicalSize) + x);
+                    indices.Add((y * chunk.Size) + x + 1);
+                    indices.Add((y * chunk.Size) + x);
+                    indices.Add(((y + 1) * chunk.Size) + x);
 
-                    indices.Add((y * physicalSize) + x + 1);
-                    indices.Add(((y + 1) * physicalSize) + x);
-                    indices.Add(((y + 1) * physicalSize) + x + 1);
+                    indices.Add((y * chunk.Size) + x + 1);
+                    indices.Add(((y + 1) * chunk.Size) + x);
+                    indices.Add(((y + 1) * chunk.Size) + x + 1);
 
                     triIdx += 6;
                 }
@@ -99,7 +78,7 @@ namespace AOSharp.Recast
             {
                 Triangles = indices,
                 Vertices = vertices.ToList(),
-                Position = new Vector3((float)(chunk.X * (chunk.ChunkSize - 1)) * tileSize, 0, (float)(chunk.Y * (chunk.ChunkSize - 1)) * tileSize),
+                Position = new Vector3((float)(chunk.X * (chunk.Size - 1)) * tileSize, 0, (float)(chunk.Y * (chunk.Size - 1)) * tileSize),
                 Rotation = Quaternion.Identity,
                 Scale = new Vector3(1, 1, 1)
             };

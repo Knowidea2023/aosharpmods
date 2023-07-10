@@ -6,6 +6,9 @@ using AOSharp.Common.GameData;
 using AOSharp.Common.Unmanaged.DataTypes;
 using AOSharp.Common.Unmanaged.Imports;
 using AOSharp.Common.Unmanaged.DbObjects;
+using static AOSharp.Common.Unmanaged.DbObjects.OutdoorRDBTilemap;
+using System.IO;
+using System.Reflection;
 
 namespace AOSharp.Core
 {
@@ -55,6 +58,11 @@ namespace AOSharp.Core
         ///Get rooms for playfield if in a dungeon.
         ///</summary>
         public static List<Room> Rooms => GetRooms();
+
+        ///<summary>
+        ///Get number of water meshes for playfield.
+        ///</summary>
+        public static List<Mesh> Water => GetWaters();
 
         ///<summary>
         ///Get Tilemap for playfield
@@ -220,6 +228,48 @@ namespace AOSharp.Core
         internal static int GetTilemapResourceId()
         {
             return ((Tilemap_MemStruct*)TileMapPtr)->TilemapResourceId;
+        }
+
+        internal static List<Mesh> GetWaters()
+        {
+            List<Mesh> waterMeshes = new List<Mesh>();
+
+            IntPtr pPlayfield = N3EngineClient_t.GetPlayfield();
+
+            if (pPlayfield == IntPtr.Zero)
+                return waterMeshes;
+
+            int numWaters = PlayfieldAnarchy_t.GetNumberOfWaters(pPlayfield);
+
+            if (numWaters == 0)
+                return waterMeshes;
+
+            IntPtr pWaterData = PlayfieldAnarchy_t.GetWaters(pPlayfield);
+
+            using (UnmanagedMemoryStream unmanagedMemStream = new UnmanagedMemoryStream((byte*)pWaterData.ToPointer(), 0x28 * numWaters))
+            {
+                using (BinaryReader reader = new BinaryReader(unmanagedMemStream))
+                {
+                    for (int i = 0; i < numWaters; i++)
+                    {
+                        waterMeshes.Add(new Mesh
+                        {
+                            Vertices = new List<Vector3>()
+                            {
+                                new Vector3(reader.ReadSingle(),reader.ReadSingle(),reader.ReadSingle()),
+                                new Vector3(reader.ReadSingle(),reader.ReadSingle(),reader.ReadSingle()),
+                                new Vector3(reader.ReadSingle(),reader.ReadSingle(),reader.ReadSingle()),
+                            },
+                            Triangles = new List<int> { 2, 1, 0 }
+                        });
+
+                        //Unk - Always 0
+                        reader.ReadInt32();
+                    }
+                }
+            }
+
+            return waterMeshes;
         }
 
         internal static RDBTilemap GetRDBTilemap()

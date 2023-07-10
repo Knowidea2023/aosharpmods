@@ -77,6 +77,10 @@ namespace AOSharp.Common.Unmanaged.Imports
         [UnmanagedFunctionPointer(CallingConvention.ThisCall, CharSet = CharSet.Unicode, SetLastError = true)]
         public delegate bool DPerformSpecialAction(IntPtr pThis, ref Identity identity);
 
+        //GetPFName
+        [DllImport("Gamecode.dll", EntryPoint = "?N3Msg_GetPFName@n3EngineClientAnarchy_t@@QBEPBDI@Z", CallingConvention = CallingConvention.StdCall)]
+        public static extern IntPtr GetPFName(int id);
+
         //GetName
         [DllImport("Gamecode.dll", EntryPoint = "?N3Msg_GetName@n3EngineClientAnarchy_t@@QBEPBDABVIdentity_t@@0@Z", CallingConvention = CallingConvention.ThisCall)]
         public static extern IntPtr GetName(IntPtr pThis, ref Identity identity, ref Identity identityUnk);
