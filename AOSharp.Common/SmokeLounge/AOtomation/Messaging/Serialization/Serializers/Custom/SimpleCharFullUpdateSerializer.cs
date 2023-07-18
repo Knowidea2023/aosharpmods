@@ -129,6 +129,11 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
                     spc.OrgName = streamReader.ReadString(streamReader.ReadByte());
             }
 
+            if (scfu.CharacterFlags.HasFlag(CharacterFlags.Tower))
+            {
+                scfu.ScfuTowerUnk = streamReader.ReadByte();
+            }
+
             scfu.Level = scfu.Flags.HasFlag(SimpleCharFullUpdateFlags.HasExtendedLevel) ? streamReader.ReadInt16() : streamReader.ReadByte();
             scfu.Health = scfu.Flags.HasFlag(SimpleCharFullUpdateFlags.HasSmallHealth) ? streamReader.ReadInt16() : streamReader.ReadInt32();
             scfu.HealthDamage = scfu.Flags.HasFlag(SimpleCharFullUpdateFlags.HasSmallHealthDamage) ? streamReader.ReadByte() : scfu.Flags.HasFlag(SimpleCharFullUpdateFlags.HasSmallHealth) ? streamReader.ReadInt16() : streamReader.ReadInt32();

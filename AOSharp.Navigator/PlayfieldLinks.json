@@ -3,6 +3,11 @@
     "Links": [
       {
         "$type": "TeleporterLink",
+        "DstId": 540,
+        "TeleporterPos": [ 214.6, 4.3, 172.7 ]
+      },
+      {
+        "$type": "TeleporterLink",
         "DstId": 640,
         "TeleporterPos": [ 150.8, 4.5, 184.7 ]
       },
@@ -20,6 +25,45 @@
         "$type": "TeleporterLink",
         "DstId": 6007,
         "TeleporterPos": [ 208.4, 4.3, 217.5 ]
+      }
+    ]
+  },
+  "540": {
+    "Links": [
+      {
+        "$type": "TerminalLink",
+        "DstId": 152,
+        "TerminalName": "Enter The Grid",
+        "TerminalPos": [ 512, 8.0, 572 ]
+      },
+      {
+        "$type": "ZoneBorderLink",
+        "DstId": 586,
+        "TransitionSpots": [
+          [ 603, 10.7, 395 ]
+        ]
+      }
+    ]
+  },
+  "585": {
+    "Links": [
+      {
+        "$type": "ZoneBorderLink",
+        "DstId": 586,
+        "TransitionSpots": [
+          [ 975, 10.7, 1431 ]
+        ]
+      }
+    ]
+  },
+  "586": {
+    "Links": [
+      {
+        "$type": "ZoneBorderLink",
+        "DstId": 585,
+        "TransitionSpots": [
+          [ 982, 9.5, 506 ]
+        ]
       }
     ]
   },

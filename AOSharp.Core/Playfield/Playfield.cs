@@ -65,6 +65,11 @@ namespace AOSharp.Core
         public static List<Mesh> Water => GetWaters();
 
         ///<summary>
+        ///Get Tower Proxies
+        ///</summary>
+        public static List<TowerProxy> TowerProxies => GetTowerProxies();
+
+        ///<summary>
         ///Get Tilemap for playfield
         ///</summary>
         public static IntPtr TileMapPtr => GetTilemap();
@@ -230,6 +235,16 @@ namespace AOSharp.Core
             return ((Tilemap_MemStruct*)TileMapPtr)->TilemapResourceId;
         }
 
+        private static List<TowerProxy> GetTowerProxies()
+        {
+            List<TowerProxy> towerProxies = new List<TowerProxy>();
+
+            IntPtr pLandControlClient = *(IntPtr*)(Kernel32.GetModuleHandle("Gamecode.dll") + Offsets.N3EngineClientAnarchy_t.LandControlClient_t);
+            LandControlClient_MemStruct landControlClient = *(LandControlClient_MemStruct*)(pLandControlClient);
+
+            return landControlClient.GetTowerProxies();
+        }
+
         internal static List<Mesh> GetWaters()
         {
             List<Mesh> waterMeshes = new List<Mesh>();
@@ -285,10 +300,55 @@ namespace AOSharp.Core
         }
 
         [StructLayout(LayoutKind.Explicit, Pack = 0)]
+        public struct TowerProxy
+        {
+            [FieldOffset(0x0)]
+            public Identity ProxyIdentity;
+
+            [FieldOffset(0x8)]
+            public Identity Identity;
+
+            [FieldOffset(0x10)]
+            public Vector3 Position;
+
+            [FieldOffset(0x20)]
+            public Side Side;
+
+            [FieldOffset(0x2C)]
+            public TowerClass Class;
+        }
+
+        [StructLayout(LayoutKind.Explicit, Pack = 0)]
         private struct Playfield_MemStruct
         {
             [FieldOffset(0x30)]
             public StdObjVector Dynels;
+        }
+
+        [StructLayout(LayoutKind.Explicit, Pack = 0)]
+        private struct LandControlClient_MemStruct
+        {
+            [FieldOffset(0x14)]
+            public IntPtr pTowerProxies;
+
+            [FieldOffset(0x18)]
+            public int Towercount;
+
+            public unsafe List<TowerProxy> GetTowerProxies()
+            {
+                List<TowerProxy> towerProxies = new List<TowerProxy>();
+
+                IntPtr pCurrent = *(IntPtr*)pTowerProxies;
+
+                for(int i =  0; i < Towercount; i++)
+                {
+                    towerProxies.Add(*(TowerProxy*)(pCurrent + 0xC));
+
+                    pCurrent = *(IntPtr*)(pCurrent);
+                }
+
+                return towerProxies;
+            }
         }
 
         [StructLayout(LayoutKind.Explicit, Pack = 0)]

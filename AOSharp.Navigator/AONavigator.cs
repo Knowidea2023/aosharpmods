@@ -88,8 +88,14 @@ namespace AOSharp.Navigator
 
         public void MoveTo(PlayfieldId id, Vector3 pos, Action destinationReachedCallback = null)
         {
-            MoveTo(id, pos, destinationReachedCallback);
+            MoveTo(id, destinationReachedCallback);
             _btContext.Tasks.Enqueue(new MoveToTask(id, pos));
+        }
+
+        public void Halt()
+        {
+            _btContext.Tasks.Clear();
+            MovementController.Instance.Halt();
         }
 
         public List<PlayfieldLink> GetPathTo(PlayfieldId toId)

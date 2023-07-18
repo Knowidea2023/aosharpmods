@@ -90,7 +90,7 @@ namespace SmokeLounge.AOtomation.Messaging.GameData
 
         [AoMember(21)]
         [AoUsesFlags("flags", typeof(byte), FlagsCriteria.EqualsToAny, new[] { (int)InfoPacketType.ControlTower })]
-        public byte? Unknown13 { get; set; }
+        public byte? NextSuppressionGas { get; set; }
 
         [AoMember(22)]
         public int Unknown14 { get; set; }

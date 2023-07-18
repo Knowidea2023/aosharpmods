@@ -136,7 +136,25 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         [AoMember(32)]
         public Identity? Owner { get; set; }
 
+        [AoMember(33)]
+        public byte ScfuTowerUnk { get; set; }
+
         #endregion
+
+        public class MovementInfo
+        {
+            [AoMember(0)]
+            public float Unk1 { get; set; }
+
+            [AoMember(1)]
+            public float Unk2 { get; set; }
+
+            [AoMember(2)]
+            public float Unk3 { get; set; }
+
+            [AoMember(3)]
+            public MovementState State { get; set; }
+        }
     }
 
     [Flags]
