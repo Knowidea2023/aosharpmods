@@ -36,9 +36,7 @@ namespace AOSharp.Recast
                                                     Playfield.Rooms.Select(x => x.SurfaceResource).ToList() : 
                                                     Playfield.Zones.Select(x => SurfaceResource.Get(Playfield.ModelIdentity.Instance << 16 | x.Instance)).ToList();
 
-                List<Mesh> water = Playfield.Water;
-
-                TriangleMesh triMesh = CreateTriangleMesh(terrainChunks, surfaces, water);
+                TriangleMesh triMesh = CreateTriangleMesh(terrainChunks, surfaces);
 
                 byte[] areas = NMGen.CreateDefaultAreaBuffer(triMesh.triCount);
                 InputGeometryBuilder gbuilder = InputGeometryBuilder.Create(triMesh, areas, navmeshGenParams.WalkableSlope);
@@ -97,13 +95,12 @@ namespace AOSharp.Recast
             });
         }
 
-        private static TriangleMesh CreateTriangleMesh(List<Mesh> terrainChunks, List<SurfaceResource> surfaces, List<Mesh> water)
+        private static TriangleMesh CreateTriangleMesh(List<Mesh> terrainChunks, List<SurfaceResource> surfaces)
         {
             List<NavVector3> verts = new List<NavVector3>();
             List<int> indices = new List<int>();
 
             var numVerts = 0;
-
             foreach (var mesh in terrainChunks)
             {
                 foreach (var i in mesh.Triangles)
@@ -123,7 +120,7 @@ namespace AOSharp.Recast
                 if (surface == null)
                     continue;
 
-                foreach (Mesh mesh in surface.Meshes)
+                foreach(Mesh mesh in surface.Meshes)
                 {
                     foreach (var i in mesh.Triangles)
                         indices.Add(numVerts + i);
@@ -133,19 +130,6 @@ namespace AOSharp.Recast
                         verts.Add(mesh.LocalToWorldMatrix.MultiplyPoint3x4(vert).ToCAIVector3());
                         numVerts++;
                     }
-                }
-            }
-
-            foreach (var mesh in water)
-            {
-                foreach (var i in mesh.Triangles)
-                    indices.Add(numVerts + i);
-
-                foreach (var vert in mesh.Vertices)
-                {
-                    verts.Add(vert.ToCAIVector3());
-
-                    numVerts++;
                 }
             }
 

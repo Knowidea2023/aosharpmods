@@ -108,36 +108,30 @@ namespace AOSharp.Pathfinding
 
         public bool LoadNavmesh(string filePath)
         {
-            if(LoadNavmesh(filePath, out Navmesh navmesh))
-            {
-                Pathfinder = new NewPathfinder(navmesh);
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool LoadNavmesh(string filePath, out Navmesh navmesh)
-        {
-            bool succeeded = false;
-            navmesh = null;
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            FileStream fileStream = null;
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = null;
+            Navmesh navmesh;
 
             if (!File.Exists(filePath))
                 return false;
 
             try
             {
-                fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                succeeded = Navmesh.Create((byte[])binaryFormatter.Deserialize(fileStream), out navmesh) == NavStatus.Sucess;
+                stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                if(Navmesh.Create((byte[])formatter.Deserialize(stream), out navmesh) == NavStatus.Sucess)
+                    Pathfinder = new NewPathfinder(navmesh);
             }
             finally
             {
-                fileStream?.Close();
+                if (stream != null)
+                    stream.Close();
             }
 
-            return succeeded && navmesh != null;
+            if (navmesh == null)
+                return false;
+
+            Pathfinder = new NewPathfinder(navmesh);
+            return true;
         }
     }
 

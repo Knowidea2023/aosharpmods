@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,7 +69,6 @@ namespace AOSharp.Common.Unmanaged.DbObjects
 
         public int NumChunksX => GroundData.NumChunksX;
         public int NumChunksZ => GroundData.NumChunksZ;
-        public int Modulo => GroundData.Modulo;
 
         private unsafe IntPtr GroundDataPtr => ((RDBTilemapMemStruct*)Pointer)->GroundDataPtr;
         private unsafe AnarchyGroundDataMemStruct GroundData => *(AnarchyGroundDataMemStruct*)GroundDataPtr;
@@ -105,21 +103,22 @@ namespace AOSharp.Common.Unmanaged.DbObjects
                         int x = reader.ReadInt32();
                         int y = reader.ReadInt32();
                         reader.ReadInt32();
-                        int chunkSize = reader.ReadInt32() + 1;
+                        int chunkSize = reader.ReadInt32();
 
                         byte[] decompressedHeightMap = DecompressArray(reader.ReadInt32(), (IntPtr)reader.ReadInt32());
 
-                        bool hasShortHeights = (Math.Sqrt(decompressedHeightMap.Length) != Math.Truncate(Math.Sqrt(decompressedHeightMap.Length)));
+                        var chunkSizeX = (int)Math.Sqrt(decompressedHeightMap.Length);
+                        var chunkSizeZ = chunkSizeX;
 
-                        ushort[,] heightmap = hasShortHeights ? UnfilterShortHeightmap(decompressedHeightMap, chunkSize) : UnfilterHeightmap(decompressedHeightMap, chunkSize);
+                        byte[,] heightmap = UnfilterHeightmap(decompressedHeightMap, chunkSizeX, chunkSizeZ);
 
-                        reader.ReadBytes(0x3C);
+                        reader.ReadBytes(0x3C); // shortHeightMap etc
 
                         Chunks.Add(new Chunk
                         {
                             X = x,
                             Y = y,
-                            Size = chunkSize,
+                            ChunkSize = (int)Math.Sqrt(decompressedHeightMap.Length),
                             Heightmap = heightmap
                         });
                     }
@@ -148,8 +147,8 @@ namespace AOSharp.Common.Unmanaged.DbObjects
         {
             public int X;
             public int Y;
-            public int Size;
-            public ushort[,] Heightmap;
+            public int ChunkSize;
+            public byte[,] Heightmap;
         }
 
         [StructLayout(LayoutKind.Explicit, Pack = 0)]
@@ -158,10 +157,11 @@ namespace AOSharp.Common.Unmanaged.DbObjects
             [FieldOffset(0x34)]
             public int Width;
 
-            [FieldOffset(0x38)]
+
+            [FieldOffset(0x34)]
             public int Height;
 
-            [FieldOffset(0x3C)]
+            [FieldOffset(0x34)]
             public int Modulo;
 
             [FieldOffset(0x50)]
@@ -200,93 +200,40 @@ namespace AOSharp.Common.Unmanaged.DbObjects
         {
         }
 
-        private ushort[] GetShortHeights(BinaryReader reader, int numHeights)
+        protected byte[,] UnfilterHeightmap(byte[] heightMap, int width, int height)
         {
-            ushort[] heights = new ushort[numHeights];
+            BinaryReader reader = new BinaryReader(new MemoryStream(heightMap));
 
-            for (int i = 0; i < numHeights; i++)
-                heights[i] = reader.ReadUInt16();
+            byte[] bytes = reader.ReadBytes(width * height);
 
-            return heights;
-        }
-
-        protected ushort[,] UnfilterShortHeightmap(byte[] heightMap, int chunkSize)
-        {
-            ushort[] heights;
-
-            using (BinaryReader reader = new BinaryReader(new MemoryStream(heightMap)))
-            {
-                heights = new ushort[heightMap.Length / 2];
-
-                for (int i = 0; i < heights.Length; i++)
-                    heights[i] = reader.ReadUInt16();
-            }
-
-            ushort delta;
-
-            for (var y = 0; y < chunkSize; y++)
-            {
-                delta = 0;
-
-                for (var x = 0; x < chunkSize; x++)
-                {
-                    int idx = x + y * chunkSize;
-                    heights[idx] += delta;
-                    delta = heights[idx];
-                }
-            }
-
-            delta = 0;
-
-            for (var x = 0; x < chunkSize; x++)
-            {
-                delta = 0;
-                for (var y = 0; y < chunkSize; y++)
-                {
-                    int idx = x + y * chunkSize;
-                    heights[idx] += delta;
-                    delta = heights[idx];
-                }
-            }
-
-            ushort[,] unfilteredHeightmap = new ushort[chunkSize, chunkSize];
-            for (int x = 0; x < chunkSize; x++)
-                for (int y = 0; y < chunkSize; y++)
-                    unfilteredHeightmap[x, y] = heights[chunkSize * y + x];
-
-            return unfilteredHeightmap;
-        }
-
-        protected ushort[,] UnfilterHeightmap(byte[] heightMap, int chunkSize)
-        {
             int delta;
 
-            for (var y = 0; y < chunkSize; y++)
+            for (var y = 0; y < height; y++)
             {
                 delta = 0;
-                for (var x = 0; x < chunkSize; x++)
+                for (var x = 0; x < width; x++)
                 {
-                    var val = heightMap[chunkSize * y + x];
-                    heightMap[chunkSize * y + x] = (byte)(delta + val);
+                    var val = bytes[width * y + x];
+                    bytes[width * y + x] = (byte)(delta + val);
                     delta = delta + val;
                 }
             }
 
-            for (var x = 0; x < chunkSize; x++)
+            for (var x = 0; x < width; x++)
             {
                 delta = 0;
-                for (var y = 0; y < chunkSize; y++)
+                for (var y = 0; y < height; y++)
                 {
-                    var val = heightMap[chunkSize * y + x];
-                    heightMap[chunkSize * y + x] = (byte)(delta + val);
+                    var val = bytes[width * y + x];
+                    bytes[width * y + x] = (byte)(delta + val);
                     delta = delta + val;
                 }
             }
 
-            ushort[,] unfilteredHeightmap = new ushort[chunkSize, chunkSize];
-            for (int x = 0; x < chunkSize; x++)
-                for (int y = 0; y < chunkSize; y++)
-                    unfilteredHeightmap[x, y] = heightMap[chunkSize * y + x];
+            byte[,] unfilteredHeightmap = new byte[width, height];
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                    unfilteredHeightmap[x, y] = bytes[width * y + x];
 
             return unfilteredHeightmap;
         }

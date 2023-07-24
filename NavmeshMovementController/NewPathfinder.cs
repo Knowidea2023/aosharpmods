@@ -171,10 +171,5 @@ namespace AOSharp.Pathfinding
 
             return null;
         }
-
-        public bool IsUsingNavmesh(Navmesh navmesh)
-        {
-            return navmesh == _navMesh;
-        }
     }
 }
