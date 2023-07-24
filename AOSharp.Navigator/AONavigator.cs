@@ -21,15 +21,13 @@ namespace AOSharp.Navigator
         public Dictionary<PlayfieldId, PlayfieldNode> PlayfieldMap;
         private NavigatorContext _btContext;
         public IBehaviour<NavigatorContext> Behaviour;
-        public bool IsNavigating => _btContext.Tasks.Any();
         private AutoResetInterval _internalTick = new AutoResetInterval(100);
-        internal Action DestinationReachedCallback;
 
         public AONavigator() 
         {
             InitPlayfields();
 
-            _btContext = new NavigatorContext(this);
+            _btContext = new NavigatorContext();
             Behaviour = NavigatorBehavior.NavBehavior();
 
             Game.TeleportEnded += TeleportEnded;
@@ -63,9 +61,9 @@ namespace AOSharp.Navigator
             Behaviour.Tick(_btContext);
         }
 
-        public void MoveTo(PlayfieldId id, Action destinationReachedCallback = null)
+        public void MoveTo(PlayfieldId id, Vector3 pos)
         {
-            if ((PlayfieldId)Playfield.ModelIdentity.Instance != id)
+            if((PlayfieldId)Playfield.ModelIdentity.Instance != id)
             {
                 var path = GetPathTo(id);
 
@@ -82,13 +80,6 @@ namespace AOSharp.Navigator
                 }
             }
 
-            DestinationReachedCallback = destinationReachedCallback;
-        }
-
-
-        public void MoveTo(PlayfieldId id, Vector3 pos, Action destinationReachedCallback = null)
-        {
-            MoveTo(id, pos, destinationReachedCallback);
             _btContext.Tasks.Enqueue(new MoveToTask(id, pos));
         }
 
