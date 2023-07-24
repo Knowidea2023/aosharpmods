@@ -58,6 +58,18 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         {
             [AoMember(0)]
             public Identity Target { get; set; }
+
+            [AoMember(1)]
+            public int Unknown1 { get; set; }
+
+            [AoMember(2)]
+            public int Unknown2 { get; set; }
+
+            [AoMember(3)]
+            public int Unknown3 { get; set; }
+
+            [AoMember(4)]
+            public int Unknown4 { get; set; }
         }
 
         public class PathInfo : IInfo

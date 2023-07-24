@@ -135,8 +135,8 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             }
 
             scfu.Level = scfu.Flags.HasFlag(SimpleCharFullUpdateFlags.HasExtendedLevel) ? streamReader.ReadInt16() : streamReader.ReadByte();
-            scfu.Health = scfu.Flags.HasFlag(SimpleCharFullUpdateFlags.HasSmallHealth) ? streamReader.ReadInt16() : streamReader.ReadInt32();
-            scfu.HealthDamage = scfu.Flags.HasFlag(SimpleCharFullUpdateFlags.HasSmallHealthDamage) ? streamReader.ReadByte() : scfu.Flags.HasFlag(SimpleCharFullUpdateFlags.HasSmallHealth) ? streamReader.ReadInt16() : streamReader.ReadInt32();
+            scfu.Health = scfu.Flags.HasFlag(SimpleCharFullUpdateFlags.HasSmallHealth) ? streamReader.ReadUInt16() : streamReader.ReadInt32();
+            scfu.HealthDamage = scfu.Flags.HasFlag(SimpleCharFullUpdateFlags.HasSmallHealthDamage) ? streamReader.ReadByte() : scfu.Flags.HasFlag(SimpleCharFullUpdateFlags.HasSmallHealth) ? streamReader.ReadUInt16() : streamReader.ReadInt32();
 
             scfu.MonsterData = streamReader.ReadUInt32();
             scfu.MonsterScale = streamReader.ReadInt16();
@@ -243,9 +243,14 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
                 scfu.SpecialAttacks = new SimpleCharInfo.SpecialAttackData[count];
                 for (int i = 0; i < count; i++)
                 {
+                    short unk1 = streamReader.ReadInt16();
+
+                    if (unk1 == 0)
+                        continue;
+
                     scfu.SpecialAttacks[i] = new SimpleCharInfo.SpecialAttackData()
                     {
-                        Unknown1 = streamReader.ReadInt16(),
+                        Unknown1 = unk1,
                         Unknown2 = streamReader.ReadInt16(),
                         Unknown3 = streamReader.ReadInt16(),
                         Unknown4 = streamReader.ReadInt16(),
