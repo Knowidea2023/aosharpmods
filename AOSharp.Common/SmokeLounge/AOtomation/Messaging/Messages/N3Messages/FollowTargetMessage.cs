@@ -17,9 +17,7 @@ using AOSharp.Common.GameData;
 namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 {
     using SmokeLounge.AOtomation.Messaging.GameData;
-    using SmokeLounge.AOtomation.Messaging.Serialization;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
-    using System.Collections.Generic;
 
     [AoContract((int)N3MessageType.FollowTarget)]
     public class FollowTargetMessage : N3Message
@@ -36,41 +34,29 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         #region AoMember Properties
 
         [AoMember(0)]
-        [AoFlags("Type")]
-        public FollowTargetType Type { get; set; }
-
-        [AoMember(1)]
         public byte Unknown1 { get; set; }
 
-        #endregion
+        [AoMember(1)]
+        public byte Unknown2 { get; set; }
 
         [AoMember(2)]
-        [AoUsesFlags("Type", typeof(PathInfo), FlagsCriteria.EqualsToAny, new[] { (int)FollowTargetType.NpcPath })]
-        [AoUsesFlags("Type", typeof(TargetInfo), FlagsCriteria.EqualsToAny, new[] { (int)FollowTargetType.Target })]
-        public IInfo Info { get; set; }
+        public Identity Target { get; set; }
 
+        [AoMember(3)]
+        public int Unknown3 { get; set; }
 
-        public interface IInfo
-        {
-        }
+        [AoMember(4)]
+        public int Unknown4 { get; set; }
 
-        public class TargetInfo : IInfo
-        {
-            [AoMember(0)]
-            public Identity Target { get; set; }
-        }
+        [AoMember(5)]
+        public int Unknown5 { get; set; }
 
-        public class PathInfo : IInfo
-        {
+        [AoMember(6)]
+        public int Unknown6 { get; set; }
 
-            [AoMember(0, SerializeSize = ArraySizeType.Byte)]
-            public Vector3[] Waypoints { get; set; }
-        }
-    }
+        [AoMember(7)]
+        public byte Unknown7 { get; set; }
 
-    public enum FollowTargetType : byte
-    {
-        NpcPath = 1,
-        Target = 2
+        #endregion
     }
 }
