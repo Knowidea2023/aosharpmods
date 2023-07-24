@@ -228,7 +228,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             scfu.Flags2 = (ScfuFlags2)streamReader.ReadInt32();
 
             if (scfu.Flags2.HasFlag(ScfuFlags2.HasOwner))
-                scfu.Owner = new Identity(IdentityType.SimpleChar, streamReader.ReadInt32());
+                scfu.PetOwner = new Identity(IdentityType.SimpleChar, streamReader.ReadInt32());
 
             scfu.ScfuUnk2 = streamReader.ReadByte();
 
