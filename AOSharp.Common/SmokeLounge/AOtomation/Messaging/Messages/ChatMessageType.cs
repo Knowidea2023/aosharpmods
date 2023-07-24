@@ -28,7 +28,6 @@ namespace SmokeLounge.AOtomation.Messaging.Messages
         VicinityMessage = 34,
         NpcMessage = 35,
         ChannelList = 60,
-        GroupMessage = 65,
-        Ping = 100
+        GroupMessage = 65
     }
 }
