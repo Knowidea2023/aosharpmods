@@ -92,6 +92,12 @@ namespace AOSharp.Navigator
             _btContext.Tasks.Enqueue(new MoveToTask(id, pos));
         }
 
+        public void Halt()
+        {
+            _btContext.Tasks.Clear();
+            MovementController.Instance.Halt();
+        }
+
         public List<PlayfieldLink> GetPathTo(PlayfieldId toId)
         {
             return GetPathFromTo((PlayfieldId)Playfield.ModelIdentity.Instance, toId);
