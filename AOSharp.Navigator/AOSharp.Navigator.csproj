@@ -186,6 +186,9 @@
     <Compile Include="AONavigator.cs" />
     <Compile Include="BT\NavigatorBehavior.cs" />
     <Compile Include="BT\NavigatorContext.cs" />
+    <Compile Include="Links\FixerGridTerminalLink.cs" />
+    <Compile Include="Links\GridTerminalLink.cs" />
+    <Compile Include="Links\UseOnTerminalLink.cs" />
     <Compile Include="Links\ZoneBorderLink.cs" />
     <Compile Include="Links\TeleporterLink.cs" />
     <Compile Include="MoveToTask.cs" />

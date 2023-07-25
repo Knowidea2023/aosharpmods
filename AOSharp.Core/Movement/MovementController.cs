@@ -105,6 +105,18 @@ namespace AOSharp.Core.Movement
             SetMovement(MovementAction.FullStop);
         }
 
+        public void Follow(Identity identity)
+        {
+            Network.Send(new FollowTargetMessage
+            {
+                Type = FollowTargetType.Target,
+                Info = new FollowTargetMessage.TargetInfo
+                {
+                    Target = identity
+                }
+            });
+        }
+
         public virtual void SetDestination(Vector3 pos)
         {
             SetDestination(pos, out _);

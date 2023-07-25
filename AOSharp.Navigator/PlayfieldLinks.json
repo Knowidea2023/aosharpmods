@@ -82,9 +82,7 @@
   "656": {
     "Links": [
       {
-        "$type": "TerminalLink",
-        "DstId": 152,
-        "TerminalName": "Enter The Grid",
+        "$type": "GridTerminalLink",
         "TerminalPos": [ 1583.3, 46.7, 1646.5 ]
       }
     ]
@@ -114,6 +112,15 @@
         "TransitionSpots": [
           [ 925, 0, 129 ]
         ]
+      }
+    ]
+  },
+  "4107": {
+    "Links": [
+      {
+        "$type": "TeleporterLink",
+        "DstId": 791,
+        "TeleporterPos": [ 292.5, 21.9, 60.2 ]
       }
     ]
   },

@@ -67,6 +67,7 @@ namespace AOSharp.Common.GameData
         JobeResearch = 4001,
         BurningMarshes = 4005,
         PenumbraForest = 4006,
+        FixerGrid = 4107,
         NascenseFrontier = 4310,
         NascenseWilds = 4311,
         NascenseSwamp = 4312,

@@ -12,11 +12,108 @@ using AOSharp.Core.UI;
 using AOSharp.Pathfinding;
 using org.critterai.nav;
 using System.IO;
+using AOSharp.Core.Inventory;
 
 namespace AOSharp.Navigator.BT
 {
     internal class NavigatorBehavior
     {
+        public enum ElevatorType
+        {
+            Up,
+            Down
+        }
+
+        public static Dictionary<int, Dictionary<ElevatorType, Vector3>> FixerGridElevators = new Dictionary<int, Dictionary<ElevatorType, Vector3>>()
+        {
+            {
+                0,
+                new Dictionary<ElevatorType, Vector3>
+                {
+                    { ElevatorType.Up, new Vector3 (307, 1.313771, 67) },
+                }
+            },
+            {
+                1,
+                new Dictionary<ElevatorType, Vector3>
+                {
+                    { ElevatorType.Up, new Vector3(313.8423, 12.31377, 66.95627) },
+                    { ElevatorType.Down,  new Vector3(300.2563, 12.31375, 66.94968) },
+                }
+            },
+            {
+                2,
+                new Dictionary<ElevatorType, Vector3>
+                {
+                    { ElevatorType.Up, new Vector3(313.4414, 22.31378, 64.6021) },
+                    { ElevatorType.Down, new Vector3(300.612, 22.31378, 69.21096) },
+                }
+            },
+            {
+                3,
+                new Dictionary<ElevatorType, Vector3>
+                {
+                    { ElevatorType.Up, new Vector3(312.2277, 32.31377, 62.54662) },
+                    { ElevatorType.Down, new Vector3(301.8001, 32.31377, 71.29952) },
+                }
+            },
+            {
+                4,
+                new Dictionary<ElevatorType, Vector3>
+                {
+                    { ElevatorType.Up, new Vector3(310.3886, 42.31377, 61.06009) },
+                    { ElevatorType.Down, new Vector3(303.6136, 42.31374, 72.81461) },
+                }
+            },
+            {
+                5,
+                new Dictionary<ElevatorType, Vector3>
+                {
+                    { ElevatorType.Up, new Vector3(308.1369, 52.31377, 60.25761) },
+                    { ElevatorType.Down, new Vector3(305.7891, 52.31377, 73.68073) },
+                }
+            },
+            {
+                6,
+                new Dictionary<ElevatorType, Vector3>
+                {
+                    { ElevatorType.Up, new Vector3(305.7449, 62.31377, 60.24995) },
+                    { ElevatorType.Down, new Vector3(308.1276, 62.31377, 73.66639) },
+                }
+            },
+            {
+                7,
+                new Dictionary<ElevatorType, Vector3>
+                {
+                    { ElevatorType.Up, new Vector3(303.5269, 72.31377, 61.13066) },
+                    { ElevatorType.Down, new Vector3(310.3562, 72.31377, 72.86738) },
+                }
+            },
+            {
+                8,
+                new Dictionary<ElevatorType, Vector3>
+                {
+                    { ElevatorType.Up, new Vector3(301.7581, 82.31377, 62.66596) },
+                    { ElevatorType.Down, new Vector3(312.1694, 82.31377, 71.39105) },
+                }
+            },
+            {
+                9,
+                new Dictionary<ElevatorType, Vector3>
+                {
+                    { ElevatorType.Up, new Vector3(300.5934, 92.31377, 64.73015) },
+                    { ElevatorType.Down, new Vector3(313.3604, 92.31377, 69.3892) },
+                }
+            },
+            {
+                10,
+                new Dictionary<ElevatorType, Vector3>
+                {
+                    { ElevatorType.Down, new Vector3(313.7806, 102.3138, 67.06682) },
+                }
+            }
+        };
+
         internal static IBehaviour<NavigatorContext> NavBehavior()
         {
             return FluentBuilder.Create<NavigatorContext>()
@@ -33,11 +130,58 @@ namespace AOSharp.Navigator.BT
                     .Condition("Are there any tasks?", c => c.Tasks.Any())
                     .Do("Load Navmesh", LoadNavmesh)
                     .Selector("Transverse Link")
+                        .Subtree(TransverseUseOnTerminalLink())
                         .Subtree(TransverseTerminalLink())
                         .Subtree(TransverseTeleporterLink())
                         .Subtree(TransverseZoneBorderLink())
                         .Subtree(MoveToDestination())
                     .End()
+                .End()
+                .Build();
+        }
+
+        internal static IBehaviour<NavigatorContext> NavigateFixerGrid()
+        {
+            TeleporterLink teleporterLink = null;
+            Vector3 elevatorPos = Vector3.Zero;
+
+            return FluentBuilder.Create<NavigatorContext>()
+                .Sequence("Fixer Grid")
+                    .Condition("Is Teleporter Link?", c => TryConvertTask(c.Tasks.Peek(), out teleporterLink))
+                    .Condition("Is Fixer Grid?", c => (PlayfieldId)Playfield.ModelIdentity.Instance == PlayfieldId.FixerGrid)
+                    .UntilSuccess("Until Correct Floor")
+                        .Selector("Navigate To Correct Floor")
+                            .Condition("Is Correct Floor", c => GetNextElevator(teleporterLink, out elevatorPos))
+                            .AlwaysFail("")
+                                .Do("Move To Next Floor", c => MoveToTransitionSpot(c, teleporterLink, elevatorPos))
+                            .End()
+                        .End()
+                    .End()
+                    .Do("Move to exit", c => MoveToTransitionSpot(c, teleporterLink, teleporterLink.TeleporterPos))
+                .End()
+                .Build();
+        }
+
+        internal static IBehaviour<NavigatorContext> PreUseItem_FixerGrid()
+        {
+            return FluentBuilder.Create<NavigatorContext>()
+                .Sequence("Pop FGrid Can")
+                    .Condition("Is Fixer Grid Link?", c => c.Tasks.Peek() is FixerGridTerminalLink)
+                    .Do("Use FGrid Can", UseFixerGridCan)
+                .End()
+                .Build();
+        }
+
+        internal static IBehaviour<NavigatorContext> TransverseUseOnTerminalLink()
+        {
+            UseOnTerminalLink terminalLink = null;
+
+            return FluentBuilder.Create<NavigatorContext>()
+                .Sequence("Transverse Use On Terminal Link")
+                    .Condition("Is Use On Terminal Link?", c => TryConvertTask(c.Tasks.Peek(), out terminalLink))
+                    .Do("Move to Terminal", c => MoveToTransitionSpot(c, terminalLink, terminalLink.TerminalPos))
+                    .Subtree(PreUseItem_FixerGrid())
+                    .Do("Use Terminal", c => UseOnTerminal(c, terminalLink))
                 .End()
                 .Build();
         }
@@ -62,6 +206,7 @@ namespace AOSharp.Navigator.BT
             return FluentBuilder.Create<NavigatorContext>()
                 .Sequence("Transverse Teleporter Link")
                     .Condition("Is Teleporter Link?", c => TryConvertTask(c.Tasks.Peek(), out teleporterLink))
+                    .Subtree(NavigateFixerGrid())
                     .Do("Move to teleporter", c => MoveToTransitionSpot(c, teleporterLink, teleporterLink.TeleporterPos))
                 .End()
                 .Build();
@@ -150,6 +295,42 @@ namespace AOSharp.Navigator.BT
             return BehaviourStatus.Running;
         }
 
+        public static BehaviourStatus UseFixerGridCan(NavigatorContext context)
+        {
+            if (Inventory.Find("Data Receptacle", out _))
+                return BehaviourStatus.Succeeded;
+
+            if (DynelManager.LocalPlayer.Cooldowns.TryGetValue(Stat.FirstAid, out _))
+                return BehaviourStatus.Running;
+
+            if (Inventory.Find("Nano Can: Instant Fixer Grid Conversion", out Item nanoCan))
+            {
+                nanoCan.Use();
+
+                return BehaviourStatus.Succeeded;
+            }
+            else
+            {
+                return BehaviourStatus.Failed;
+            }
+        }
+
+        public static BehaviourStatus UseOnTerminal(NavigatorContext context, UseOnTerminalLink terminalLink)
+        {
+            if (DynelManager.Find(terminalLink.TerminalName, out SimpleItem terminal) && Inventory.Find(terminalLink.ItemName, out Item useItem))
+            {
+
+                useItem.UseOn(terminal.Identity);
+                Chat.WriteLine($"Using {useItem.Slot} on {terminal.Identity}");
+
+                return BehaviourStatus.Succeeded;
+            }
+            else
+            {
+                return BehaviourStatus.Failed;
+            }
+        }
+
         public static BehaviourStatus UseTerminal (NavigatorContext context, TerminalLink terminalLink)
         {
             if (DynelManager.Find(terminalLink.TerminalName, out SimpleItem terminal))
@@ -177,6 +358,26 @@ namespace AOSharp.Navigator.BT
         {
             convertedTask = task as T;
             return task is T;
+        }
+
+        public static bool GetNextElevator(TeleporterLink teleporterLink, out Vector3 elevatorPos)
+        {
+            int currentFloor = GetFgridFloor(DynelManager.LocalPlayer.Position);
+            int desiredFloor = GetFgridFloor(teleporterLink.TeleporterPos);
+
+            if (currentFloor == desiredFloor)
+            {
+                elevatorPos = Vector3.Zero;
+                return true;
+            }
+
+            elevatorPos = FixerGridElevators[currentFloor][currentFloor < desiredFloor ? ElevatorType.Up : ElevatorType.Down];
+            return false;
+        }
+
+        public static int GetFgridFloor(Vector3 pos)
+        {
+            return (int)(pos.Y / 10f);
         }
     }
 }

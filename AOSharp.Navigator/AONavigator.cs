@@ -6,6 +6,7 @@ using AOSharp.Core.UI;
 using AOSharp.Navigator.BT;
 using BehaviourTree;
 using Newtonsoft.Json;
+using SmokeLounge.AOtomation.Messaging.GameData;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -63,11 +64,11 @@ namespace AOSharp.Navigator
             Behaviour.Tick(_btContext);
         }
 
-        public void MoveTo(PlayfieldId id, Action destinationReachedCallback = null)
+        public void MoveTo(PlayfieldId id, bool useFGrid = false, bool preferFGrid = true, Action destinationReachedCallback = null)
         {
             if ((PlayfieldId)Playfield.ModelIdentity.Instance != id)
             {
-                var path = GetPathTo(id);
+                var path = GetPathTo(id, useFGrid, preferFGrid);
 
                 if (path.Count == 0)
                 {
@@ -86,9 +87,9 @@ namespace AOSharp.Navigator
         }
 
 
-        public void MoveTo(PlayfieldId id, Vector3 pos, Action destinationReachedCallback = null)
+        public void MoveTo(PlayfieldId id, Vector3 pos, bool useFGrid = false, bool preferFGrid = true, Action destinationReachedCallback = null)
         {
-            MoveTo(id, destinationReachedCallback);
+            MoveTo(id, useFGrid, preferFGrid, destinationReachedCallback);
             _btContext.Tasks.Enqueue(new MoveToTask(id, pos));
         }
 
@@ -98,12 +99,12 @@ namespace AOSharp.Navigator
             MovementController.Instance.Halt();
         }
 
-        public List<PlayfieldLink> GetPathTo(PlayfieldId toId)
+        public List<PlayfieldLink> GetPathTo(PlayfieldId toId, bool useFGrid = false, bool preferFGrid = true)
         {
-            return GetPathFromTo((PlayfieldId)Playfield.ModelIdentity.Instance, toId);
+            return GetPathFromTo((PlayfieldId)Playfield.ModelIdentity.Instance, toId, useFGrid, preferFGrid);
         }
 
-        public List<PlayfieldLink> GetPathFromTo(PlayfieldId fromId, PlayfieldId toId)
+        public List<PlayfieldLink> GetPathFromTo(PlayfieldId fromId, PlayfieldId toId, bool useFGrid = false, bool preferFGrid = true)
         {
             List<PlayfieldId> path = new List<PlayfieldId>();
             List<PlayfieldId> visited = new List<PlayfieldId>();
@@ -123,6 +124,12 @@ namespace AOSharp.Navigator
 
                 foreach(PlayfieldLink link in PlayfieldMap[id].Links)
                 {
+                    if (link.DstId == PlayfieldId.Grid && useFGrid)
+                    {
+                        visited.Add(PlayfieldId.FixerGrid);
+                        queue.Enqueue(PlayfieldId.FixerGrid);
+                    }
+
                     if (visited.Contains(link.DstId))
                         continue;
 
@@ -138,7 +145,12 @@ namespace AOSharp.Navigator
 
             foreach (PlayfieldId id in path)
             {
-                if (PlayfieldMap[id].TryGetLink(lastValidId, out PlayfieldLink link))
+                if(lastValidId == PlayfieldId.FixerGrid && PlayfieldMap[id].TryGetLink(PlayfieldId.Grid, out PlayfieldLink gridLink) && gridLink is GridTerminalLink gridTerminalLink)
+                {
+                    pathLinks.Add(new FixerGridTerminalLink(gridTerminalLink.TerminalPos));
+                    lastValidId = id;
+                }
+                else if (PlayfieldMap[id].TryGetLink(lastValidId, out PlayfieldLink link))
                 { 
                     pathLinks.Add(link);
                     lastValidId = id;
