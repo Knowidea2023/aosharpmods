@@ -124,6 +124,7 @@
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\ChatLoginErrorMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\ChatCharacterListMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\CharacterNameMessage.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\ChatPingMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\ChatSelectCharacterMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\ChatLoginRequestMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\ChatServerSaltMessage.cs" />

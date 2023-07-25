@@ -21,17 +21,28 @@ namespace AOSharp.Core.Inventory
             Identity = identity;
         }
 
-        private bool GetIsOpen()
+        private unsafe bool GetIsOpen()
+        {
+            IntPtr pInvVec = GetInventoryPtr();
+
+            if (pInvVec == IntPtr.Zero)
+                return false;
+
+            if (Identity.Type == IdentityType.Corpse)
+                return *((int*)(pInvVec + 0x20)) == 0x2;
+
+            return true;
+        }
+
+        private IntPtr GetInventoryPtr()
         {
             IntPtr pEngine = N3Engine_t.GetInstance();
 
             if (pEngine == IntPtr.Zero)
-                return false;
+                return IntPtr.Zero;
 
             Identity identity = Identity;
-            IntPtr pItems = N3EngineClientAnarchy_t.GetInventoryVec(pEngine, ref identity);
-
-            return pItems != IntPtr.Zero;
+            return N3EngineClientAnarchy_t.GetInventoryVec(pEngine, ref identity);
         }
     }
 }
