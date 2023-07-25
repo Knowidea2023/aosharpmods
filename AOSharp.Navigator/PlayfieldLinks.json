@@ -8,6 +8,11 @@
       },
       {
         "$type": "TeleporterLink",
+        "DstId": 656,
+        "TeleporterPos": [ 219.2, 4.3, 252.3 ]
+      },
+      {
+        "$type": "TeleporterLink",
         "DstId": 800,
         "TeleporterPos": [ 242.2, 4.3, 199.1 ]
       },
@@ -29,6 +34,16 @@
   },
   "646": {
     "Links": []
+  },
+  "656": {
+    "Links": [
+      {
+        "$type": "TerminalLink",
+        "DstId": 152,
+        "TerminalName": "Enter The Grid",
+        "TerminalPos": [ 1583.3, 46.7, 1646.5 ]
+      }
+    ]
   },
   "791": {
     "Links": []
