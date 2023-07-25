@@ -48,6 +48,7 @@
     <Compile Include="GameData\HitType.cs" />
     <Compile Include="GameData\ItemEnums.cs" />
     <Compile Include="GameData\ChatMessageEnums.cs" />
+    <Compile Include="GameData\PlayfieldId.cs" />
     <Compile Include="GameData\Vector4.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\MissionInfo.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\MissionItemData.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using AOSharp.Common.GameData;
 using AOSharp.Common.Helpers;
 using AOSharp.Common.Unmanaged.DataTypes;
@@ -9,6 +10,12 @@ namespace AOSharp.Common.Unmanaged.Interfaces
 {
     public class N3EngineClientAnarchy
     {
+
+        public static string GetPFName(int id)
+        {
+            return Marshal.PtrToStringAnsi(N3EngineClientAnarchy_t.GetPFName(id));
+        }
+
         public static string GetPerkName(int perkId, bool unk = false)
         {
             StdString retStr = StdString.Create();
