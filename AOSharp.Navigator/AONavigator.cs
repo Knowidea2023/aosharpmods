@@ -88,7 +88,7 @@ namespace AOSharp.Navigator
 
         public void MoveTo(PlayfieldId id, Vector3 pos, Action destinationReachedCallback = null)
         {
-            MoveTo(id, pos, destinationReachedCallback);
+            MoveTo(id, destinationReachedCallback);
             _btContext.Tasks.Enqueue(new MoveToTask(id, pos));
         }
 
