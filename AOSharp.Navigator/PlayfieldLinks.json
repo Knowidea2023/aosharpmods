@@ -46,7 +46,15 @@
     ]
   },
   "791": {
-    "Links": []
+    "Links": [
+      {
+        "$type": "ZoneBorderLink",
+        "DstId": 800,
+        "TransitionSpots": [
+          [ 140, 0.1, 752.4 ]
+        ]
+      }
+    ]
   },
   "800": {
     "Links": [

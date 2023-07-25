@@ -133,7 +133,12 @@ namespace AOSharp.Navigator.BT
             if (Vector3.Distance(DynelManager.LocalPlayer.Position, transitionPos) < 1f && !movementController.IsNavigating)
             {
                 if (task is MoveToTask)
+                {
                     context.Tasks.Dequeue();
+
+                    if (!context.Tasks.Any())
+                        context.Navigator.DestinationReachedCallback?.Invoke();
+                }
 
                 return BehaviourStatus.Succeeded;
             }
