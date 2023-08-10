@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GenericCmdMessage.cs" company="SmokeLounge">
+// <copyright file="TeamInviteMessage.cs" company="SmokeLounge">
 //   Copyright © 2013 SmokeLounge.
 //   This program is free software. It comes without any warranty, to
 //   the extent permitted by applicable law. You can redistribute it
@@ -8,27 +8,24 @@
 //   http://www.wtfpl.net/ for more details.
 // </copyright>
 // <summary>
-//   Defines the GenericCmdMessage type.
+//   Defines the TeamInviteMessage type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using AOSharp.Common.GameData;
-
 namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 {
-    using SmokeLounge.AOtomation.Messaging.GameData;
+    using AOSharp.Common.GameData;
     using SmokeLounge.AOtomation.Messaging.Serialization;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
-    using static SmokeLounge.AOtomation.Messaging.Messages.N3Messages.PlayfieldAnarchyFMessage;
 
-    [AoContract((int)N3MessageType.GenericCmd)]
-    public class GenericCmdMessage : N3Message
+    [AoContract((int)N3MessageType.TeamInvite)]
+    public class TeamInviteMessage : N3Message
     {
         #region Constructors and Destructors
 
-        public GenericCmdMessage()
+        public TeamInviteMessage()
         {
-            this.N3MessageType = N3MessageType.GenericCmd;
+            this.N3MessageType = N3MessageType.TeamInvite;
         }
 
         #endregion
@@ -36,28 +33,14 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         #region AoMember Properties
 
         [AoMember(0)]
-        public int Temp1 { get; set; }
+        public Identity Text { get; set; }
 
         [AoMember(1)]
-        public int Count { get; set; }
+        public byte Unknown1 { get; set; }
 
-        [AoFlags("action")]
-        [AoMember(2)]
-        public GenericCmdAction Action { get; set; }
+        [AoMember(2, SerializeSize = ArraySizeType.Int16)]
+        public string Name { get; set; }
 
-        [AoMember(3)]
-        public int Temp4 { get; set; }
-
-        [AoMember(4)]
-        public Identity User { get; set; }
-
-        [AoUsesFlags("action", typeof(Identity), FlagsCriteria.EqualsToAny, new[] { 4, 5 })]
-        [AoMember(5)]
-        public Identity? Source { get; set; }
-        
-        [AoMember(6)]
-        public Identity Target { get; set; }
-        
         #endregion
     }
 }

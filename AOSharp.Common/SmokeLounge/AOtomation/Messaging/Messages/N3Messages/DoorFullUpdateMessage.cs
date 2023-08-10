@@ -46,28 +46,28 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         [AoMember(4)]
         public int Playfield { get; set; }
 
-        [AoMember(5)]
-        public int Unk2 { get; set; }
+        //[AoMember(5)]
+        //public int Unk2 { get; set; }
 
-        [AoMember(6)]
-        public int Unk3 { get; set; }
+        //[AoMember(6)]
+        //public int Unk3 { get; set; }
 
-        [AoMember(7)]
-        public int Unk4 { get; set; }
+        //[AoMember(7)]
+        //public int Unk4 { get; set; }
 
-        [AoMember(8, SerializeSize = ArraySizeType.X3F1)]
-        public GameTuple<Stat, uint>[] Skills { get; set; }
+        //[AoMember(8, SerializeSize = ArraySizeType.X3F1)]
+        //public GameTuple<Stat, uint>[] Skills { get; set; }
 
-        [AoMember(9)]
-        public int Unk5 { get; set; }
+        //[AoMember(9)]
+        //public int Unk5 { get; set; }
 
-        [AoMember(11)]
-        public int Unk7 { get; set; }
+        //[AoMember(11)]
+        //public int Unk7 { get; set; }
 
-        [AoMember(12)]
-        public int Unk8 { get; set; }
+        //[AoMember(12)]
+        //public int Unk8 { get; set; }
 
-        [AoMember(13, SerializeSize = ArraySizeType.X3F1)]
-        public Identity[] UnkIdentities { get; set; }
+        //[AoMember(13, SerializeSize = ArraySizeType.X3F1)]
+        //public Identity[] UnkIdentities { get; set; }
     }
 }

@@ -45,7 +45,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             var deserializerMethodInfo =
                 ReflectionHelper
                     .GetMethodInfo
-                        <GenericCmdSerializer, Func<StreamReader, SerializationContext, PropertyMetaData, object>>
+                        <PlayfieldTowerUpdateClientSerializer, Func<StreamReader, SerializationContext, PropertyMetaData, object>>
                         (o => o.Deserialize);
             var serializerExp = Expression.New(this.GetType());
             var callExp = Expression.Call(
@@ -73,7 +73,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             var serializerMethodInfo =
                 ReflectionHelper
                     .GetMethodInfo
-                    <GenericCmdSerializer,
+                    <PlayfieldTowerUpdateClientSerializer,
                         Action<StreamWriter, SerializationContext, object, PropertyMetaData>>(o => o.Serialize);
             var serializerExp = Expression.New(this.GetType());
             var callExp = Expression.Call(

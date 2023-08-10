@@ -17,6 +17,7 @@ using AOSharp.Common.GameData;
 namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 {
     using SmokeLounge.AOtomation.Messaging.GameData;
+    using SmokeLounge.AOtomation.Messaging.Serialization;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
     [AoContract((int)N3MessageType.PlayfieldAnarchyF)]
@@ -52,26 +53,68 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         public int Unknown3 { get; set; }
 
         [AoMember(5)]
-        public int Unknown4 { get; set; }
+        public int SG { get; set; }
 
         [AoMember(6)]
-        public Identity PlayfieldId2 { get; set; }
+        public Identity ProxyId { get; set; }
 
+        [AoFlags("flags")]
         [AoMember(7)]
-        public int Unknown5 { get; set; }
+        public int UnknownIdType { get; set; }
 
         [AoMember(8)]
-        public int Unknown6 { get; set; }
+        public int UnknownIdInstance { get; set; }
 
         [AoMember(9)]
-        public PlayfieldVendorInfo PlayfieldVendorInfo { get; set; }
+        public int Unknown5 { get; set; }
 
         [AoMember(10)]
-        public int PlayfieldX { get; set; }
+        public int Unknown6 { get; set; }
 
+        [AoUsesFlags("flags", typeof(UnknownStruct1), FlagsCriteria.EqualsToAny, new[] { 0xC77B })]
         [AoMember(11)]
-        public int PlayfieldZ { get; set; }
+        public UnknownStruct1 Unknown7 { get; set; }
+
+        [AoUsesFlags("flags", typeof(PlayfieldDynelInfo[]), FlagsCriteria.EqualsToAny, new[] { 0xC77B, 0xC77D })]
+        [AoMember(12, SerializeSize=ArraySizeType.Int32)]
+        public PlayfieldDynelInfo[] Dynels { get; set; }
 
         #endregion
+
+        public class UnknownStruct1
+        {
+            [AoMember(0)]
+            public int Unknown1 { get; set; }
+            [AoMember(1)]
+            public Identity Unknown2 { get; set; }
+            [AoMember(2)]
+            public int Unknown3 { get; set; }
+            [AoMember(3)]
+            public Vector3 Unknown4 { get; set; }
+            [AoMember(4)]
+            public int Unknown5 { get; set; }
+            [AoMember(5)]
+            public int Unknown6 { get; set; }
+            [AoMember(6)]
+            public float Unknown7 { get; set; }
+            [AoMember(7)]
+            public int Unknown8 { get; set; }
+            [AoMember(8)]
+            public int Unknown9 { get; set; }
+        }
+
+        public class PlayfieldDynelInfo
+        {
+            [AoMember(0)]
+            public IdentityType IdentityType { get; set; }
+            [AoMember(1)]
+            public int Unknown1 { get; set; }
+            [AoMember(2)]
+            public int Unknown2 { get; set; }
+            [AoMember(3)]
+            public int Unknown3 { get; set; }
+            [AoMember(4)]
+            public int Instance { get; set; }
+        }
     }
 }

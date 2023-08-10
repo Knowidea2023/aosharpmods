@@ -124,7 +124,7 @@ namespace AOSharp.Navigator
 
                 foreach(PlayfieldLink link in PlayfieldMap[id].Links)
                 {
-                    if (link.DstId == PlayfieldId.Grid && useFGrid)
+                    if (link is GridTerminalLink && link.DstId == PlayfieldId.Grid && useFGrid)
                     {
                         visited.Add(PlayfieldId.FixerGrid);
                         queue.Enqueue(PlayfieldId.FixerGrid);

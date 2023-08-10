@@ -65,7 +65,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
             this.serializers.TryAdd(typeof(uint), new UInt32Serializer());
             this.serializers.TryAdd(typeof(PlayfieldVendorInfo), new PlayfieldVendorInfoSerializer());
             this.serializers.TryAdd(typeof(SimpleCharFullUpdateMessage), new SimpleCharFullUpdateSerializer());
-            this.serializers.TryAdd(typeof(GenericCmdMessage), new GenericCmdSerializer());
+            //this.serializers.TryAdd(typeof(GenericCmdMessage), new GenericCmdSerializer());
             this.serializers.TryAdd(typeof(GroupMsgMessage), new GroupMessageSerializer());
             this.serializers.TryAdd(typeof(PlayfieldTowerUpdateClientMessage), new PlayfieldTowerUpdateClientSerializer());
         }

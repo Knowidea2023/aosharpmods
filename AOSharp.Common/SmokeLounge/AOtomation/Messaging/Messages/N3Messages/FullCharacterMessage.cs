@@ -65,10 +65,10 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         public UnknownDataType2[] Unknown8 { get; set; }
 
         [AoMember(10, SerializeSize = ArraySizeType.X3F1)]
-        public GameTuple<int, uint>[] Stats1 { get; set; }
+        public GameTuple<int, int>[] Stats1 { get; set; }
 
         [AoMember(11, SerializeSize = ArraySizeType.X3F1)]
-        public GameTuple<int, uint>[] Stats2 { get; set; }
+        public GameTuple<int, int>[] Stats2 { get; set; }
 
         [AoMember(12, SerializeSize = ArraySizeType.X3F1)]
         public GameTuple<byte, byte>[] Stats3 { get; set; }
@@ -79,19 +79,40 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         [AoMember(14, SerializeSize = ArraySizeType.Int32)]
         public GameTuple<int, int>[] AbsorbStats { get; set; }
 
-        [AoMember(15)]
-        public int Unknown10 { get; set; }
+        [AoMember(15, SerializeSize = ArraySizeType.Int32)]
+        public Identity[] UnknownIdentities { get; set; }
 
-        [AoMember(16)]
-        public int Unknown11 { get; set; } // Empty 3F1 Array
+        [AoMember(16, SerializeSize = ArraySizeType.X3F1)]
+        public TeamMember[] TeamMembers { get; set; }
 
-        [AoMember(17)]
-        public int Unknown12 { get; set; } // Empty 3F1 Array
+        [AoMember(17, SerializeSize = ArraySizeType.X3F1)]
+        public UnknownDataType4[] Unknown12 { get; set; }
 
         [AoMember(18, SerializeSize = ArraySizeType.X3F1)]
         public Perk[] Perks { get; set; }
 
         #endregion
+
+        public class TeamMember
+        {
+            [AoMember(0)]
+            public Identity Identity { get; set; }
+
+            [AoMember(1, SerializeSize = ArraySizeType.Int16)]
+            public string Name { get; set; }
+
+            [AoMember(2)]
+            public int Unknown1 { get; set; }
+
+            [AoMember(3)]
+            public byte Unknown2 { get; set; }
+
+            [AoMember(4)]
+            public short Level { get; set; }
+
+            [AoMember(5)]
+            public short Profession { get; set; }
+        }
 
         public class UnknownDataType1
         {
@@ -118,6 +139,40 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 
             [AoMember(3)]
             public int Unknown4 { get; set; }
+        }
+
+        public class UnknownDataType4
+        {
+            [AoMember(0)]
+            public int Unknown1 { get; set; }
+
+            [AoMember(1)]
+            public int Unknown2 { get; set; }
+
+            [AoMember(2)]
+            public int Unknown3 { get; set; }
+
+            [AoMember(3)]
+            public int Unknown4 { get; set; }
+
+            [AoMember(4)]
+            public int Unknown5 { get; set; }
+
+            [AoMember(5)]
+            public int Unknown6 { get; set; }
+
+            [AoMember(6)]
+            public int Unknown7 { get; set; }
+
+            [AoMember(7)]
+            public int Unknown8 { get; set; }
+
+            [AoMember(8)]
+            public int Unknown9 { get; set; }
+
+            [AoMember(9)]
+            public int Unknown10 { get; set; }
+
         }
 
         public class Perk

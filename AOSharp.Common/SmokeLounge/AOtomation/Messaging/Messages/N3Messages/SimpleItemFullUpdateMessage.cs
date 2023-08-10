@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GenericCmdMessage.cs" company="SmokeLounge">
+// <copyright file="SimpleItemFullUpdateMessage.cs" company="SmokeLounge">
 //   Copyright © 2013 SmokeLounge.
 //   This program is free software. It comes without any warranty, to
 //   the extent permitted by applicable law. You can redistribute it
@@ -8,7 +8,7 @@
 //   http://www.wtfpl.net/ for more details.
 // </copyright>
 // <summary>
-//   Defines the GenericCmdMessage type.
+//   Defines the SimpleItemFullUpdateMessage type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -19,16 +19,15 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
     using SmokeLounge.AOtomation.Messaging.GameData;
     using SmokeLounge.AOtomation.Messaging.Serialization;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
-    using static SmokeLounge.AOtomation.Messaging.Messages.N3Messages.PlayfieldAnarchyFMessage;
 
-    [AoContract((int)N3MessageType.GenericCmd)]
-    public class GenericCmdMessage : N3Message
+    [AoContract((int)N3MessageType.SimpleItemFullUpdate)]
+    public class SimpleItemFullUpdateMessage : N3Message
     {
         #region Constructors and Destructors
 
-        public GenericCmdMessage()
+        public SimpleItemFullUpdateMessage()
         {
-            this.N3MessageType = N3MessageType.GenericCmd;
+            this.N3MessageType = N3MessageType.SimpleItemFullUpdate;
         }
 
         #endregion
@@ -36,28 +35,35 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         #region AoMember Properties
 
         [AoMember(0)]
-        public int Temp1 { get; set; }
+        public int Unknown1 { get; set; }
 
+        [AoFlags("OwnerType")]
         [AoMember(1)]
-        public int Count { get; set; }
+        public int OwnerType { get; set; }
 
-        [AoFlags("action")]
         [AoMember(2)]
-        public GenericCmdAction Action { get; set; }
+        public int OwnerInstance { get; set; }
 
+        [AoUsesFlags("OwnerType", typeof(Vector3), FlagsCriteria.EqualsToAny, new[] { 0 })]
         [AoMember(3)]
-        public int Temp4 { get; set; }
+        public Vector3? Position { get; set; }
 
+        [AoUsesFlags("OwnerType", typeof(Quaternion), FlagsCriteria.EqualsToAny, new[] { 0 })]
         [AoMember(4)]
-        public Identity User { get; set; }
+        public Quaternion? Rotation { get; set; }
 
-        [AoUsesFlags("action", typeof(Identity), FlagsCriteria.EqualsToAny, new[] { 4, 5 })]
         [AoMember(5)]
-        public Identity? Source { get; set; }
-        
+        public int PlayfieldId { get; set; }
+
         [AoMember(6)]
-        public Identity Target { get; set; }
-        
+        public Identity StateMachine { get; set; }
+
+        [AoMember(7)]
+        public short Unknown2 { get; set; }
+
+        [AoMember(8, SerializeSize = ArraySizeType.X3F1)]
+        public GameTuple<Stat, int>[] Stats { get; set; }
+
         #endregion
     }
 }
