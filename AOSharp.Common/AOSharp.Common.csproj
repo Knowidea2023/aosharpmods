@@ -50,8 +50,14 @@
     <Compile Include="GameData\ChatMessageEnums.cs" />
     <Compile Include="GameData\PlayfieldId.cs" />
     <Compile Include="GameData\Vector4.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\FightModeName.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\ResearchLine.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\CharacterInfo.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\QuestIdentity.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\Quest.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\QuestAction.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\MissionInfo.cs" />
-    <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\MissionItemData.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\MissionItemReward.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\MissionSliders.cs" />
     <Compile Include="GameData\ResearchGoal.cs" />
     <Compile Include="GameData\DuelUpdate.cs" />
@@ -136,6 +142,11 @@
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatHeader.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\AbsorbMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\AttackInfoMessage.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\DoorStatusUpdateMessage.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\FightModeUpdate.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\ResearchUpdateMessage.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\QuestFullUpdateMessage.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\PlayfieldAllCitiesMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\TeamInviteMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\ChestFullUpdateMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\ContainerAddItem.cs" />
@@ -229,6 +240,7 @@
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\QuestAction.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\QuestMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\TradeMessage.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\VendingMachineFullUpdateMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\WeaponItemFullUpdateMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3MessageType.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\OperatorMessage.cs" />

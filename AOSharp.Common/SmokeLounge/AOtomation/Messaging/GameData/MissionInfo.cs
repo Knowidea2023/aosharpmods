@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TowerInfo.cs" company="SmokeLounge">
+// <copyright file="MissionInfo.cs" company="SmokeLounge">
 //   Copyright © 2013 SmokeLounge.
 //   This program is free software. It comes without any warranty, to
 //   the extent permitted by applicable law. You can redistribute it
@@ -8,7 +8,7 @@
 //   http://www.wtfpl.net/ for more details.
 // </copyright>
 // <summary>
-//   Defines the TowerInfo type.
+//   Defines the MissionInfo type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -53,7 +53,7 @@ namespace SmokeLounge.AOtomation.Messaging.GameData
         public byte[] UnkChunk2 { get; set; }
 
         [AoMember(10, SerializeSize = ArraySizeType.X3F1)]
-        public MissionItemData[] MissionItemData { get; set; }
+        public MissionItemReward[] MissionItemData { get; set; }
 
         [AoMember(11, FixedSizeLength = 44, IsFixedSize = true)]
         public byte[] UnkChunk3 { get; set; }

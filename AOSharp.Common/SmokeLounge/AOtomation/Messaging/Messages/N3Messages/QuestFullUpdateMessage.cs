@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TowerInfo.cs" company="SmokeLounge">
+// <copyright file="QuestFullUpdateMessage.cs" company="SmokeLounge">
 //   Copyright © 2013 SmokeLounge.
 //   This program is free software. It comes without any warranty, to
 //   the extent permitted by applicable law. You can redistribute it
@@ -8,31 +8,34 @@
 //   http://www.wtfpl.net/ for more details.
 // </copyright>
 // <summary>
-//   Defines the TowerInfo type.
+//   Defines the QuestFullUpdateMessage type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SmokeLounge.AOtomation.Messaging.GameData
+using AOSharp.Common.GameData;
+
+namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 {
-    using AOSharp.Common.GameData;
+    using SmokeLounge.AOtomation.Messaging.GameData;
     using SmokeLounge.AOtomation.Messaging.Serialization;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
-    public class MissionItemData
+    [AoContract((int)N3MessageType.QuestFullUpdate)]
+    public class QuestFullUpdateMessage : N3Message
     {
+        #region Constructors and Destructors
+
+        public QuestFullUpdateMessage()
+        {
+            this.N3MessageType = N3MessageType.QuestFullUpdate;
+        }
+
+        #endregion
+
         #region AoMember Properties
 
-        [AoMember(0)]
-        public int LowId { get; set; }
-
-        [AoMember(1)]
-        public int HighId { get; set; }
-
-        [AoMember(2)]
-        public int Ql { get; set; }
-
-        [AoMember(3)]
-        public int Unk { get; set; }
+        [AoMember(0, SerializeSize = ArraySizeType.X3F1)]
+        public Quest[] Quests { get; set; }
 
         #endregion
     }
