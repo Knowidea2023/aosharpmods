@@ -93,6 +93,7 @@
     <Compile Include="Playfield\Room.cs" />
     <Compile Include="Research.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="CityController.cs" />
     <Compile Include="Trade.cs" />
     <Compile Include="TeamMember.cs" />
     <Compile Include="DummyItem\Spell.cs" />

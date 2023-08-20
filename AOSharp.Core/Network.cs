@@ -36,6 +36,7 @@ namespace AOSharp.Core
             { N3MessageType.GenericCmd, OnGenericCmd },
             { N3MessageType.CharInPlay, OnCharInPlay },
             { N3MessageType.QuestAlternative, OnQuestAlternative },
+            { N3MessageType.AOTransportSignal, OnAoTransportSignal },
             //{ N3MessageType.Trade, OnTrade }
 
         };
@@ -216,5 +217,11 @@ namespace AOSharp.Core
 
             Mission.OnRollListChanged(qMsg.MissionSliders, qMsg.MissionDetails);
         }
+
+        private static void OnAoTransportSignal(N3Message n3Msg)
+        {
+            CityController.OnAOSignalTransportMessage((AOTransportSignalMessage)n3Msg);
+        }
+
     }
 }
