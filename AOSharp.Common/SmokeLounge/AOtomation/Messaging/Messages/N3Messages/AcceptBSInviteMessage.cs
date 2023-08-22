@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TeamInviteMessage.cs" company="SmokeLounge">
+// <copyright file="AcceptBSInviteMessage.cs" company="SmokeLounge">
 //   Copyright © 2013 SmokeLounge.
 //   This program is free software. It comes without any warranty, to
 //   the extent permitted by applicable law. You can redistribute it
@@ -8,24 +8,25 @@
 //   http://www.wtfpl.net/ for more details.
 // </copyright>
 // <summary>
-//   Defines the TeamInviteMessage type.
+//   Defines the AcceptBSInviteMessage type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using AOSharp.Common.GameData;
+
 namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 {
-    using AOSharp.Common.GameData;
-    using SmokeLounge.AOtomation.Messaging.Serialization;
+    using SmokeLounge.AOtomation.Messaging.GameData;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
-    [AoContract((int)N3MessageType.TeamInvite)]
-    public class TeamInviteMessage : N3Message
+    [AoContract((int)N3MessageType.AcceptBSInvite)]
+    public class AcceptBSInviteMessage : N3Message
     {
         #region Constructors and Destructors
 
-        public TeamInviteMessage()
+        public AcceptBSInviteMessage()
         {
-            this.N3MessageType = N3MessageType.TeamInvite;
+            this.N3MessageType = N3MessageType.AcceptBSInvite;
         }
 
         #endregion
@@ -33,13 +34,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         #region AoMember Properties
 
         [AoMember(0)]
-        public Identity Requestor { get; set; }
-
-        [AoMember(1)]
-        public byte Unknown1 { get; set; }
-
-        [AoMember(2, SerializeSize = ArraySizeType.Int16)]
-        public string Name { get; set; }
+        public Identity UnkIdentity { get; set; }
 
         #endregion
     }

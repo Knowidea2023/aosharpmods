@@ -51,7 +51,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         [AoMember(4)]
         public Identity User { get; set; }
 
-        [AoUsesFlags("action", typeof(Identity), FlagsCriteria.EqualsToAny, new[] { 4, 5 })]
+        [AoUsesFlags("action", typeof(Identity), FlagsCriteria.EqualsToAny, new[] { (int)GenericCmdAction.Repair, (int)GenericCmdAction.UseItemOnItem })]
         [AoMember(5)]
         public Identity? Source { get; set; }
         
