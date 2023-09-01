@@ -37,6 +37,7 @@ namespace AOSharp.Core
             { N3MessageType.CharInPlay, OnCharInPlay },
             { N3MessageType.QuestAlternative, OnQuestAlternative },
             { N3MessageType.AOTransportSignal, OnAoTransportSignal },
+            { N3MessageType.InfromPlayer, OnInfromPlayer },
             //{ N3MessageType.Trade, OnTrade }
 
         };
@@ -209,6 +210,14 @@ namespace AOSharp.Core
                     PerkAction.OnPerkFinished(templateActionMessage.ItemLowId, templateActionMessage.ItemHighId, templateActionMessage.Quality, templateActionMessage.Identity);
                     break;
             }
+        }
+
+        private static void OnInfromPlayer(N3Message n3Msg)
+        {
+            InfromPlayerMessage infromPlayerMessage = (InfromPlayerMessage)n3Msg;
+
+            if (infromPlayerMessage.UnkIdentity.Type == IdentityType.Battlestation)
+                Battlestation.OnBattlestationInvite(infromPlayerMessage.UnkIdentity);
         }
 
         private static void OnQuestAlternative(N3Message n3Msg)

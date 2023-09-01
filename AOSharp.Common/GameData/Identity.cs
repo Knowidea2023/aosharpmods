@@ -38,6 +38,7 @@ namespace AOSharp.Common.GameData
         ProxyInstance = 0x0000C77D,
         DummyItem = 0xC788,
         PerkHash = 0xC78E,
+        Battlestation = 0xC794,
         PlayfieldProxy = 0xC79C,
         Playfield = 0xC79D,
         ACGBuildingGeneratorData = 0x0000C79F,

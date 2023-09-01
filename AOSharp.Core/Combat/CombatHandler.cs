@@ -240,8 +240,7 @@ namespace AOSharp.Core.Combat
                 if (!ShouldUseSpecialAttack(special))
                     continue;
 
-                if (special == SpecialAttack.AimedShot ||
-                    special == SpecialAttack.SneakAttack)
+                if ((special == SpecialAttack.AimedShot || special == SpecialAttack.SneakAttack) && target.IsNpc)
                     continue;
 
                 if (!special.IsAvailable())
