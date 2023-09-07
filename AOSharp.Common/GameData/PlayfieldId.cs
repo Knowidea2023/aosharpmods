@@ -81,6 +81,7 @@ namespace AOSharp.Common.GameData
         Sector13 = 4365,
         Sector28 = 4366,
         Sector35 = 4367,
+        APFHub = 4368,
         Pandemonium = 4389,
         BeastLair = 4391,
         JobePlatform = 4530,

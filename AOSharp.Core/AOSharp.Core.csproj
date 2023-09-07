@@ -60,6 +60,7 @@
     <Compile Include="Battlestation.cs" />
     <Compile Include="Combat\ICombatAction.cs" />
     <Compile Include="Combat\CombatHandler.cs" />
+    <Compile Include="Coroutine.cs" />
     <Compile Include="Dynel\LockableItem.cs" />
     <Compile Include="GMI\GMI.cs" />
     <Compile Include="Duel.cs" />

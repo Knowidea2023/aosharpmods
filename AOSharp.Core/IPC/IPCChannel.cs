@@ -171,7 +171,7 @@ namespace AOSharp.Core.IPC
             _callbacks.Add(opCode, callback);
         }
 
-        internal static void LoadMessages(Assembly assembly)
+        public static void LoadMessages(Assembly assembly)
         {
             _typeInfo.InitializeSubTypesForAssembly(assembly);
         }

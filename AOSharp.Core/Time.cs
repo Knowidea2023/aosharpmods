@@ -5,9 +5,12 @@ namespace AOSharp.Core
 {
     public static class Time
     {
-        public static double NormalTime => GetNormalTime();
-       
-        private  static double GetNormalTime()
+        private static DateTime InitTime = DateTime.Now;
+
+        public static double AONormalTime => GetAOTime();
+        public static double NormalTime => GetSystemTime();
+
+        private  static double GetAOTime()
         {
             IntPtr pGameTime = GameTime_t.GetInstance();
 
@@ -15,6 +18,11 @@ namespace AOSharp.Core
                 return 0;
 
             return GameTime_t.GetNormalTime(pGameTime);
+        }
+
+        private static double GetSystemTime()
+        {
+            return (DateTime.Now - InitTime).TotalSeconds;
         }
     }
 }

@@ -28,7 +28,16 @@ namespace AOSharp.Core
 
         public int RemainingNCU => MaxNCU - CurrentNCU;
 
-        public Pet[] Pets => GetPets();
+        private Pet[] _pets = null;
+        public Pet[] Pets 
+        {
+            get {
+                if (_pets == null)
+                    _pets = GetPets();
+
+                return _pets;
+            }
+        }
 
         public bool IsAttackPending => Time.NormalTime < _nextAttack;
 

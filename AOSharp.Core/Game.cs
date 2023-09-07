@@ -136,6 +136,9 @@ namespace AOSharp.Core
                 return;
 
             Network.Update();
+
+            Coroutine.Update();
+
             IPCChannel.Update();
 
             UIController.UpdateViews();
