@@ -11,6 +11,8 @@ namespace AOSharp.Core.UI
         public unsafe int Handle => *(int*)(_pointer + 0x44);
         public object Tag;
 
+        public bool Enabled => View_c.IsEnabled(_pointer);
+
         protected readonly IntPtr _pointer;
 
         public IntPtr Pointer
@@ -61,6 +63,11 @@ namespace AOSharp.Core.UI
         private string GetName()
         {
             return "";
+        }
+
+        public void Enable(bool enabled)
+        {
+            View_c.Enable(_pointer, enabled);
         }
 
         public void AddChild(View view, bool assignTabOrder)

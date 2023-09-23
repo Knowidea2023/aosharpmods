@@ -65,6 +65,13 @@ namespace AOSharp.Common.Unmanaged.Imports
         [DllImport("GUI.dll", EntryPoint = "?SetAlpha@View@@QAEXM@Z", CallingConvention = CallingConvention.ThisCall)]
         public static extern void SetAlpha(IntPtr pThis, float value);
 
+        [DllImport("GUI.dll", EntryPoint = "?Enable@View@@QAEX_N@Z", CallingConvention = CallingConvention.ThisCall)]
+        public static extern void Enable(IntPtr pThis, bool enabled);
+
+        [return: MarshalAs(UnmanagedType.U1)]
+        [DllImport("GUI.dll", EntryPoint = "?IsEnabled@View@@QBE_NXZ", CallingConvention = CallingConvention.ThisCall)]
+        public static extern bool IsEnabled(IntPtr pThis);
+
         public static unsafe IntPtr Create(Rect rect, string name, int unk1, int unk2)
         {
             StdString nameStr = StdString.Create(name);
