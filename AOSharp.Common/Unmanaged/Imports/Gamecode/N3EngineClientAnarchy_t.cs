@@ -244,5 +244,8 @@ namespace AOSharp.Common.Unmanaged.Imports
 
         [DllImport("Gamecode.dll", EntryPoint = "?N3Msg_SetStat@n3EngineClientAnarchy_t@@QAEXHW4Stat_e@GameData@@@Z", CallingConvention = CallingConvention.ThisCall)]
         public static extern void SetStat(IntPtr pThis, int value, Stat stat);
+
+        [DllImport("Gamecode.dll", EntryPoint = "?N3Msg_TemplateIDToDynelID@n3EngineClientAnarchy_t@@QBE?AVIdentity_t@@ABV2@@Z", CallingConvention = CallingConvention.ThisCall)]
+        public static extern IntPtr TemplateIDToDynelID(IntPtr pThis, out Identity dynelId, ref Identity templateId);
     }
 }

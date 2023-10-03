@@ -252,6 +252,17 @@ namespace AOSharp.Core.Inventory
             });
         }
 
+        public static void UseItemOnItem(Identity slot, Identity target)
+        {
+            Network.Send(new GenericCmdMessage()
+            {
+                Action = GenericCmdAction.UseItemOnItem,
+                User = DynelManager.LocalPlayer.Identity,
+                Source = slot,
+                Target = target
+            });
+        }
+
         public static void Delete(Identity slot)
         {
             Network.Send(new CharacterActionMessage()
