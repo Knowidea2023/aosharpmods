@@ -43,11 +43,18 @@ namespace AOSharp.Pathfinding
         {
             List<Vector3> finalPath = new List<Vector3>();
 
+            //if (NavUtil.Failed(GetNavMeshPoint(start, new oVector3(0.5f, 2, 0.5f), out NavmeshPoint origin)) || origin.point == new oVector3())
+            //    throw new PointNotOnNavMeshException(start);
+
+            //if (NavUtil.Failed(GetNavMeshPoint(end, new oVector3(0.5f, 2, 0.5f), out NavmeshPoint destination)) || destination.point == new oVector3())
+            //    throw new PointNotOnNavMeshException(end);
+
             if (NavUtil.Failed(GetNavMeshPoint(start, new oVector3(0.5f, 2, 0.5f), out NavmeshPoint origin)) || origin.point == new oVector3())
-                throw new PointNotOnNavMeshException(start);
+                throw new StartPositionNotOnNavMeshException(start);
 
             if (NavUtil.Failed(GetNavMeshPoint(end, new oVector3(0.5f, 2, 0.5f), out NavmeshPoint destination)) || destination.point == new oVector3())
-                throw new PointNotOnNavMeshException(end);
+                throw new DestinationNotOnNavMeshException(end);
+
 
             uint[] path = new uint[500];
             int pathCount;

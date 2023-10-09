@@ -130,29 +130,54 @@ namespace AOSharp.Pathfinding
 
         internal void UpdatePath()
         {
-            /*
-            List<Vector3> waypoints = new List<Vector3>();
-            _pathCorridor.MovePosition(DynelManager.LocalPlayer.Position.ToCAIVector3());
-
-            if (_pathCorridor == null || _pathCorridor.Corners.cornerCount == 0)
-            {
-                base.SetWaypoints(new List<Vector3>());
-                return;
-            }
-
-            foreach (oVector3 wp in _pathCorridor.Corners.verts.Take(_pathCorridor.Corners.cornerCount))
-                waypoints.Add(new Vector3(wp.x, wp.y, wp.z));
-            */
-
             try
             {
                 base.SetWaypoints(_pathfinder.GeneratePath(DynelManager.LocalPlayer.Position, Destination));
             }
-            catch(PointNotOnNavMeshException e)
+            catch (StartPositionNotOnNavMeshException e)
+            {
+                Chat.WriteLine(e.Message);
+                // Handle the case where the player's position is not on the navmesh
+                // For example, move the player to the closest point on the navmesh
+            }
+            catch (DestinationNotOnNavMeshException e)
+            {
+                Chat.WriteLine(e.Message);
+                // Handle the case where the destination is not on the navmesh
+                // For example, choose a new destination
+            }
+            catch (Exception e)
             {
                 Chat.WriteLine(e.Message);
                 base.SetWaypoints(new List<Vector3>());
             }
         }
+
+        //internal void UpdatePath()
+        //{
+        //    /*
+        //    List<Vector3> waypoints = new List<Vector3>();
+        //    _pathCorridor.MovePosition(DynelManager.LocalPlayer.Position.ToCAIVector3());
+
+        //    if (_pathCorridor == null || _pathCorridor.Corners.cornerCount == 0)
+        //    {
+        //        base.SetWaypoints(new List<Vector3>());
+        //        return;
+        //    }
+
+        //    foreach (oVector3 wp in _pathCorridor.Corners.verts.Take(_pathCorridor.Corners.cornerCount))
+        //        waypoints.Add(new Vector3(wp.x, wp.y, wp.z));
+        //    */
+
+        //    try
+        //    {
+        //        base.SetWaypoints(_pathfinder.GeneratePath(DynelManager.LocalPlayer.Position, Destination));
+        //    }
+        //    catch(PointNotOnNavMeshException e)
+        //    {
+        //        Chat.WriteLine(e.Message);
+        //        base.SetWaypoints(new List<Vector3>());
+        //    }
+        //}
     }
 }
