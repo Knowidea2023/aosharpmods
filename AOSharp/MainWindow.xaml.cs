@@ -39,6 +39,19 @@ namespace AOSharp
         //private ObservableCollection<Assembly> _assemblies;
         //public ObservableCollection<Assembly> Assemblies { get { return _assemblies; } }
 
+        public bool AnyProfilesInjected
+        {
+            get
+            {
+                ProfilesModel profilesModel = ProfileListBox.DataContext as ProfilesModel;
+                if (profilesModel != null)
+                {
+                    return profilesModel.Profiles.Any(profile => profile.IsInjected);
+                }
+                return false;
+            }
+        }
+
         public Config Config;
 
         private Profile _activeProfile;
@@ -183,6 +196,8 @@ namespace AOSharp
 
             foreach (KeyValuePair<string, PluginModel> plugin in Config.Plugins)
                 plugin.Value.IsEnabled = profile.EnabledPlugins.Contains(plugin.Key);
+
+            OnPropertyChanged("AnyProfilesInjected");
         }
 
         private async void InjectButton_Clicked(object sender, RoutedEventArgs e)
@@ -208,6 +223,9 @@ namespace AOSharp
             {
                 await this.ShowMessageAsync("Error", "Failed to inject.");
             }
+
+            OnPropertyChanged("AnyProfilesInjected");
+
         }
 
         private void EjectButton_Clicked(object sender, RoutedEventArgs e)
@@ -220,6 +238,9 @@ namespace AOSharp
             profile.Eject();
 
             PluginsDataGrid.IsEnabled = true;
+
+            OnPropertyChanged("AnyProfilesInjected");
+
         }
 
         private void EjectAllButton_Clicked(object sender, RoutedEventArgs e)
@@ -230,6 +251,8 @@ namespace AOSharp
                     break;
                 profile.Eject();
             }
+
+            OnPropertyChanged("AnyProfilesInjected");
         }
 
         private void InjectAllButton_Clicked(object sender, RoutedEventArgs e)
@@ -243,6 +266,8 @@ namespace AOSharp
                 if (strings.Any<string>() && profile.Inject(strings))
                     this.PluginsDataGrid.IsEnabled = false;
             }
+
+            OnPropertyChanged("AnyProfilesInjected");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

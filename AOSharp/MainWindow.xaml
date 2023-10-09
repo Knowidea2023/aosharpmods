@@ -69,9 +69,11 @@
                 <Grid Name="InjectAllButtonContainer">
                     <Button Click="EjectAllButton_Clicked" Width="70" HorizontalAlignment="Left" Margin="78,3,0,3"
                   Visibility="{Binding ActiveProfile.IsInjected, Converter={StaticResource BoolToVisibleConverter}}">Eject All</Button>
+
                     <Button Click="InjectAllButton_Clicked" Width="70" HorizontalAlignment="Left" Margin="78,3,0,3"
-                  Content="Inject All"
-                  Visibility="{Binding ActiveProfile.IsInjected, Converter={StaticResource BoolToHiddenConverter}}"/>
+                    Content="Inject All"
+                    Visibility="{Binding AnyProfilesInjected, Converter={StaticResource BoolToHiddenConverter}}"/>
+
                 </Grid>
                 <Button Width="100" 
                         HorizontalAlignment="Right"
