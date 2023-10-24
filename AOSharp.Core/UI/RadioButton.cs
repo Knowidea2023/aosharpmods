@@ -7,7 +7,7 @@ namespace AOSharp.Core.UI
 {
     public class RadioButton : View
     {
-        public bool IsSelected => false;
+        public bool IsSelected => RadioButton_c.GetState(Pointer);
 
         internal RadioButton(IntPtr pointer, bool track = false) : base(pointer, track)
         {

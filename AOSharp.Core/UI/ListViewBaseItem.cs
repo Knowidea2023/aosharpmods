@@ -29,5 +29,10 @@ namespace AOSharp.Core.UI
         {
             ListViewBaseItem_c.AppendChild(_pointer, item.Pointer);
         }
+
+        public void MakeSelectable(bool selectable)
+        {
+            ListViewBaseItem_c.MakeSelectable(_pointer, selectable);
+        }
     }
 }

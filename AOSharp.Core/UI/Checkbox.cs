@@ -35,7 +35,7 @@ namespace AOSharp.Core.UI
             CheckBox_c.SetValue(Pointer, Variant.Create(value).Pointer, value);
         }
 
-        private unsafe bool GetIsChecked()
+        private bool GetIsChecked()
         {
             Variant pOutput = Variant.Create(false);
             CheckBox_c.GetValue(_pointer, pOutput.Pointer);
