@@ -145,12 +145,7 @@ namespace AOSharp.Pathfinding
             {
                 Chat.WriteLine(e.Message);
             }
-
-            foreach (oVector3 wp in _pathCorridor.Corners.verts.Take(_pathCorridor.Corners.cornerCount))
-                waypoints.Add(new Vector3(wp.x, wp.y, wp.z));
-            */
-
-            try
+            catch (DestinationNotOnNavMeshException e)
             {
                 Chat.WriteLine(e.Message);
             }
