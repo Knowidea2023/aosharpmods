@@ -16,6 +16,13 @@ namespace AOSharp.Pathfinding
 {
     public class NavMeshMovementController : MovementController
     {
+        public bool LocalPlayerOnNavmesh => IsPosOnNavmesh(DynelManager.LocalPlayer.Position);
+
+        public bool IsPosOnNavmesh(Vector3 pos)
+        {
+            return !NavUtil.Failed(_pathfinder.GetNavMeshPoint(pos, new oVector3(0.5f, 2, 0.5f), out NavmeshPoint _));
+        }
+
         private const float PathUpdateInterval = 1f;
 
         private Pathfinder _pathfinder = null;
@@ -137,14 +144,15 @@ namespace AOSharp.Pathfinding
             catch (StartPositionNotOnNavMeshException e)
             {
                 Chat.WriteLine(e.Message);
-                // Handle the case where the player's position is not on the navmesh
-                // For example, move the player to the closest point on the navmesh
             }
-            catch (DestinationNotOnNavMeshException e)
+
+            foreach (oVector3 wp in _pathCorridor.Corners.verts.Take(_pathCorridor.Corners.cornerCount))
+                waypoints.Add(new Vector3(wp.x, wp.y, wp.z));
+            */
+
+            try
             {
                 Chat.WriteLine(e.Message);
-                // Handle the case where the destination is not on the navmesh
-                // For example, choose a new destination
             }
             catch (Exception e)
             {

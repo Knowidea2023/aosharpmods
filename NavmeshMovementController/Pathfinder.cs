@@ -27,6 +27,7 @@ namespace AOSharp.Pathfinding
         private NavmeshQueryFilter _filter;
         private PathCorridor _pathCorridor;
 
+        
         public Pathfinder(Navmesh navMesh)
         {
             _navMesh = navMesh;
@@ -53,8 +54,7 @@ namespace AOSharp.Pathfinding
                 throw new StartPositionNotOnNavMeshException(start);
 
             if (NavUtil.Failed(GetNavMeshPoint(end, new oVector3(0.5f, 2, 0.5f), out NavmeshPoint destination)) || destination.point == new oVector3())
-                throw new DestinationNotOnNavMeshException(end);
-
+                throw new PointNotOnNavMeshException(end);
 
             uint[] path = new uint[500];
             int pathCount;

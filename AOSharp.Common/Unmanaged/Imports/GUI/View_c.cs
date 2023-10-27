@@ -68,6 +68,9 @@ namespace AOSharp.Common.Unmanaged.Imports
         [DllImport("GUI.dll", EntryPoint = "?Enable@View@@QAEX_N@Z", CallingConvention = CallingConvention.ThisCall)]
         public static extern void Enable(IntPtr pThis, bool enabled);
 
+        [DllImport("GUI.dll", EntryPoint = "?BeginDrag@View@@QAEXPAVDragObject_c@@ABVPoint@@PAV1@@Z", CallingConvention = CallingConvention.ThisCall)]
+        public static extern void BeginDrag(IntPtr pThis, IntPtr pDragObject, ref Vector2 point, IntPtr pView);
+
         [return: MarshalAs(UnmanagedType.U1)]
         [DllImport("GUI.dll", EntryPoint = "?IsEnabled@View@@QBE_NXZ", CallingConvention = CallingConvention.ThisCall)]
         public static extern bool IsEnabled(IntPtr pThis);
