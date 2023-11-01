@@ -101,8 +101,8 @@ namespace AOSharp.Pathfinding
             try
             {
                 _pathfinder = Pathfinder.Create(navFile);
-            } 
-            catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Chat.WriteLine(e.Message);
             }
@@ -155,6 +155,5 @@ namespace AOSharp.Pathfinding
                 base.SetWaypoints(new List<Vector3>());
             }
         }
-
     }
 }

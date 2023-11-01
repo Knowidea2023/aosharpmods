@@ -57,8 +57,8 @@ namespace AOSharp.Pathfinding
             {
                 List<Vector3> path = Pathfinder.GeneratePath(DynelManager.LocalPlayer.Position, destination);
 
-                for(int i = 0; i < path.Count - 1; i++)
-                    distance += Vector3.Distance(path[i], path[i+1]);
+                for (int i = 0; i < path.Count - 1; i++)
+                    distance += Vector3.Distance(path[i], path[i + 1]);
 
                 return true;
             }
@@ -108,7 +108,7 @@ namespace AOSharp.Pathfinding
 
         public bool LoadNavmesh(string filePath)
         {
-            if(LoadNavmesh(filePath, out Navmesh navmesh))
+            if (LoadNavmesh(filePath, out Navmesh navmesh))
             {
                 Pathfinder = new NewPathfinder(navmesh);
                 return true;
@@ -170,7 +170,7 @@ namespace AOSharp.Pathfinding
             {
                 base.SetWaypoints(_pathfinder.GeneratePath(DynelManager.LocalPlayer.Position, Destination));
             }
-            catch(PointNotOnNavMeshException e)
+            catch (PointNotOnNavMeshException e)
             {
                 Chat.WriteLine(e.Message);
                 base.SetWaypoints(new List<Vector3>());
