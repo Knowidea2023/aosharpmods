@@ -19,6 +19,9 @@ namespace AOSharp.Common.Unmanaged.Imports
         [DllImport("Interfaces.dll", EntryPoint = "?N3Msg_CastNanoSpell@N3InterfaceModule_t@@QBEXABVIdentity_t@@0@Z", CallingConvention = CallingConvention.ThisCall)]
         public unsafe static extern void CastNanoSpell(IntPtr pThis, Identity* nano, Identity target);
 
+        [DllImport("Interfaces.dll", EntryPoint = "?N3Msg_GetPerkProgress@N3InterfaceModule_t@@QBEMI@Z", CallingConvention = CallingConvention.ThisCall)]
+        public static extern float GetPerkProgress(IntPtr pThis, uint perkId);
+
         public unsafe delegate void DCastNanoSpell(IntPtr pThis, Identity* nanoIdentity, Identity targetIdentity);
 
         [return: MarshalAs(UnmanagedType.U1)]
