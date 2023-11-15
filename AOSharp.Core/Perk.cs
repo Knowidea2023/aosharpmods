@@ -46,6 +46,11 @@ namespace AOSharp.Core
         {
             return GetFullPerkMap().FirstOrDefault(p => p.Instance == instance);
         }
+
+        public static List<Perk>GetByInstance(IEnumerable<int> instances)
+        {
+            return GetFullPerkMap().Where(perk => instances.Contains(perk.Instance)).ToList();
+        }
         
         public static Dictionary<PerkLine, int> GetPerkLineLevels(bool includeAllPerkLines = false)
         {

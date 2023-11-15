@@ -28,6 +28,11 @@ namespace AOSharp.Common.Unmanaged.Interfaces
             return retStr.ToString();
         }
 
+        public static float GetPerkProgress(uint perkId)
+        {
+            return N3InterfaceModule_t.GetPerkProgress(N3InterfaceModule_t.GetInstance(), perkId);
+        }
+
         public static List<uint> GetCompletedPersonalResearchGoals()
         {
             StdStructVector vector = new StdStructVector();
