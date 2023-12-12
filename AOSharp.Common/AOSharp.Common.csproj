@@ -50,6 +50,7 @@
     <Compile Include="GameData\ChatMessageEnums.cs" />
     <Compile Include="GameData\PlayfieldId.cs" />
     <Compile Include="GameData\Vector4.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\AnimationEffect.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\AOSignalAction.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\FightModeName.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\ResearchLine.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatHeader.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\AbsorbMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\AttackInfoMessage.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\CorpseFullUpdate.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\DoorStatusUpdateMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\FightModeUpdate.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\AOTransportSignalMessage.cs" />
