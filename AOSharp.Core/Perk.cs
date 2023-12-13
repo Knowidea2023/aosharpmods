@@ -8,6 +8,7 @@ using AOSharp.Common.GameData;
 using AOSharp.Common.Helpers;
 using AOSharp.Common.Unmanaged.Imports;
 using AOSharp.Common.Unmanaged.Interfaces;
+using AOSharp.Core.UI;
 
 namespace AOSharp.Core
 {
@@ -25,6 +26,9 @@ namespace AOSharp.Core
         public string Name { get; private set; }
         public PerkLine PerkLine { get; private set; }
 
+        private static Dictionary<int, string> _perkNameCache = new Dictionary<int, string>();
+        private static Dictionary<int, PerkLine> _perkLineCache = new Dictionary<int, PerkLine>();
+
         private Perk(int instance, int templateInstance, int prerequisitePerkInstance, int perkType,
             int allowedProfessions, int actionInstance, int requiredExperience)
         {
@@ -36,10 +40,8 @@ namespace AOSharp.Core
             ActionInstance = actionInstance;
             RequiredExperience = requiredExperience;
 
-            //Remaining is not returned by GetFullPerkMap
-            Name = N3EngineClientAnarchy.GetName(new Identity(IdentityType.None, TemplateInstance));
-            string sanitizedName = Name.Replace(" ", "").Replace("-", "").Replace("'", "");
-            PerkLine = (PerkLine)Enum.Parse(typeof(PerkLine), sanitizedName);
+            Name = GetName();
+            PerkLine = GetPerkLine();
         }
 
         public static Perk GetByInstance(int instance)
@@ -86,7 +88,30 @@ namespace AOSharp.Core
         {
             return N3EngineClientAnarchy.HasPerk(Instance);
         }
-        
+
+        private string GetName()
+        {
+            if (!_perkNameCache.TryGetValue(Instance, out string name))
+            {
+                name = N3EngineClientAnarchy.GetName(new Identity(IdentityType.None, TemplateInstance));
+                _perkNameCache[Instance] = name;
+            }
+
+            return name;
+        }
+
+        private PerkLine GetPerkLine()
+        {
+            if (!_perkLineCache.TryGetValue(Instance, out PerkLine line))
+            {
+                string sanitizedName = Name.Replace(" ", "").Replace("-", "").Replace("'", "");
+                line = (PerkLine)Enum.Parse(typeof(PerkLine), sanitizedName);
+                _perkLineCache[Instance] = line;
+            }
+
+            return line;
+        }
+
         private static unsafe List<Perk> GetFullPerkMap()
         {
             List<Perk> perks = new List<Perk>();
@@ -110,7 +135,7 @@ namespace AOSharp.Core
 
             string currentName = "NoName";
             int currentLevel = 1;
-            
+
             foreach (Perk perk in perks.OrderBy(perk => perk.Instance))
             {
                 if (perk.Name != currentName)
@@ -120,7 +145,7 @@ namespace AOSharp.Core
                 }
 
                 perk.Level = currentLevel;
-                
+
                 currentLevel++;
             }
 
