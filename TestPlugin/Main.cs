@@ -195,7 +195,7 @@ namespace TestPlugin
 
                 //Inventory.GetContainerItems(new Identity(IdentityType.Bank, Game.ClientInst));
 
-                DynelManager.LocalPlayer.SetStat(Stat.AggDef, 100);
+                //DynelManager.LocalPlayer.SetStat(Stat.AggDef, 100);
 
                 /*
                 List<Item> characterItems = Inventory.Items;
