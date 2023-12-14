@@ -206,7 +206,7 @@ namespace TestPlugin
                     Chat.WriteLine($"{item.Slot} - {item.LowId} - {item.Name} - {item.QualityLevel} - {item.UniqueIdentity}");
                 }
                 */
-                
+
                 /*
                 Chat.WriteLine("Backpacks:");
 
@@ -315,7 +315,7 @@ namespace TestPlugin
                 Chat.RegisterCommand("testui", (string command, string[] param, ChatWindow chatWindow) =>
                 {
                     //Chat.WriteLine(Window.GetActiveWindow().Name);
-                    Chat.WriteLine($"{ItemListViewBase_c.Create(new Rect(999999, 999999, -999999,-999999),0,0,0, Identity.None).ToString("X4")}");
+                    Chat.WriteLine($"{ItemListViewBase_c.Create(new Rect(999999, 999999, -999999, -999999),0,0,0, Identity.None).ToString("X4")}");
 
                 });
 
@@ -615,7 +615,7 @@ namespace TestPlugin
                         Chat.WriteLine($"EmptyMessage");
                     });
 
-                } 
+                }
                 catch (Exception e)
                 {
                     Chat.WriteLine(e.Message);
@@ -634,7 +634,7 @@ namespace TestPlugin
                 Network.N3MessageReceived += Network_N3MessageReceived;
                 //Network.N3MessageSent += Network_N3MessageSent;
                 Network.PacketReceived += Network_PacketReceived;
-               // Network.PacketSent += Network_PacketSent;
+                // Network.PacketSent += Network_PacketSent;
                 Network.ChatMessageReceived += Network_ChatMessageReceived;
                 Team.TeamRequest += Team_TeamRequest;
                 Team.MemberLeft += Team_MemberLeft;
@@ -703,9 +703,9 @@ namespace TestPlugin
             //Chat.WriteLine($"{n3Msg.N3MessageType}");
         }
 
-         private void Network_N3MessageReceived(object s, SmokeLounge.AOtomation.Messaging.Messages.N3Message n3Msg)
+        private void Network_N3MessageReceived(object s, SmokeLounge.AOtomation.Messaging.Messages.N3Message n3Msg)
         {
-           // Chat.WriteLine($"{n3Msg.N3MessageType} {n3Msg.Identity}");
+            // Chat.WriteLine($"{n3Msg.N3MessageType} {n3Msg.Identity}");
 
             /*
             if(n3Msg.N3MessageType == SmokeLounge.AOtomation.Messaging.Messages.N3MessageType.PlayfieldAnarchyF)
@@ -856,7 +856,7 @@ namespace TestPlugin
             }
 
             if(DynelManager.LocalPlayer.FightingTarget != null)
-            {              
+            {
                 if (SpecialAttack.FastAttack.IsInRange(DynelManager.LocalPlayer.FightingTarget) && SpecialAttack.FastAttack.IsAvailable())
                     SpecialAttack.FastAttack.UseOn(DynelManager.LocalPlayer.FightingTarget);
             }
