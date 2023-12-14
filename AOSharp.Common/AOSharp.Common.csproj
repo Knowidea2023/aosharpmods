@@ -401,6 +401,7 @@
     <Compile Include="Unmanaged\Imports\Interfaces\GuiResourceManager_t.cs" />
     <Compile Include="Unmanaged\Imports\Interfaces\Client_t.cs" />
     <Compile Include="Unmanaged\Imports\Interfaces\N3InterfaceModule_t.cs" />
+    <Compile Include="Unmanaged\Imports\LDB\RemoteFormat.cs" />
     <Compile Include="Unmanaged\Imports\LDB\LDBFace.cs" />
     <Compile Include="Unmanaged\Imports\MessageProtocol\MessageProtocol.cs" />
     <Compile Include="Unmanaged\Imports\N3\N3DatabaseHandler.cs" />
