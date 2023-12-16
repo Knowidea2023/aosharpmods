@@ -10,7 +10,7 @@ using AOSharp.Common.Unmanaged.DataTypes;
 
 namespace AOSharp.Core.UI
 {
-    public class ComboBox : View
+    public class ComboBox : TextInputView
     {
         public EventHandler<ButtonBase> Clicked;
 
@@ -21,6 +21,11 @@ namespace AOSharp.Core.UI
         public void AppendItem(Variant value, string label)
         {
             ComboBox_c.AppendItem(Pointer, value.Pointer, StdString.Create(label).Pointer);
+        }
+
+        public void Clear()
+        {
+            ComboBox_c.Clear(Pointer);
         }
 
         public override void Dispose()
