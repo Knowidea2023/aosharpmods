@@ -171,16 +171,22 @@ namespace AOSharp.Core.UI
 
         public Vector2 GetMousePos()
         {
-            Vector2 preferredSize = new Vector2();
-            Window_c.GetMousePos(Pointer, ref preferredSize);
-            return preferredSize;
+            Vector2 mousePos = new Vector2();
+            Window_c.GetMousePos(Pointer, ref mousePos);
+            return mousePos;
         }
 
-        public Vector2 GetScreenSize()
+        public static Vector2 GetScreenSize()
         {
-            Vector2 preferredSize = new Vector2();
-            Window_c.GetScreenSize(Pointer, ref preferredSize);
-            return preferredSize;
+            IntPtr instance = WindowController_c.GetInstance();
+
+            if (instance == null)
+                return new Vector2(0, 0);
+
+            Vector2 screenSize = new Vector2();
+
+            Window_c.GetScreenSize(instance, ref screenSize);
+            return screenSize;
         }
 
         public void SetTitle(string name)
