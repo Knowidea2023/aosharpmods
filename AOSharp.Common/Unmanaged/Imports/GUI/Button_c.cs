@@ -26,5 +26,8 @@ namespace AOSharp.Common.Unmanaged.Imports
 
         [DllImport("GUI.dll", EntryPoint = "?SetLabelColor@Button_c@@QAEXI@Z", CallingConvention = CallingConvention.ThisCall)]
         public static extern void SetLabelColor(IntPtr pThis, uint unk);
+
+        [DllImport("GUI.dll", EntryPoint = "?GetBorderView@Button_c@@QAEPAVBorderView_c@@W4StateID_e@1@@Z", CallingConvention = CallingConvention.ThisCall)]
+        public static extern IntPtr GetBorderView(IntPtr pThis, ButtonState buttonState);
     }
 }
