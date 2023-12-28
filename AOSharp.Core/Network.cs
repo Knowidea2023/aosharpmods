@@ -38,6 +38,7 @@ namespace AOSharp.Core
             { N3MessageType.QuestAlternative, OnQuestAlternative },
             { N3MessageType.AOTransportSignal, OnAoTransportSignal },
             { N3MessageType.InfromPlayer, OnInfromPlayer },
+            { N3MessageType.FormatFeedback, OnFormatFeedback},
             //{ N3MessageType.Trade, OnTrade }
 
         };
@@ -218,6 +219,11 @@ namespace AOSharp.Core
 
             if (infromPlayerMessage.UnkIdentity.Type == IdentityType.Battlestation)
                 Battlestation.OnBattlestationInvite(infromPlayerMessage.UnkIdentity);
+        }
+
+        private static void OnFormatFeedback(N3Message n3Msg)
+        {
+            Chat.OnFormatFeedback((FormatFeedbackMessage)n3Msg);
         }
 
         private static void OnQuestAlternative(N3Message n3Msg)
