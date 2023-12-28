@@ -5,12 +5,21 @@ using AOSharp.Common.GameData;
 using AOSharp.Common.Helpers;
 using AOSharp.Common.Unmanaged.DataTypes;
 using AOSharp.Common.Unmanaged.Imports;
+using static SmokeLounge.AOtomation.Messaging.Messages.N3Messages.FullCharacterMessage;
 
 namespace AOSharp.Common.Unmanaged.Interfaces
 {
     public class N3EngineClientAnarchy
     {
-        
+        public static string GetDesc(Identity identity)
+        {
+            IntPtr instance = N3InterfaceModule_t.GetInstance();
+
+            if (instance == IntPtr.Zero)
+                return string.Empty;
+
+            return Marshal.PtrToStringAnsi(N3InterfaceModule_t.GetDesc(instance, ref identity, 0));
+        }
 
         public static string GetPFName(int id)
         {

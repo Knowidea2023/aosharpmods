@@ -72,18 +72,18 @@ namespace AOSharp.Core.UI
             MultiListView_c.SetGridLabelsOnTop(_pointer, value);
         }
 
-        public void SetViewCellCounts(Vector2 unk1, Vector2 unk2)
+        public void SetViewCellCounts(IPoint unk1, IPoint unk2)
         {
             MultiListView_c.SetViewCellCounts(_pointer, ref unk1, ref unk2);
         }
 
-        public bool AddItem(Vector2 slot, MultiListViewItem listViewItem, bool unk)
+        public bool AddItem(IPoint slot, MultiListViewItem listViewItem, bool unk)
         {
             Items.Add(listViewItem);
             return MultiListView_c.AddItem(_pointer, ref slot, listViewItem.Pointer, unk);
         }
 
-        public MultiListViewItem AddItem(Vector2 slot, Variant value)
+        public MultiListViewItem AddItem(IPoint slot, Variant value)
         {
             MultiListViewItem newItem = MultiListViewItem.Create(value);
             MultiListView_c.AddItem(_pointer, ref slot, newItem.Pointer, true);
@@ -102,9 +102,9 @@ namespace AOSharp.Core.UI
             MultiListView_c.InvalidateItem(_pointer, listViewItem.Pointer);
         }
 
-        public Vector2 GetFirstFreePos()
+        public IPoint GetFirstFreePos()
         {
-            Vector2 pos = Vector2.Zero;
+            IPoint pos = IPoint.Zero;
             MultiListView_c.GetFirstFreePos(_pointer, ref pos);
             return pos;
         }
@@ -120,6 +120,16 @@ namespace AOSharp.Core.UI
             listViewItem = (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { pSelectedItem }, null);
 
             return true;
+        }
+
+        public View GetScrolledView()
+        {
+            IntPtr ptr = MultiListView_c.GetScrolledView(Pointer);
+
+            if (ptr == IntPtr.Zero)
+                return null;
+
+            return new View(ptr, false);
         }
 
         internal void OnItemSelectionStateChanged(IntPtr pItem, bool selected)

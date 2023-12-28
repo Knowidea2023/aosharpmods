@@ -24,7 +24,17 @@ namespace AOSharp.Core.UI
         {
             Button_c.SetLabel(Pointer, StdString.Create(text).Pointer);
         }
-        
+
+        public View GetBorderView(ButtonState state)
+        {
+            IntPtr ptr = Button_c.GetBorderView(Pointer, state);
+
+            if (ptr == IntPtr.Zero)
+                return null;
+
+            return new View(ptr, false);
+        }
+
         private string GetLabel()
         {
             IntPtr pStr = Button_c.GetLabel(Pointer);

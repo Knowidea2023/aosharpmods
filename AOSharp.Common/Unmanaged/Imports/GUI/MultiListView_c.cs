@@ -17,9 +17,12 @@ namespace AOSharp.Common.Unmanaged.Imports
         [DllImport("GUI.dll", EntryPoint = "?AddColumn@MultiListView_c@@QAEXHABVString@@MI@Z", CallingConvention = CallingConvention.ThisCall)]
         public static extern void AddColumn(IntPtr pThis, int idx, IntPtr pStr, float width, int unk);
 
+        [DllImport("GUI.dll", EntryPoint = "?GetScrolledView@MultiListView_c@@QAEPAVView@@XZ", CallingConvention = CallingConvention.ThisCall)]
+        public static extern IntPtr GetScrolledView(IntPtr pThis);
+
         [return: MarshalAs(UnmanagedType.U1)]
         [DllImport("GUI.dll", EntryPoint = "?AddItem@MultiListView_c@@QAE_NABVIPoint@@PAVMultiListViewItem_c@@_N@Z", CallingConvention = CallingConvention.ThisCall)]
-        public static extern bool AddItem(IntPtr pThis, ref Vector2 slot, IntPtr listViewItem, bool unk);
+        public static extern bool AddItem(IntPtr pThis, ref IPoint slot, IntPtr listViewItem, bool unk);
 
         [DllImport("GUI.dll", CallingConvention = CallingConvention.ThisCall, EntryPoint = "?SetGridIconSize@MultiListView_c@@QAEXW4IconSize_e@1@@Z")]
         public static extern void SetGridIconSize(IntPtr pThis, int num);
@@ -37,10 +40,10 @@ namespace AOSharp.Common.Unmanaged.Imports
         public static extern void SetGridLabelsOnTop(IntPtr pThis, bool spacing);
 
         [DllImport("GUI.dll", EntryPoint = "?SetViewCellCounts@MultiListView_c@@QAEXABVIPoint@@0@Z", CallingConvention = CallingConvention.ThisCall)]
-        public static extern void SetViewCellCounts(IntPtr pThis, ref Vector2 unk1, ref Vector2 unk2);
+        public static extern void SetViewCellCounts(IntPtr pThis, ref IPoint unk1, ref IPoint unk2);
 
         [DllImport("GUI.dll", EntryPoint = "?GetFirstFreePos@MultiListView_c@@QBE?AVIPoint@@XZ", CallingConvention = CallingConvention.ThisCall)]
-        public static extern IntPtr GetFirstFreePos(IntPtr pThis, ref Vector2 pos);
+        public static extern IntPtr GetFirstFreePos(IntPtr pThis, ref IPoint pos);
 
         [DllImport("GUI.dll", EntryPoint = "?GetSelectedItem@MultiListView_c@@QBEPAVMultiListViewItem_c@@XZ", CallingConvention = CallingConvention.ThisCall)]
         public static extern IntPtr GetSelectedItem(IntPtr pThis);
