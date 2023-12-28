@@ -6,6 +6,7 @@ using AOSharp.Common.GameData;
 using System.Linq;
 using SmokeLounge.AOtomation.Messaging.Messages;
 using AOSharp.Common.SharedEventArgs;
+using SmokeLounge.AOtomation.Messaging.Messages.N3Messages;
 
 namespace AOSharp.Core.UI
 {
@@ -14,6 +15,8 @@ namespace AOSharp.Core.UI
         private static Dictionary<string, Action<string, string[], ChatWindow>> _customCommands = new Dictionary<string, Action<string, string[], ChatWindow>>();
         private static ConcurrentQueue<(string, ChatColor)> _messageQueue = new ConcurrentQueue<(string, ChatColor)>();
         public static EventHandler<GroupMessageEventArgs> GroupMessageReceived;
+        public static Action<string> FeedbackReceived;
+        
         public static void RegisterCommand(string command, Action<string, string[], ChatWindow> callback)
         {
             if(!_customCommands.ContainsKey(command))
@@ -47,6 +50,11 @@ namespace AOSharp.Core.UI
         private static void OnGroupMessage(GroupMessageEventArgs args)
         {
             GroupMessageReceived?.Invoke(null, args);
+        }
+
+        internal static void OnFormatFeedback(FormatFeedbackMessage feedbackMsg)
+        {
+            FeedbackReceived?.Invoke(feedbackMsg.FormattedMessage);
         }
 
         public static void WriteLine(object obj, ChatColor color = ChatColor.Gold)
