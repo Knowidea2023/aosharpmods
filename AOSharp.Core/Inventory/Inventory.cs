@@ -97,7 +97,7 @@ namespace AOSharp.Core.Inventory
                         slotType = IdentityType.Inventory;
 
                         //Correct the slot type to match the equipment pages
-                        if (i <= (int)EquipSlot.Weap_Deck6)
+                        if (i <= (int)EquipSlot.Weap_Hud2)
                             slotType = IdentityType.WeaponPage;
                         else if (i <= (int)EquipSlot.Cloth_LeftFinger)
                             slotType = IdentityType.ArmorPage;
