@@ -133,6 +133,7 @@ namespace AOSharp.Common.GameData
         ElderHall = 6015,
         ThreeCratersWest = 6101,
         ThreeCratersEast = 6102,
+        Arete = 6553,
         ArbitersHall = 7001,
         ThePyramidofHome = 8020,
         TheGate = 8030,
