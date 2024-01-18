@@ -30,6 +30,7 @@ namespace AOSharp.Core
 
         private static Dictionary<N3MessageType, Action<N3Message>> n3MsgCallbacks = new Dictionary<N3MessageType, Action<N3Message>>
         {
+            { N3MessageType.KnubotOpenChatWindow, NpcDialog.OnKnubotOpenChatWindow },
             { N3MessageType.KnubotAnswerList, NpcDialog.OnKnubotAnswerList },
             { N3MessageType.CharacterAction, OnCharacterAction },
             { N3MessageType.TemplateAction, OnTemplateAction },
