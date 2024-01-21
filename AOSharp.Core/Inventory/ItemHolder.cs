@@ -19,6 +19,11 @@ namespace AOSharp.Core.Inventory
             return (item = Items.FirstOrDefault(x => x.Slot == slot)) != null;
         }
 
+        public bool Find(string name, out Item item)
+        {
+            return (item = Items.FirstOrDefault(x => x.Name == name)) != null;
+        }
+
         public bool Find(int id, out Item item)
         {
             return (item = Items.FirstOrDefault(x => x.Id == id || x.HighId == id)) != null;
@@ -27,6 +32,11 @@ namespace AOSharp.Core.Inventory
         public bool Find(int lowId, int highId, out Item item)
         {
             return (item = Items.FirstOrDefault(x => x.Id == lowId && x.HighId == highId)) != null;
+        }
+
+        public bool FindAtQl (int id, int ql, out Item item)
+        {
+            return (item = Items.FirstOrDefault(x => (x.Id == id || x.HighId == id) && x.QualityLevel == ql)) != null;
         }
 
         public bool Find(int lowId, int highId, int ql, out Item item)

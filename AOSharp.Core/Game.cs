@@ -139,7 +139,7 @@ namespace AOSharp.Core
 
             Coroutine.Update();
 
-            IPCChannel.Update();
+            IPCChannel.UpdateInternal();
 
             UIController.UpdateViews();
 

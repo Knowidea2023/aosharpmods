@@ -12,6 +12,7 @@ namespace AOSharp.Core
 {
     public static class NpcDialog
     {
+        public static Action<Identity> ChatWindowOpened;
         public static EventHandler<Dictionary<int, string>> AnswerListChanged;
 
         public static void Open(Dynel target)
@@ -49,7 +50,7 @@ namespace AOSharp.Core
                 Amount = amount
             });
         }
-        public static void OpenTrade(Identity target, int slots)
+        public static void OpenTrade(Identity target, int slots = 0)
         {
             Network.Send(new KnuBotStartTradeMessage()
             {
@@ -71,6 +72,13 @@ namespace AOSharp.Core
             }
 
             AnswerListChanged?.Invoke(knubotMsg.Target, options);
+        }
+
+        internal static void OnKnubotOpenChatWindow(N3Message n3Msg)
+        {
+            KnuBotOpenChatWindowMessage knubotMsg = (KnuBotOpenChatWindowMessage)n3Msg;
+
+            ChatWindowOpened?.Invoke(knubotMsg.Target);
         }
     }
 }

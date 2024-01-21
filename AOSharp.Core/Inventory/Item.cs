@@ -20,6 +20,7 @@ namespace AOSharp.Core.Inventory
         public readonly Identity UniqueIdentity;
         public readonly Identity Slot;
         public readonly int Charges;
+        public bool IsEquipped => Slot.Type == IdentityType.WeaponPage || Slot.Type == IdentityType.ArmorPage || Slot.Type == IdentityType.ImplantPage || Slot.Type == IdentityType.SocialPage;
         public List<EquipSlot> EquipSlots => GetEquipSlots();
 
         public static EventHandler<ItemUsedEventArgs> ItemUsed;
@@ -80,6 +81,11 @@ namespace AOSharp.Core.Inventory
         public void MoveToInventory(int targetSlot = 0x6F)
         {
             MoveItemToInventory(Slot, targetSlot);
+        }
+
+        public void MoveToBank()
+        {
+            MoveToContainer(new Identity(IdentityType.Bank, Game.ClientInst));
         }
 
         public void MoveToContainer(Container target)

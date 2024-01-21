@@ -70,6 +70,7 @@
     <Compile Include="Dynel\Camera.cs" />
     <Compile Include="Dynel\MissionTerminal.cs" />
     <Compile Include="Inventory\Bank.cs" />
+    <Compile Include="IPC\IPCChannel.cs" />
     <Compile Include="Misc\Interval.cs" />
     <Compile Include="ReqChecker.cs" />
     <Compile Include="Dynel\Door.cs" />
@@ -80,8 +81,6 @@
     <Compile Include="Inventory\Inventory.cs" />
     <Compile Include="Inventory\Container.cs" />
     <Compile Include="Inventory\Item.cs" />
-    <Compile Include="IPC\IPCChannel.cs" />
-    <Compile Include="IPC\IPCMessage.cs" />
     <Compile Include="MiscClientEvents.cs" />
     <Compile Include="Misc\Extensions.cs" />
     <Compile Include="Movement\MovementController.cs" />

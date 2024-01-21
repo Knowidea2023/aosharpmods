@@ -21,6 +21,5 @@ namespace AOSharp.Core.Inventory
         {
             return (backpack = Backpacks.FirstOrDefault(x => x.Name == name)) != null;
         }
-
     }
 }

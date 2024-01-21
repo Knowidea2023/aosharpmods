@@ -21,28 +21,38 @@ namespace AOSharp.Core.Inventory
 
         public static EventHandler<Container> ContainerOpened;
 
+        public static bool Find(Identity identity, out Backpack backpack)
+        {
+            return (backpack = Backpacks.FirstOrDefault(x => x.Identity == identity)) != null;
+        }
+
         public static bool Find(Identity slot, out Item item)
         {
             return (item = Items.FirstOrDefault(x => x.Slot == slot)) != null;
         }
-        public static bool Find(string name, out Item item)
+        public static bool Find(string name, out Item item, bool includeEquipped = true)
         {
-            return (item = Items.FirstOrDefault(x => x.Name == name)) != null;
+            return (item = FindAll(name, includeEquipped).FirstOrDefault()) != null;
         }
 
-        public static bool Find(int id, out Item item)
+        public static bool Find(int id, out Item item, bool includeEquipped = true)
         {
-            return (item = Items.FirstOrDefault(x => x.Id == id || x.HighId == id)) != null;
+            return (item = FindAll(id, includeEquipped).FirstOrDefault()) != null;
         }
 
-        public static bool Find(int lowId, int highId, out Item item)
+        public static bool Find(int lowId, int highId, out Item item, bool includeEquipped = true)
         {
-            return (item = Items.FirstOrDefault(x => x.Id == lowId && x.HighId == highId)) != null;
+            return (item = FindAll(lowId, highId, includeEquipped).FirstOrDefault()) != null;
         }
 
-        public static List<Item> FindAll(int id)
+        public static bool FindAtQl(int id, int ql, out Item item, bool includeEquipped = true)
         {
-            return Items.Where(x => x.Id == id || x.HighId == id).ToList();
+            return (item = FindAll(id, includeEquipped).FirstOrDefault(x => x.QualityLevel == ql)) != null;
+        }
+
+        public static List<Item> FindAll(int id, bool includeEquipped = true)
+        {
+            return Items.Where(x => (x.Id == id || x.HighId == id) && (includeEquipped || !x.IsEquipped)).ToList();
         }
 
         public static List<Item> FindAll(IEnumerable<int> ids)
@@ -50,14 +60,19 @@ namespace AOSharp.Core.Inventory
             return Items.Where(x => ids.Contains(x.Id)).ToList();
         }
 
-        public static List<Item> FindAll(int lowId, int highId)
+        public static List<Item> FindAll(int lowId, int highId, bool includeEquipped = true)
         {
-            return Items.Where(x => x.Id == lowId && x.HighId == highId).ToList();
+            return Items.Where(x => x.Id == lowId && x.HighId == highId && (includeEquipped || !x.IsEquipped)).ToList();
         }
 
-        public static List<Item> FindAll(string name)
+        public static List<Item> FindAll(string name, bool includeEquipped = true)
         {
-            return Items.Where(x => x.Name == name).ToList();
+            return Items.Where(x => x.Name == name && (includeEquipped || !x.IsEquipped)).ToList();
+        }
+
+        public static bool FindContainer(Identity identity, out Backpack backpack)
+        {
+            return (backpack = Backpacks.FirstOrDefault(x => x.Identity == identity)) != null;
         }
 
         public static bool FindContainer(string name, out Backpack backpack)
@@ -97,7 +112,7 @@ namespace AOSharp.Core.Inventory
                         slotType = IdentityType.Inventory;
 
                         //Correct the slot type to match the equipment pages
-                        if (i <= (int)EquipSlot.Weap_Deck6)
+                        if (i <= (int)EquipSlot.Weap_Hud2)
                             slotType = IdentityType.WeaponPage;
                         else if (i <= (int)EquipSlot.Cloth_LeftFinger)
                             slotType = IdentityType.ArmorPage;
