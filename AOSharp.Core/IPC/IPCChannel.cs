@@ -13,6 +13,7 @@ using TypeInfo = SmokeLounge.AOtomation.Messaging.Serialization.TypeInfo;
 using AOSharp.Common.Unmanaged.Imports;
 using AOSharp.Core.UI;
 using System.Reflection;
+using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
 namespace AOSharp.Core.IPC
 {
@@ -142,8 +143,11 @@ namespace AOSharp.Core.IPC
             using (MemoryStream stream = new MemoryStream())
             {
                 ISerializer serializer = _serializerResolver.GetSerializer(msg.GetType());
+
                 if (serializer == null)
                     return;
+
+                int opcode = ((AoContractAttribute)msg.GetType().GetCustomAttributes(typeof(AoContractAttribute))).Identifier;
 
                 SerializationContext serializationContext = new SerializationContext(_serializerResolver);
                 StreamWriter writer = new StreamWriter(stream) { Position = 0 };
@@ -151,7 +155,7 @@ namespace AOSharp.Core.IPC
                 writer.WriteInt16(0);
                 writer.WriteByte(_channelId);
                 writer.WriteInt32(Game.ClientInst);
-                writer.WriteInt16(msg.Opcode);
+                writer.WriteInt16((short)opcode);
                 serializer.Serialize(writer, serializationContext, msg);
                 long length = writer.Position;
                 writer.Position = 2;
