@@ -51,6 +51,7 @@
     <Compile Include="GameData\ChatMessageEnums.cs" />
     <Compile Include="GameData\PlayfieldId.cs" />
     <Compile Include="GameData\Vector4.cs" />
+    <Compile Include="IPC\IPCChannel.cs" />
     <Compile Include="IPC\IPCMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\AnimationEffect.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\AOSignalAction.cs" />
