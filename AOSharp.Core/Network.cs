@@ -40,7 +40,7 @@ namespace AOSharp.Core
             { N3MessageType.AOTransportSignal, OnAoTransportSignal },
             { N3MessageType.InfromPlayer, OnInfromPlayer },
             { N3MessageType.FormatFeedback, OnFormatFeedback},
-            //{ N3MessageType.Trade, OnTrade }
+            { N3MessageType.Trade, Trade.OnTradeMessage }
 
         };
 

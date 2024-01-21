@@ -11,8 +11,21 @@ using SmokeLounge.AOtomation.Messaging.Messages.N3Messages;
 
 namespace AOSharp.Core
 {
+    public enum TradeState
+    {
+        None,
+        Opened,
+        Accept,
+        Confirm,
+        Declined,
+        Finished
+    }
+
     public static class Trade
     {
+        public static Identity? TradeTarget;
+        public static Action<Identity, TradeState> TradeStateChanged;
+
         public static void Open(Identity trader)
         {
             Network.Send(new TradeMessage
@@ -22,6 +35,16 @@ namespace AOSharp.Core
                 Param1 = (int)trader.Type,
                 Param2 = trader.Instance,
             });
+        }
+
+        public static void AddItem(Identity slot)
+        {
+            AddItem(DynelManager.LocalPlayer.Identity, slot);
+        }
+
+        public static void AddItem(Item item)
+        {
+            AddItem(DynelManager.LocalPlayer.Identity, item.Slot);
         }
 
         public static void AddItem(Identity trade, Identity slot)
@@ -47,6 +70,12 @@ namespace AOSharp.Core
             });
         }
 
+        public static void Accept()
+        {
+            if (TradeTarget.HasValue)
+                Accept(TradeTarget.Value);
+        }
+
         public static void Accept(Identity trade)
         {
             Network.Send(new TradeMessage
@@ -56,6 +85,12 @@ namespace AOSharp.Core
                 Param1 = (int)trade.Type,
                 Param2 = trade.Instance,
             });
+        }
+
+        public static void Confirm()
+        {
+            if (TradeTarget.HasValue)
+                Confirm(TradeTarget.Value);
         }
 
         public static void Confirm(Identity trade)
@@ -79,25 +114,38 @@ namespace AOSharp.Core
             });
         }
 
-        //To be continued.  Maybe.. one day..
-        /*
-        internal static void OnTradeMessage(TradeMessage tradeMsg)
+        internal static void OnTradeMessage(N3Message n3Msg)
         {
+            TradeMessage tradeMsg = (TradeMessage)n3Msg;
+
             switch(tradeMsg.Action)
             {
                 case TradeAction.Open:
-                    ActiveTrade = new Trade(new Identity((IdentityType)tradeMsg.Param1, tradeMsg.Param2));
-                    TradeStateChanged?.Invoke(ActiveTrade);
+                    Identity target = new Identity((IdentityType)tradeMsg.Param1, tradeMsg.Param2);
+
+                    if (target == DynelManager.LocalPlayer.Identity)
+                        return;
+
+                    TradeTarget = target;
+                    TradeStateChanged?.Invoke(TradeTarget.Value, TradeState.Opened);
                     break;
                 case TradeAction.Confirm:
+                    TradeStateChanged?.Invoke(TradeTarget.Value, TradeState.Confirm);
+                    break;
                 case TradeAction.Accept:
-                    if (ActiveTrade != null)
-                    {
-                        ActiveTrade.State = (TradeState)tradeMsg.Action;
-                        TradeStateChanged?.Invoke(ActiveTrade);
-                    }
+                    TradeStateChanged?.Invoke(TradeTarget.Value, TradeState.Accept);
+                    break;
+                case TradeAction.Complete:
+                    if (tradeMsg.Param1 == 50000 && tradeMsg.Param2 == Game.ClientInst)
+                        return;
+
+                    TradeStateChanged?.Invoke(Identity.None, TradeState.Finished);
+                    TradeTarget = null;
+                    break;
+                case TradeAction.Decline:
+                    TradeStateChanged?.Invoke(TradeTarget.Value, TradeState.Declined);
                     break;
             }
-        }*/
+        }
     }
 }
