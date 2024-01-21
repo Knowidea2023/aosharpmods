@@ -2,7 +2,7 @@
 
 namespace AOSharp.Core.IPC
 {
-    internal class IPCChannel<TOpcode> : IPCChannel where TOpcode : Enum, IConvertible
+    public class IPCChannel<TOpcode> : IPCChannel where TOpcode : Enum, IConvertible
     {
         public IPCChannel(byte channelId) : base(channelId)
         {
