@@ -21,8 +21,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
     [AoContract((int)N3MessageType.OrgServer)]
-    [AoKnownType(26, IdentifierType.Byte)]
-    public abstract class OrgServerMessage : N3Message
+    public class OrgServerMessage : N3Message
     {
         #region Constructors and Destructors
 
@@ -35,6 +34,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 
         #region AoMember Properties
 
+        [AoFlags("orgmessagetype")]
         [AoMember(0)]
         public OrgServerMessageType OrgServerMessageType { get; set; }
 
@@ -47,9 +47,53 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         [AoMember(3)]
         public Identity Organization { get; set; }
 
-        [AoMember(4, SerializeSize = ArraySizeType.Int16)]
-        public string OrganizationName { get; set; }
+        [AoUsesFlags("orgmessagetype", typeof(OrgInvite), FlagsCriteria.EqualsToAny, new[] { (int)OrgServerMessageType.OrgInvite })]
+        [AoUsesFlags("orgmessagetype", typeof(OrganizationInfo), FlagsCriteria.EqualsToAny, new[] { (int)OrgServerMessageType.OrgInfo })]
+        [AoUsesFlags("orgmessagetype", typeof(ContractsInfo), FlagsCriteria.EqualsToAny, new[] { (int)OrgServerMessageType.OrgContract })]
+        [AoMember(4)]
+        public IOrgServerMessage IOrgServerMessage { get; set; }
 
         #endregion
     }
+
+    public class OrgInvite : IOrgServerMessage
+    {
+        [AoMember(0)]
+        public int Unknown3 { get; set; }
+    }
+
+    public class ContractsInfo : IOrgServerMessage
+    {
+        [AoMember(0, SerializeSize = ArraySizeType.X3F1)]
+        public OrgContractSlot[] Contracts { get; set; }
+    }
+
+    public class OrganizationInfo : IOrgServerMessage
+    {
+        [AoMember(0, SerializeSize = ArraySizeType.Int16)]
+        public string OrganizationName { get; set; }
+
+        [AoMember(1, SerializeSize = ArraySizeType.Int16)]
+        public string Description { get; set; }
+
+        [AoMember(2, SerializeSize = ArraySizeType.Int16)]
+        public string Objective { get; set; }
+
+        [AoMember(3, SerializeSize = ArraySizeType.Int16)]
+        public string History { get; set; }
+
+        [AoMember(4, SerializeSize = ArraySizeType.Int16)]
+        public string GoverningForm { get; set; }
+
+        [AoMember(5, SerializeSize = ArraySizeType.Int16)]
+        public string LeaderName { get; set; }
+
+        [AoMember(6, SerializeSize = ArraySizeType.Int16)]
+        public string Rank { get; set; }
+
+        [AoMember(7, SerializeSize = ArraySizeType.X3F1)]
+        public object[] Unknown3 { get; set; }
+    }
+
+    public interface IOrgServerMessage { }
 }
