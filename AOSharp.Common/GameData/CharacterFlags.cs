@@ -52,4 +52,20 @@ namespace AOSharp.Common.GameData
         SocialTabEnabled = 0x20,
         SocialTabOnly = 0x40
     }
+
+    [Flags]
+    public enum ExpansionFlags : int
+    {
+        NotumWars = 1 << 0,
+        ShadowLands = 1 << 1,
+        ShadowLandsPreOrder = 1 << 2,
+        AlienInvasion = 1 << 3,
+        AlienInvasionPreOrder = 1 << 4,
+        LostEden = 1 << 5,
+        LostEdenPreOrder = 1 << 6,
+        LegacyOfTheXan = 1 << 7,
+        LegacyOfTheXanPreOrder = 1 << 8,
+        Mail = 1 << 9,
+        PMVObsidianEdition = 1 << 10
+    }
 }
