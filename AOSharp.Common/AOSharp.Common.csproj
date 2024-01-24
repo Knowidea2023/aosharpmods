@@ -53,9 +53,12 @@
     <Compile Include="GameData\Vector4.cs" />
     <Compile Include="IPC\IPCChannel.cs" />
     <Compile Include="IPC\IPCMessage.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\AdvantagesItem.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\AnimationEffect.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\AOSignalAction.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\FightModeName.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\InspectSlotInfo.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\OrgContractSlot.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\ResearchLine.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\CharacterInfo.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\GameData\QuestIdentity.cs" />
@@ -145,6 +148,7 @@
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\VicinityMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessages\PrivateMsgMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatHeader.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\CityAdvantagesMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\AbsorbMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\AttackInfoMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\CorpseFullUpdate.cs" />
@@ -152,6 +156,7 @@
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\FightModeUpdate.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\AOTransportSignalMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\InfromPlayerMessage.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\InspectMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\ReloadMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\ResearchUpdateMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\QuestFullUpdateMessage.cs" />
@@ -225,13 +230,8 @@
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\KnuBotTradeMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\LookAtMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\N3TeleportMessage.cs" />
-    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\OrgClientCommand.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\OrgClientMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\OrgInfoPacketMessage.cs" />
-    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\OrgServerMessage.cs" />
-    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\OrgServerMessages\OrgInfoMessage.cs" />
-    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\OrgServerMessages\OrgInviteMessage.cs" />
-    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\OrgServerMessageType.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\PlayfieldAnarchyFMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\SetStatMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\InventoryUpdateMessage.cs" />
@@ -255,6 +255,9 @@
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3MessageType.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\OperatorMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\ChatMessageType.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\OrgClientCommand.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\OrgServerMessage.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\N3Messages\OrgServerMessageType.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\PacketType.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\PingMessage.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Messages\SystemMessage.cs" />
@@ -309,6 +312,7 @@
     <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\Serializers\ArraySizeSerializer.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\Serializers\ByteSerializer.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\Serializers\BoolSerializer.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\Serializers\Custom\InspectSerializer.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\Serializers\Custom\PlayfieldTowerUpdateSerializer.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\Serializers\Custom\GenericCmdSerializer.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\Serializers\Custom\GroupMessageSerializer.cs" />

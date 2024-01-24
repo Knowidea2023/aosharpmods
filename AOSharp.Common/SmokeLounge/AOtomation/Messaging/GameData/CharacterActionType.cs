@@ -54,6 +54,7 @@
         PerkAvailable = 0xCE,
         PerkUnavailable = 0xCF,
         JoinBattlestationQueue = 0xFD,
-        LeaveBattlestationQueue = 0xFF
+        LeaveBattlestationQueue = 0xFF,
+        Inspect = 0x105,
     }
 }

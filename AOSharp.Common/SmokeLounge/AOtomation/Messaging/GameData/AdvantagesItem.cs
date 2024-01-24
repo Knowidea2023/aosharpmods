@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="OrgInviteMessage.cs" company="SmokeLounge">
+// <copyright file="BankSlot.cs" company="SmokeLounge">
 //   Copyright © 2013 SmokeLounge.
 //   This program is free software. It comes without any warranty, to
 //   the extent permitted by applicable law. You can redistribute it
@@ -8,30 +8,31 @@
 //   http://www.wtfpl.net/ for more details.
 // </copyright>
 // <summary>
-//   Defines the OrgInviteMessage type.
+//   Defines the BankSlot type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages.OrgServerMessages
+using AOSharp.Common.GameData;
+
+namespace SmokeLounge.AOtomation.Messaging.GameData
 {
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
-    [AoContract((byte)OrgServerMessageType.OrgInvite)]
-    public class OrgInviteMessage : OrgServerMessage
+    public class AdvantagesItem
     {
-        #region Constructors and Destructors
-
-        public OrgInviteMessage()
-        {
-            this.OrgServerMessageType = OrgServerMessageType.OrgInvite;
-        }
-
-        #endregion
-
         #region AoMember Properties
 
         [AoMember(0)]
-        public int Unknown3 { get; set; }
+        public int LowId { get; set; }
+
+        [AoMember(1)]
+        public int HighId { get; set; }
+
+        [AoMember(2)]
+        public int Ql { get; set; }
+
+        [AoMember(3)]
+        public int Status { get; set; }
 
         #endregion
     }

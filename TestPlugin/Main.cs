@@ -643,12 +643,24 @@ namespace TestPlugin
                 Inventory.ContainerOpened += OnContainerOpened;
                 Duel.Challenged = DuelChallenged;
                 Duel.StatusChanged = DuelStatusChanged;
+                CharacterAction.Inspect += OnInspect;
                 //DynelManager.DynelSpawned += DynelSpawned;
                 //DynelManager.CharInPlay += CharInPlay;
             }
             catch (Exception e)
             {
                 Chat.WriteLine(e.Message);
+            }
+        }
+
+        private void OnInspect(object sender, InspectEventArgs inpectArgs)
+        {
+            foreach (var page in inpectArgs.Pages)
+            {
+                Chat.WriteLine(page.Key);
+
+                foreach (var slot in page.Value)
+                    Chat.WriteLine($"{slot.EquipSlot} {slot.LowId} {slot.HighId} {slot.Ql}");
             }
         }
 

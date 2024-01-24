@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Battlestation.cs" />
+    <Compile Include="CharacterAction.cs" />
     <Compile Include="Combat\ICombatAction.cs" />
     <Compile Include="Combat\CombatHandler.cs" />
     <Compile Include="Coroutine.cs" />
