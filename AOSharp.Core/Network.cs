@@ -40,8 +40,8 @@ namespace AOSharp.Core
             { N3MessageType.AOTransportSignal, OnAoTransportSignal },
             { N3MessageType.InfromPlayer, OnInfromPlayer },
             { N3MessageType.FormatFeedback, OnFormatFeedback},
-            { N3MessageType.Trade, Trade.OnTradeMessage }
-
+            { N3MessageType.Trade, Trade.OnTradeMessage },
+            { N3MessageType.Inspect, OnInspect},
         };
 
         public static void Send(MessageBody message)
@@ -237,6 +237,13 @@ namespace AOSharp.Core
         private static void OnAoTransportSignal(N3Message n3Msg)
         {
             CityController.OnAOSignalTransportMessage((AOTransportSignalMessage)n3Msg);
+        }
+
+        private static void OnInspect(N3Message n3Msg)
+        {
+            InspectMessage iMsg = (InspectMessage)n3Msg;
+
+            CharacterAction.OnInspected(iMsg.Target, iMsg.Slot);
         }
 
     }

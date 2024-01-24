@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="OrgServerMessageType.cs" company="SmokeLounge">
+// <copyright file="NanoEffect.cs" company="SmokeLounge">
 //   Copyright © 2013 SmokeLounge.
 //   This program is free software. It comes without any warranty, to
 //   the extent permitted by applicable law. You can redistribute it
@@ -8,16 +8,22 @@
 //   http://www.wtfpl.net/ for more details.
 // </copyright>
 // <summary>
-//   Defines the OrgServerMessageType type.
+//   Defines the NanoEffect type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
+using AOSharp.Common.GameData;
+
+namespace SmokeLounge.AOtomation.Messaging.GameData
 {
-    public enum OrgServerMessageType : byte
+    public class InspectSlotInfo
     {
-        OrgContract = 0x01,
-        OrgInfo = 0x02, 
-        OrgInvite = 0x05
+        public int Unk { get; set; }
+        public EquipSlot EquipSlot { get; set; }
+        public int Unk2 { get; set; }
+        public Identity UniqueIdentity { get; set; }
+        public int LowId { get; set; }
+        public int HighId { get; set; }
+        public int Ql { get; set; }
     }
 }
