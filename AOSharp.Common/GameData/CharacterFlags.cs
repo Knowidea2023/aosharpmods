@@ -41,4 +41,15 @@ namespace AOSharp.Common.GameData
         GuardsB = 70002
     }
 
+    public enum AppearanceFlags
+    {
+        None = 0,
+        HelmetVisible = 0x4,
+        RightPadVisible = 0x01,
+        LeftPadVisible = 0x02,
+        AllowDoubleLeftPads = 0x08,
+        AllowDoubleRightPads = 0x10,
+        SocialTabEnabled = 0x20,
+        SocialTabOnly = 0x40
+    }
 }
