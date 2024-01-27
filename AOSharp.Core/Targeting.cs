@@ -9,6 +9,7 @@ namespace AOSharp.Core
 {
     public static class Targeting
     {
+        public static bool HasTarget = Target != null;
         public static Dynel Target => GetTargetDynel();
         public static SimpleChar TargetChar => GetTargetChar();
 
