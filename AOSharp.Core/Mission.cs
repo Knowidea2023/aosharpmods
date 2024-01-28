@@ -49,7 +49,7 @@ namespace AOSharp.Core
             LocalPlayer localPlayer = DynelManager.LocalPlayer;
 
             if (localPlayer == null)
-                return null;
+                return new List<Mission>();
 
             return localPlayer.GetMissionList();
         }
