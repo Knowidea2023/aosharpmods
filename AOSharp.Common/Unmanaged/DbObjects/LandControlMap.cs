@@ -48,6 +48,11 @@ namespace AOSharp.Common.Unmanaged.DbObjects
         {
             return LandControlMap_t.CanPlaceInTileAt(Pointer, ref pos);
         }
+
+        public bool IsTileAtAllowedBorder(Vector3 pos)
+        {
+            return LandControlMap_t.IsTileAtAllowedBorder(Pointer, ref pos);
+        }
     }
     
     public struct LandControlMapMemStruct
