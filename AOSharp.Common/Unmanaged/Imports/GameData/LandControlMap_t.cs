@@ -18,5 +18,8 @@ namespace AOSharp.Common.Unmanaged.Imports.GameData
         
         [DllImport("GameData.dll", EntryPoint = "?CanPlaceInTileAt@LandControlMap_t@GameData@@QBE_NABVVector3_t@@@Z", CallingConvention = CallingConvention.ThisCall)]
         public static extern bool CanPlaceInTileAt(IntPtr pLandControlMap, ref Vector3 pos);
+
+        [DllImport("GameData.dll", EntryPoint = "?IsTileAtAllowedBorder@LandControlMap_t@GameData@@QBE_NABVVector3_t@@@Z", CallingConvention = CallingConvention.ThisCall)]
+        public static extern bool IsTileAtAllowedBorder(IntPtr pLandControlMap, ref Vector3 pos);
     }
 }
