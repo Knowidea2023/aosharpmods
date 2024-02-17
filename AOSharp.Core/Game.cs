@@ -14,6 +14,10 @@ using System.Reflection;
 using AOSharp.Core.IPC;
 using SmokeLounge.AOtomation.Messaging.Exceptions;
 using AOSharp.Core.Movement;
+using System.Data.SqlClient;
+using Serilog.Core;
+using Serilog;
+using AOSharp.Core.Logging;
 
 namespace AOSharp.Core
 {
@@ -25,6 +29,8 @@ namespace AOSharp.Core
         public static int ServerId => Client_t.GetServerID(Client_t.GetInstanceIfAny());
 
         public static bool IsNewEngine => Kernel32.GetModuleHandle("Cheetah.dll") != IntPtr.Zero;
+
+        public static bool IsAOLite => AppDomain.CurrentDomain.GetData("AOLite") != null;
 
         public static EventHandler<float> OnEarlyUpdate;
         public static EventHandler<float> OnUpdate;
@@ -60,17 +66,19 @@ namespace AOSharp.Core
                 GamecodeUnk.IsInLineOfSight = Marshal.GetDelegateForFunctionPointer<GamecodeUnk.IsInLineOfSightDelegate>(Utils.FindPattern("Gamecode.dll", "55 8B EC 83 EC 30 56 57 8B 7D 08 8B F1 85 FF 75 07 32 C0 E9 ? ? ? ? 3B FE 75 07 B0 01 E9 ? ? ? ? 53 FF 15 ? ? ? ? 8B CF 8B D8 FF 15 ? ? ? ? 3B C3 75 0E 8B CE FF 15 ? ? ? ? 8B D8 85 DB"));
             }
 
-            ChatWindowNode_t.AppendText = Marshal.GetDelegateForFunctionPointer<ChatWindowNode_t.AppendTextDelegate>(Utils.FindPattern("GUI.dll", "B8 ? ? ? ? E8 ? ? ? ? 83 EC 70 53 56 57 8B F1 68 ? ? ? ? 8D 4D D8 FF 15 ? ? ? ? 33 DB 89 5D FC 39 5D 0C 74 6B FF 75 0C 8D 45 84 50 E8 ? ? ? ? 50 8D 45 A0 68 ? ? ? ? 50 C6 45 FC 01 E8 ? ? ? ? 83 C4 14 68 ? ? ? ? 8D 4D BC 51 8B C8 C6 45 FC 02 FF 15 ? ? ? ? 50 8D 4D D8 C6 45 FC 03 FF 15 ? ? ? ? 8D 4D BC C6 45 FC 02 FF 15 ? ? ? ? 8D 4D A0 C6 45 FC 01 FF 15 ? ? ? ? 8D 4D 84 88 5D FC FF 15 ? ? ? ? FF 75 08 8D 45 84 50 E8 ? ? ? ? 59 59 50 8D 4D D8 C6 45 FC 04 FF 15 ? ? ? ? 53 6A 01 8D 4D 84 88 5D FC E8 ? ? ? ? 8B 3D ? ? ? ? 39 5D 0C 74 0A 68 ? ? ? ? 8D 4D D8"));
-            GUIUnk.LoadViewFromXml = Marshal.GetDelegateForFunctionPointer<GUIUnk.LoadViewFromXmlDelegate>(Utils.FindPattern("GUI.dll", "55 8B EC 56 FF 75 10 FF 75 0C FF 15 ? ? ? ? 6A 00 68 ? ? ? ? 68 ? ? ? ? 8B F0 6A 00 56 E8 ? ? ? ? 8B 4D 08 83 C4 1C 89 01 85 C0 75 10 85 F6 74 08 8B 06 6A 01 8B CE FF 10 32 C0 EB 02 B0 01 5E 5D C3"));
-            GUIUnk.UploadMissionToMap = Marshal.GetDelegateForFunctionPointer<GUIUnk.UploadMissionToMapDelegate>(Utils.FindPattern("GUI.dll", "B8 ? ? ? ? E8 ? ? ? ? 83 EC 2C D9 EE 56 8B 75 08 D9 55 C8 57 D9 55 CC 8D 45 D4 D9 55 D0 50 D9 55 D4 8D 45 C8 D9 55 D8 50 D9 5D DC 8D 45 EC 50 33 FF 56 89 7D EC 89 7D F0 FF 15 ? ? ? ? 8B C8 FF 15 ? ? ? ? 84 C0 0F 84 ? ? ? ? 53 8B 5D F0 FF 15 ? ? ? ? 05 ? ? ? ? 8B 08 3B CF 74 6C 89 45 E4 A1 ? ? ? ? 89 4D E0 8B 08 89 4D E8 8D 4D E0 89 08 89 7D FC 8B 4D E0 8B 41 14 89 45 E0 8B 41 0C 2B C7 74 2A 48 74 1F 48 74 10 48 75 26 8B 01 53 8D 55 D4 52 56 FF 50 04 EB 19"));
+            if (!IsAOLite)
+            {
+                ChatWindowNode_t.AppendText = Marshal.GetDelegateForFunctionPointer<ChatWindowNode_t.AppendTextDelegate>(Utils.FindPattern("GUI.dll", "B8 ? ? ? ? E8 ? ? ? ? 83 EC 70 53 56 57 8B F1 68 ? ? ? ? 8D 4D D8 FF 15 ? ? ? ? 33 DB 89 5D FC 39 5D 0C 74 6B FF 75 0C 8D 45 84 50 E8 ? ? ? ? 50 8D 45 A0 68 ? ? ? ? 50 C6 45 FC 01 E8 ? ? ? ? 83 C4 14 68 ? ? ? ? 8D 4D BC 51 8B C8 C6 45 FC 02 FF 15 ? ? ? ? 50 8D 4D D8 C6 45 FC 03 FF 15 ? ? ? ? 8D 4D BC C6 45 FC 02 FF 15 ? ? ? ? 8D 4D A0 C6 45 FC 01 FF 15 ? ? ? ? 8D 4D 84 88 5D FC FF 15 ? ? ? ? FF 75 08 8D 45 84 50 E8 ? ? ? ? 59 59 50 8D 4D D8 C6 45 FC 04 FF 15 ? ? ? ? 53 6A 01 8D 4D 84 88 5D FC E8 ? ? ? ? 8B 3D ? ? ? ? 39 5D 0C 74 0A 68 ? ? ? ? 8D 4D D8"));
+                GUIUnk.LoadViewFromXml = Marshal.GetDelegateForFunctionPointer<GUIUnk.LoadViewFromXmlDelegate>(Utils.FindPattern("GUI.dll", "55 8B EC 56 FF 75 10 FF 75 0C FF 15 ? ? ? ? 6A 00 68 ? ? ? ? 68 ? ? ? ? 8B F0 6A 00 56 E8 ? ? ? ? 8B 4D 08 83 C4 1C 89 01 85 C0 75 10 85 F6 74 08 8B 06 6A 01 8B CE FF 10 32 C0 EB 02 B0 01 5E 5D C3"));
+                GUIUnk.UploadMissionToMap = Marshal.GetDelegateForFunctionPointer<GUIUnk.UploadMissionToMapDelegate>(Utils.FindPattern("GUI.dll", "B8 ? ? ? ? E8 ? ? ? ? 83 EC 2C D9 EE 56 8B 75 08 D9 55 C8 57 D9 55 CC 8D 45 D4 D9 55 D0 50 D9 55 D4 8D 45 C8 D9 55 D8 50 D9 5D DC 8D 45 EC 50 33 FF 56 89 7D EC 89 7D F0 FF 15 ? ? ? ? 8B C8 FF 15 ? ? ? ? 84 C0 0F 84 ? ? ? ? 53 8B 5D F0 FF 15 ? ? ? ? 05 ? ? ? ? 8B 08 3B CF 74 6C 89 45 E4 A1 ? ? ? ? 89 4D E0 8B 08 89 4D E8 8D 4D E0 89 08 89 7D FC 8B 4D E0 8B 41 14 89 45 E0 8B 41 0C 2B C7 74 2A 48 74 1F 48 74 10 48 75 26 8B 01 53 8D 55 D4 52 56 FF 50 04 EB 19"));
 
-            //Inv UI testing
-            ItemListViewBase_c.CreateItemListView = Marshal.GetDelegateForFunctionPointer<ItemListViewBase_c.CreateItemListViewDelegate>(Utils.FindPattern("GUI.dll", "B8 ? ? ? ? E8 ? ? ? ? 51 53 56 57 FF 75 14 8B F1 FF 75 10 89 75 F0 FF 75 0C FF 75 08 E8 ? ? ? ? 8B 3D ? ? ? ? 33 DB 8D 8E ? ? ? ? 89 5D FC C7 06 ? ? ? ? C7 46 ? ? ? ? ? C7 46 ? ? ? ? ? FF D7 8D 8E ? ? ? ? C6 45 FC 01 FF D7 8D 8E ? ? ? ? C6 45 FC 02 FF D7 8D 8E ? ? ? ? C6 45 FC 03 FF D7 8D 8E ? ? ? ? C6 45 FC 04 FF D7 8D 8E ? ? ? ? C6 45 FC 05 FF 15 ? ? ? ? C7 86"));
-            InventoryListViewItem_c.CreateInventoryListViewItem = Marshal.GetDelegateForFunctionPointer<InventoryListViewItem_c.CreateInventoryListViewItemDelegate>(Utils.FindPattern("GUI.dll", "B8 ? ? ? ? E8 ? ? ? ? 83 EC 1C 53 56 57 FF 75 0C 8B F1 8D 4D D8 89 75 F0 FF 15 ? ? ? ? 8D 45 D8 33 DB 50 8B CE 89 5D FC E8 ? ? ? ? 8D 4D D8 C6 45 FC 02 FF 15 ? ? ? ? 8D 4E 48 C7 06 ? ? ? ? C7 46 ? ? ? ? ? FF 15 ? ? ? ? 8B 3D ? ? ? ? 8D 4E 4C C6 45 FC 03 FF D7 8D 8E ? ? ? ? C6 45 FC 04 FF D7 C7 86 ? ? ? ? ? ? ? ? 89 9E ? ? ? ? 88 9E ? ? ? ? 8D 8E ? ? ? ? 6A FF C6 45 FC 06 FF 15 ? ? ? ? D9 E8 8B 45 08 D9 9E ? ? ? ? 83 4E 68 FF 83 8E ? ? ? ? ? 89 86 ? ? ? ? 6A 11 33 C0 8D 7E 70 59 88 9E ? ? ? ? 89 9E ? ? ? ? C6 45 FC 07 F3 AB 38 5D 10"));
+                //Inv UI testing
+                ItemListViewBase_c.CreateItemListView = Marshal.GetDelegateForFunctionPointer<ItemListViewBase_c.CreateItemListViewDelegate>(Utils.FindPattern("GUI.dll", "B8 ? ? ? ? E8 ? ? ? ? 51 53 56 57 FF 75 14 8B F1 FF 75 10 89 75 F0 FF 75 0C FF 75 08 E8 ? ? ? ? 8B 3D ? ? ? ? 33 DB 8D 8E ? ? ? ? 89 5D FC C7 06 ? ? ? ? C7 46 ? ? ? ? ? C7 46 ? ? ? ? ? FF D7 8D 8E ? ? ? ? C6 45 FC 01 FF D7 8D 8E ? ? ? ? C6 45 FC 02 FF D7 8D 8E ? ? ? ? C6 45 FC 03 FF D7 8D 8E ? ? ? ? C6 45 FC 04 FF D7 8D 8E ? ? ? ? C6 45 FC 05 FF 15 ? ? ? ? C7 86"));
+                InventoryListViewItem_c.CreateInventoryListViewItem = Marshal.GetDelegateForFunctionPointer<InventoryListViewItem_c.CreateInventoryListViewItemDelegate>(Utils.FindPattern("GUI.dll", "B8 ? ? ? ? E8 ? ? ? ? 83 EC 1C 53 56 57 FF 75 0C 8B F1 8D 4D D8 89 75 F0 FF 15 ? ? ? ? 8D 45 D8 33 DB 50 8B CE 89 5D FC E8 ? ? ? ? 8D 4D D8 C6 45 FC 02 FF 15 ? ? ? ? 8D 4E 48 C7 06 ? ? ? ? C7 46 ? ? ? ? ? FF 15 ? ? ? ? 8B 3D ? ? ? ? 8D 4E 4C C6 45 FC 03 FF D7 8D 8E ? ? ? ? C6 45 FC 04 FF D7 C7 86 ? ? ? ? ? ? ? ? 89 9E ? ? ? ? 88 9E ? ? ? ? 8D 8E ? ? ? ? 6A FF C6 45 FC 06 FF 15 ? ? ? ? D9 E8 8B 45 08 D9 9E ? ? ? ? 83 4E 68 FF 83 8E ? ? ? ? ? 89 86 ? ? ? ? 6A 11 33 C0 8D 7E 70 59 88 9E ? ? ? ? 89 9E ? ? ? ? C6 45 FC 07 F3 AB 38 5D 10"));
 
-
-            int* pGetOptionWindowOffset = (int*)(Kernel32.GetProcAddress(Kernel32.GetModuleHandle("GUI.dll"), "?ModuleActivated@OptionPanelModule_c@@UAEX_N@Z") + 0x14);
-            OptionPanelModule_c.GetOptionWindow = Marshal.GetDelegateForFunctionPointer<OptionPanelModule_c.GetOptionWindowDelegate>(new IntPtr((int)pGetOptionWindowOffset + sizeof(int) + *pGetOptionWindowOffset));
+                int* pGetOptionWindowOffset = (int*)(Kernel32.GetProcAddress(Kernel32.GetModuleHandle("GUI.dll"), "?ModuleActivated@OptionPanelModule_c@@UAEX_N@Z") + 0x14);
+                OptionPanelModule_c.GetOptionWindow = Marshal.GetDelegateForFunctionPointer<OptionPanelModule_c.GetOptionWindowDelegate>(new IntPtr((int)pGetOptionWindowOffset + sizeof(int) + *pGetOptionWindowOffset));
+            }
 
             MovementController.Instance = new MovementController();
         }
@@ -100,18 +108,6 @@ namespace AOSharp.Core
 
             if (MovementController.Instance != null && MovementController.Instance.IsNavigating)
                 MovementController.Instance.Halt();
-        }
-
-        private static void OnPluginLoaded(Assembly assembly)
-        {
-            try
-            {
-                IPCChannel.LoadMessages(assembly);
-            }
-            catch (ContractIdCollisionException e)
-            {
-                Chat.WriteLine(e.Message);
-            }
         }
 
         private static void OnEarlyUpdateInternal (float deltaTime)
