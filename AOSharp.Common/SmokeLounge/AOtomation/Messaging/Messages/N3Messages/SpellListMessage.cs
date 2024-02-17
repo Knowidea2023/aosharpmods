@@ -34,7 +34,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 
         #region AoMember Properties
 
-        [AoMember(0, SerializeSize = ArraySizeType.X3F1)]
+        [AoMember(0, SerializeSize = ArraySizeType.Int32)]
         public NanoEffect[] NanoEffects { get; set; }
 
         [AoMember(1)]

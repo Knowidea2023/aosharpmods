@@ -14,10 +14,9 @@
 
 namespace SmokeLounge.AOtomation.Messaging.Serialization
 {
-    using System.IO;
-
     using SmokeLounge.AOtomation.Messaging.Messages;
     using SmokeLounge.AOtomation.Messaging.Serialization.Serializers;
+    using System.IO;
 
     public class MessageSerializer
     {
@@ -57,9 +56,9 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
             return this.Deserialize(stream, out ignore);
         }
 
-        public Message Deserialize(byte[] message)
+        public Message Deserialize(byte[] datablock)
         {
-            using (MemoryStream buffer = new MemoryStream(message))
+            using (MemoryStream buffer = new MemoryStream(datablock))
             {
                 return this.Deserialize(buffer);
             }
@@ -84,12 +83,35 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
 
             reader.Position = 0;
             serializationContext = new SerializationContext(this.serializerResolver);
-            var message = new Message
-                              {
-                                  Header = (Header)this.headerSerializer.Deserialize(reader, serializationContext), 
-                                  Body = (MessageBody)serializer.Deserialize(reader, serializationContext)
-                              };
-            return message;
+
+            return new Message
+            {
+                Header = (Header)this.headerSerializer.Deserialize(reader, serializationContext),
+                Body = (MessageBody)serializer.Deserialize(reader, serializationContext),
+                RawPacket = reader.ReadAll()
+            };
+        }
+
+        public MessageBody DeserializeDatablock(Stream stream)
+        {
+            SerializationContext serializationContext = null;
+
+            using (StreamReader reader = new StreamReader(stream) { Position = 0 })
+            {
+                var subTypeInfo = this.packetInspector.FindSubType(reader, out int _);
+
+                if (subTypeInfo == null)
+                    return null;
+
+                var serializer = this.serializerResolver.GetSerializer(subTypeInfo.Type);
+                if (serializer == null)
+                    return null;
+
+                reader.Position = 16;
+                serializationContext = new SerializationContext(this.serializerResolver);
+
+                return (MessageBody)serializer.Deserialize(reader, serializationContext);
+            }
         }
 
         public void Serialize(Stream stream, Message message)

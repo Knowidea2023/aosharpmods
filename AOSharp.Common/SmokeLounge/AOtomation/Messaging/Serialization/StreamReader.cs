@@ -150,6 +150,12 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
             return length;
         }
 
+        public byte[] ReadAll()
+        {
+            reader.BaseStream.Position = 0;
+            return reader.ReadBytes((int)reader.BaseStream.Length);
+        }
+
         #endregion
     }
 }

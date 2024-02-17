@@ -335,6 +335,8 @@
     <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\TypeInfo.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\TypeSerializerBuilder.cs" />
     <Compile Include="Helpers\Utils.cs" />
+    <Compile Include="Unmanaged\DataTypes\ACEDataBlock.cs" />
+    <Compile Include="Unmanaged\DataTypes\PlayfieldProxy.cs" />
     <Compile Include="Unmanaged\DataTypes\StdStructList.cs" />
     <Compile Include="Unmanaged\DataTypes\StdObjList.cs" />
     <Compile Include="Unmanaged\DataTypes\StdObjVector.cs" />
@@ -416,6 +418,7 @@
     <Compile Include="Unmanaged\Imports\N3\N3Dynel_t.cs" />
     <Compile Include="Unmanaged\Imports\N3\N3EngineClient_t .cs" />
     <Compile Include="Unmanaged\Imports\N3\N3Camera_t.cs" />
+    <Compile Include="Unmanaged\Imports\N3\N3Root_t.cs" />
     <Compile Include="Unmanaged\Imports\N3\N3Engine_t.cs" />
     <Compile Include="Unmanaged\Imports\N3\N3InfoItemRemote_t.cs" />
     <Compile Include="Unmanaged\Imports\N3\N3Playfield_t.cs" />
@@ -429,12 +432,14 @@
     <Compile Include="Unmanaged\Imports\Native\Psapi.cs" />
     <Compile Include="Unmanaged\Imports\Randy31\RCATMesh_t.cs" />
     <Compile Include="Unmanaged\Imports\Randy31\Debugger_t.cs" />
+    <Compile Include="Unmanaged\Imports\Randy31\Render_t.cs" />
     <Compile Include="Unmanaged\Imports\Utils\Looper.cs" />
     <Compile Include="Unmanaged\Imports\Utils\Rect_c.cs" />
     <Compile Include="Unmanaged\Imports\Utils\String_c.cs" />
     <Compile Include="Unmanaged\Imports\Utils\DistributedValue_c.cs" />
     <Compile Include="Unmanaged\Imports\Utils\Variant_c.cs" />
     <Compile Include="Unmanaged\Imports\Utils\XMLObject_c.cs" />
+    <Compile Include="Unmanaged\Imports\Vehicle\Vehicle_t.cs" />
     <Compile Include="Unmanaged\Interfaces\GuiResourceManager.cs" />
     <Compile Include="Unmanaged\Interfaces\InventoryGUIModule.cs" />
     <Compile Include="Unmanaged\Interfaces\PlayfieldAnarchy.cs" />
