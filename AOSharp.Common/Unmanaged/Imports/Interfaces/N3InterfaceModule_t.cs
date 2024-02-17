@@ -34,5 +34,14 @@ namespace AOSharp.Common.Unmanaged.Imports
         [return: MarshalAs(UnmanagedType.U1)]
         [DllImport("Interfaces.dll", EntryPoint = "?N3Msg_PersonalResearchGoals@N3InterfaceModule_t@@QAEXAAV?$vector@U?$pair@I_N@std@@V?$allocator@U?$pair@I_N@std@@@2@@std@@@Z", CallingConvention = CallingConvention.ThisCall)]
         public static extern bool GetPersonalResearchGoals(IntPtr pThis, ref StdStructVector vector);
+
+        [DllImport("Interfaces.dll", EntryPoint = "?SetCharID@Client_t@@SAXI@Z", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetCharID(int charId);
+
+        [DllImport("Interfaces.dll", EntryPoint = "?GetCharID@Client_t@@SAIXZ", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetCharID();
+
+        [DllImport("Interfaces.dll", EntryPoint = "?ProcessMessage@Client_t@@AAEHPAVMessage_t@@@Z", CallingConvention = CallingConvention.ThisCall)]
+        public static extern IntPtr ProcessMessage(IntPtr pThis, IntPtr pMsg);
     }
 }
