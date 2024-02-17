@@ -13,8 +13,6 @@ namespace AOSharp.Bootstrap
         public InitDelegate Init;
         public delegate void TeardownDelegate();
         public TeardownDelegate Teardown;
-        public delegate void OnPluginLoadedDelegate(Assembly assembly);
-        public OnPluginLoadedDelegate OnPluginLoaded;
         public delegate void DynelSpawnedDelegate(IntPtr pDynel);
         public DynelSpawnedDelegate DynelSpawned;
         public delegate void DataBlockToMessageDelegate(byte[] datablock);
@@ -154,7 +152,6 @@ namespace AOSharp.Bootstrap
             {
                 Init = CreateDelegate<CoreDelegates.InitDelegate>(assembly, "AOSharp.Core.Game", "Init"),
                 Teardown = CreateDelegate<CoreDelegates.TeardownDelegate>(assembly, "AOSharp.Core.Game", "Teardown"),
-                OnPluginLoaded = CreateDelegate<CoreDelegates.OnPluginLoadedDelegate>(assembly, "AOSharp.Core.Game", "OnPluginLoaded"),
                 Update = CreateDelegate<CoreDelegates.UpdateDelegate>(assembly, "AOSharp.Core.Game", "OnUpdateInternal"),
                 EarlyUpdate = CreateDelegate<CoreDelegates.EarlyUpdateDelegate>(assembly, "AOSharp.Core.Game", "OnEarlyUpdateInternal"),
                 DynelSpawned = CreateDelegate<CoreDelegates.DynelSpawnedDelegate>(assembly, "AOSharp.Core.DynelManager", "OnDynelSpawned"),
@@ -215,9 +212,9 @@ namespace AOSharp.Bootstrap
                     if (type.GetInterface("AOSharp.Core.IAOPluginEntry") == null)
                         continue;
 
-                    MethodInfo runMethod = type.GetMethod("Run", BindingFlags.Public | BindingFlags.Instance);
+                    MethodInfo initMethod = type.GetMethod("Init", BindingFlags.Public | BindingFlags.Instance);
 
-                    if (runMethod == null)
+                    if (initMethod == null)
                         continue;
 
                     MethodInfo teardownMethod = type.GetMethod("Teardown", BindingFlags.Public | BindingFlags.Instance);
@@ -230,14 +227,12 @@ namespace AOSharp.Bootstrap
                     if (constructor == null)
                         continue;
 
-                    _coreDelegates.OnPluginLoaded(assembly);
-
                     object instance = constructor.Invoke(null);
 
                     if (instance == null) //Is this even possible?
                         continue;
 
-                    _plugins.Add(new Plugin(instance, runMethod, teardownMethod, Path.GetDirectoryName(assemblyPath)));
+                    _plugins.Add(new Plugin(instance, initMethod, teardownMethod, Path.GetDirectoryName(assemblyPath)));
                 }
             }
             catch (Exception ex)
@@ -270,15 +265,15 @@ namespace AOSharp.Bootstrap
         public bool Initialized;
 
         private object _instance;
-        private MethodInfo _runMethod;
+        private MethodInfo _initMethod;
         private MethodInfo _teardownMethod;
         private string _assemblyDir;
 
-        public Plugin(object instance, MethodInfo runMethod, MethodInfo teardownMethod, string assemblyDir)
+        public Plugin(object instance, MethodInfo initMethod, MethodInfo teardownMethod, string assemblyDir)
         {
             Initialized = false;
             _instance = instance;
-            _runMethod = runMethod;
+            _initMethod = initMethod;
             _teardownMethod = teardownMethod;
             _assemblyDir = assemblyDir;
         }
@@ -287,7 +282,7 @@ namespace AOSharp.Bootstrap
         {
             try
             {
-                _runMethod.Invoke(_instance, new object[] { _assemblyDir });
+                _initMethod.Invoke(_instance, new object[] { _assemblyDir });
             }
             catch { }
 
