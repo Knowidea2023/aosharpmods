@@ -12,7 +12,7 @@ namespace AOSharp.Core
         public static EventHandler<Dynel> DynelSpawned;
         public static EventHandler<SimpleChar> CharInPlay;
 
-        public static LocalPlayer LocalPlayer { private set; get; } = GetLocalPlayer();
+        public static LocalPlayer LocalPlayer { private set; get; }
 
         public static List<Dynel> AllDynels { private set; get; } = new List<Dynel>();
 
