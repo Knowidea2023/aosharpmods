@@ -25,7 +25,7 @@ namespace AOSharp.Core
         public unsafe Quaternion Rotation
         {
             get => (*(MemStruct*)Pointer).Vehicle->Rotation;
-            set => N3Dynel_t.SetRelRot(Pointer, &value);
+            set => N3Dynel_t.SetRelRot(Pointer, ref value);
         }
 
         public unsafe MovementState MovementState

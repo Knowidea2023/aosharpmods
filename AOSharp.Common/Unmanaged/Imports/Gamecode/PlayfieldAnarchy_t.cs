@@ -35,6 +35,19 @@ namespace AOSharp.Common.Unmanaged.Imports
         
         [DllImport("Gamecode.dll", EntryPoint = "?IsGrid@PlayfieldAnarchy_t@@QBE_NXZ", CallingConvention = CallingConvention.ThisCall)]
         public static extern bool IsGrid(IntPtr pThis);
-        
+
+        [DllImport("N3.dll", EntryPoint = "?AddChildDynel@n3Playfield_t@@QAEXPAVn3Dynel_t@@ABVVector3_t@@ABVQuaternion_t@@@Z", CallingConvention = CallingConvention.ThisCall)]
+        public static extern void AddChildDynel(IntPtr pThis, IntPtr pDynel, ref Vector3 pos, ref Quaternion rot);
+
+        [DllImport("Gamecode.dll", EntryPoint = "?AddCellMonitor@PlayfieldAnarchy_t@@QAEXABVVector3_t@@@Z", CallingConvention = CallingConvention.ThisCall)]
+        public static extern void AddCellMonitor(IntPtr pThis, ref Vector3 pos);
+
+        [DllImport("N3.dll", EntryPoint = "?CalculateWaterHeightMax@n3Playfield_t@@QAEXXZ", CallingConvention = CallingConvention.ThisCall)]
+        public static extern void CalculateWaterHeightMax(IntPtr pThis);
+
+        [return: MarshalAs(UnmanagedType.U1)]
+        [DllImport("Gamecode.dll", EntryPoint = "?Run@PlayfieldAnarchy_t@@UAE_NXZ", CallingConvention = CallingConvention.ThisCall)]
+        public static extern bool Run(IntPtr pThis);
+
     }
 }

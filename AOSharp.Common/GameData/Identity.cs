@@ -61,6 +61,7 @@ namespace AOSharp.Common.GameData
         Texture = 1010004,
         LandControlMap = 1000008,
         RDBTilemap = 1000009,
+        InfoObject = 1000010,
         SurfaceResource = 1000013,
         PlayfieldDistrictInfo = 1000014,
         Mesh = 1010001,

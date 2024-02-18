@@ -10,6 +10,9 @@ namespace AOSharp.Common.Unmanaged.Imports
 {
     public class N3DatabaseHandler_t
     {
+        [DllImport("N3.dll", EntryPoint = "?Initialize@n3DatabaseHandler_t@@SAXXZ", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void Initialize();
+
         [DllImport("N3.dll", EntryPoint = "?Get@n3DatabaseHandler_t@@SAAAV1@XZ", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr Get();
 

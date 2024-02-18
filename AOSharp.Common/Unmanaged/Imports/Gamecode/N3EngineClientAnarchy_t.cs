@@ -7,6 +7,12 @@ namespace AOSharp.Common.Unmanaged.Imports
 {
     public class N3EngineClientAnarchy_t
     {
+        [DllImport("Gamecode.dll", EntryPoint = "??0n3EngineClientAnarchy_t@@QAE@XZ", CallingConvention = CallingConvention.ThisCall)]
+        public static extern IntPtr Constructor(IntPtr pThis);
+
+        [DllImport("Gamecode.dll", EntryPoint = "?GetPlayfieldFactory@n3EngineClientAnarchy_t@@UAEPAVn3PlayfieldFactory_i@@ABVPlayfieldProxy_t@@@Z", CallingConvention = CallingConvention.ThisCall)]
+        public static extern IntPtr GetPlayfieldFactory(IntPtr pThis, ref PlayfieldProxy playfieldProxy);
+
         //GetQuestWorldPos
         [return: MarshalAs(UnmanagedType.U1)]
         [DllImport("Gamecode.dll", EntryPoint = "?N3Msg_GetQuestWorldPos@n3EngineClientAnarchy_t@@QBE_NABVIdentity_t@@AAV2@AAVVector3_t@@2@Z", CallingConvention = CallingConvention.ThisCall)]
@@ -207,11 +213,17 @@ namespace AOSharp.Common.Unmanaged.Imports
         public delegate IntPtr GetItemActionInfoDelegate(IntPtr pThis, ItemActionInfo action);
         public static GetItemActionInfoDelegate GetItemActionInfo;
 
+
+        [DllImport("Gamecode.dll", EntryPoint = "?ToClientN3Message@n3EngineClientAnarchy_t@@UBEXABVIdentity_t@@PAVACE_Data_Block@@@Z", CallingConvention = CallingConvention.ThisCall)]
+        public static extern void ToClientN3Message(IntPtr pThis, ref Identity identity, IntPtr pDataBlock);
+        [UnmanagedFunctionPointer(CallingConvention.ThisCall)]
+        public delegate void ToClientN3MessageDelegate(IntPtr pThis, ref Identity identity, IntPtr pDataBlock);
+
         [DllImport("N3.dll", EntryPoint = "?GetPlayfield@n3EngineClient_t@@SAPAVn3Playfield_t@@XZ", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr GetPlayfield();
 
         [DllImport("Gamecode.dll", EntryPoint = "?RunEngine@n3EngineClientAnarchy_t@@UAEXM@Z", CallingConvention = CallingConvention.ThisCall)]
-        public static extern void RunEngine(IntPtr pThis, float unk);
+        public static extern void RunEngine(IntPtr pThis, float deltaTime);
         [UnmanagedFunctionPointer(CallingConvention.ThisCall, CharSet = CharSet.Unicode, SetLastError = true)]
         public delegate void DRunEngine(IntPtr pThis, float unk);
 

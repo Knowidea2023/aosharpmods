@@ -22,6 +22,8 @@ namespace SmokeLounge.AOtomation.Messaging.Messages
 
         public Header Header { get; set; }
 
+        public byte[] RawPacket {  get; set; }
+
         #endregion
     }
 }
