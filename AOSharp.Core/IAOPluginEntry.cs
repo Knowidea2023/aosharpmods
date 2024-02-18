@@ -65,7 +65,7 @@ namespace AOSharp.Core
         {
             try
             {
-                IPCChannel.LoadMessages(Assembly.GetExecutingAssembly());
+                IPCChannel.LoadMessages(GetType().Assembly);
             }
             catch (ContractIdCollisionException e)
             {
