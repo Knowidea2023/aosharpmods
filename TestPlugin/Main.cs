@@ -315,7 +315,7 @@ namespace TestPlugin
                 Chat.RegisterCommand("testui", (string command, string[] param, ChatWindow chatWindow) =>
                 {
                     //Chat.WriteLine(Window.GetActiveWindow().Name);
-                    Chat.WriteLine($"{ItemListViewBase_c.Create(new Rect(999999, 999999, -999999, -999999),0,0,0, Identity.None).ToString("X4")}");
+                    Chat.WriteLine($"{ItemListViewBase_c.Create(new Rect(999999, 999999, -999999, -999999), 0, 0, 0, Identity.None).ToString("X4")}");
 
                 });
 
@@ -400,7 +400,7 @@ namespace TestPlugin
                         {
                             Chat.WriteLine($"ComboBox.Pointer: {testComboBox.Pointer.ToString("X4")}");
 
-                            for(int i = 0; i < 10; i++)
+                            for (int i = 0; i < 10; i++)
                                 testComboBox.AppendItem(i, $"loli {i}");
                         }
                         if (testWindow.FindView("testTextInput", out TextInputView testTextInput))
@@ -747,15 +747,6 @@ namespace TestPlugin
             //        Chat.WriteLine($"\t{stat.Value1}: {stat.Value2}");
             //}
 
-            if (n3Msg.N3MessageType == N3MessageType.SpellList)
-            {
-                SpellListMessage ayy = (SpellListMessage)n3Msg;
-                Chat.WriteLine($"SpellList for {ayy.Character}");
-
-                foreach(NanoEffect effect in ayy.NanoEffects)
-                    Chat.WriteLine($"{effect.Effect}");
-            }
-
             if (n3Msg.N3MessageType == N3MessageType.Trade)
             {
                 TradeMessage ayy = (TradeMessage)n3Msg;
@@ -867,13 +858,13 @@ namespace TestPlugin
                 }
             }
 
-            if(DynelManager.LocalPlayer.FightingTarget != null)
+            if (DynelManager.LocalPlayer.FightingTarget != null)
             {
                 if (SpecialAttack.FastAttack.IsInRange(DynelManager.LocalPlayer.FightingTarget) && SpecialAttack.FastAttack.IsAvailable())
                     SpecialAttack.FastAttack.UseOn(DynelManager.LocalPlayer.FightingTarget);
             }
 
-            foreach(SimpleChar character in DynelManager.Characters)
+            foreach (SimpleChar character in DynelManager.Characters)
             {
                 if (character.IsPathing)
                 {
@@ -889,7 +880,7 @@ namespace TestPlugin
             if (Playfield.Raycast(rayOrigin, rayTarget, out Vector3 hitPos, out Vector3 hitNormal))
             {
                 Debug.DrawLine(rayOrigin, rayTarget, DebuggingColor.White);
-                Debug.DrawLine(hitPos, hitPos+hitNormal, DebuggingColor.Yellow);
+                Debug.DrawLine(hitPos, hitPos + hitNormal, DebuggingColor.Yellow);
                 Debug.DrawSphere(hitPos, 0.2f, DebuggingColor.White);
                 Debug.DrawSphere(hitPos + hitNormal, 0.2f, DebuggingColor.Yellow);
             }
