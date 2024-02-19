@@ -120,12 +120,6 @@ namespace AOSharp.Core
 
         private static void OnUpdateInternal(float deltaTime)
         {
-            if(!_notifiedTeleportEnded)
-            {
-                TeleportEnded?.Invoke(null, EventArgs.Empty);
-                _notifiedTeleportEnded = true;
-            }
-
             DynelManager.Update();
 
             if (DynelManager.LocalPlayer == null)
@@ -162,12 +156,22 @@ namespace AOSharp.Core
         {
             IsZoning = true;
             MovementController.Instance?.Halt();
-            TeleportStarted?.Invoke(null, EventArgs.Empty);
+
+            try
+            {
+                TeleportStarted?.Invoke(null, EventArgs.Empty);
+            }
+            catch { }
         }
 
         private static void OnTeleportEnded()
         {
-            _notifiedTeleportEnded = false;
+            try
+            {
+                TeleportEnded?.Invoke(null, EventArgs.Empty);
+            }
+            catch {}
+
             IsZoning = false;
         }
 

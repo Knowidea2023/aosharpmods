@@ -34,11 +34,14 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 
         #region AoMember Properties
 
-        [AoMember(0, SerializeSize = ArraySizeType.Int32)]
-        public NanoEffect[] NanoEffects { get; set; }
+        //This really isn't used by us and it's definition is incorrect so until
+        //someone (Mali) properly defines the struct this message will just be empty.
 
-        [AoMember(1)]
-        public Identity Character { get; set; }
+        //[AoMember(0, SerializeSize = ArraySizeType.Int32)]
+        //public NanoEffect[] NanoEffects { get; set; }
+
+        //[AoMember(1)]
+        //public Identity Character { get; set; }
 
         #endregion
     }
