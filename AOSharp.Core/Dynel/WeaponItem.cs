@@ -62,7 +62,7 @@ namespace AOSharp.Core
 
         public bool IsDynelInRange(Dynel target)
         {
-            return WeaponHolder_t.IsDynelInWeaponRange(_pWeaponHolder, _pWeaponUnk, target.Pointer) == 0x01;
+            return WeaponHolder_t.IsDynelInWeaponRange(_pWeaponHolder, _pWeaponUnk, target.Pointer);
         }
 
         [StructLayout(LayoutKind.Explicit, Pack = 0)]
