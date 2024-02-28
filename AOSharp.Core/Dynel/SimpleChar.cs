@@ -118,7 +118,7 @@ namespace AOSharp.Core
 
                 IntPtr pdummyWeaponUnk = *(IntPtr*)(dummyWeapon + 0xE4);
 
-                return WeaponHolder_t.IsDynelInWeaponRange(pWeaponHolder, pdummyWeaponUnk, Pointer) == 0x01;
+                return WeaponHolder_t.IsDynelInWeaponRange(pWeaponHolder, pdummyWeaponUnk, Pointer);
             }
         }
 

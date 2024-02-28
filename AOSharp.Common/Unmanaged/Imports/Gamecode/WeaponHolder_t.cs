@@ -11,7 +11,8 @@ namespace AOSharp.Common.Unmanaged.Imports
         public static GetWeaponDelegate GetWeapon;
  
         [UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-        public delegate byte IsDynelInWeaponRangeDelegate(IntPtr pThis, IntPtr pWeapon, IntPtr pDynel);
+        [return: MarshalAs(UnmanagedType.U1)]
+        public delegate bool IsDynelInWeaponRangeDelegate(IntPtr pThis, IntPtr pWeapon, IntPtr pDynel);
         public static IsDynelInWeaponRangeDelegate IsDynelInWeaponRange;
 
         [UnmanagedFunctionPointer(CallingConvention.ThisCall)]

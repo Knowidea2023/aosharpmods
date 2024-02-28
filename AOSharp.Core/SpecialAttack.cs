@@ -50,7 +50,7 @@ namespace AOSharp.Core
 
             SpecialAttack specialAttack = this == Backstab ? SpecialAttack.SneakAttack : this;
 
-            if (weapons.Count > 0)
+            if (weapons.Count > 0 && _stat != Stat.Brawl)
             {
                 if (weapons.ContainsKey(MainHand) && weapons[MainHand].SpecialAttacks.Contains(specialAttack))
                     return weapons[MainHand].IsDynelInRange(target);
@@ -62,14 +62,14 @@ namespace AOSharp.Core
             else
             {
                 IntPtr pWeaponHolder = DynelManager.LocalPlayer.pWeaponHolder;
-                IntPtr dummyWeapon = WeaponHolder_t.GetDummyWeapon(pWeaponHolder, this._stat);
+                IntPtr dummyWeapon = WeaponHolder_t.GetDummyWeapon(pWeaponHolder, _stat);
 
                 if (dummyWeapon == null)
                     return false;
 
                 IntPtr pdummyWeaponUnk = *(IntPtr*)(dummyWeapon + 0xE4);
 
-                return WeaponHolder_t.IsDynelInWeaponRange(pWeaponHolder, pdummyWeaponUnk, target.Pointer) == 0x01;
+                return WeaponHolder_t.IsDynelInWeaponRange(pWeaponHolder, pdummyWeaponUnk, target.Pointer);
             }
         }
 
