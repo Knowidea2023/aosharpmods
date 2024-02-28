@@ -50,7 +50,20 @@ namespace AOSharp.Core
 
             SpecialAttack specialAttack = this == Backstab ? SpecialAttack.SneakAttack : this;
 
-            if (weapons.Count > 0 && _stat != Stat.Brawl)
+            if (_stat == Stat.Brawl || _stat == Stat.Dimach) {
+                IntPtr pWeaponHolder = DynelManager.LocalPlayer.pWeaponHolder;
+                IntPtr specialWeapon = WeaponHolder_t.GetDummyWeapon(pWeaponHolder, _stat);
+
+                if (specialWeapon == null)
+                    return false;
+
+                IntPtr pdummyWeaponUnk = *(IntPtr*)(specialWeapon + 0xE4);
+
+                if (!WeaponHolder_t.IsDynelInWeaponRange(pWeaponHolder, pdummyWeaponUnk, target.Pointer))
+                    return false;
+            }
+
+            if (weapons.Count > 0)
             {
                 if (weapons.ContainsKey(MainHand) && weapons[MainHand].SpecialAttacks.Contains(specialAttack))
                     return weapons[MainHand].IsDynelInRange(target);
@@ -62,12 +75,12 @@ namespace AOSharp.Core
             else
             {
                 IntPtr pWeaponHolder = DynelManager.LocalPlayer.pWeaponHolder;
-                IntPtr dummyWeapon = WeaponHolder_t.GetDummyWeapon(pWeaponHolder, _stat);
+                IntPtr martialArtsWeapon = WeaponHolder_t.GetDummyWeapon(pWeaponHolder, Stat.MartialArts);
 
-                if (dummyWeapon == null)
+                if (martialArtsWeapon == null)
                     return false;
 
-                IntPtr pdummyWeaponUnk = *(IntPtr*)(dummyWeapon + 0xE4);
+                IntPtr pdummyWeaponUnk = *(IntPtr*)(martialArtsWeapon + 0xE4);
 
                 return WeaponHolder_t.IsDynelInWeaponRange(pWeaponHolder, pdummyWeaponUnk, target.Pointer);
             }
