@@ -12,8 +12,15 @@ namespace AOSharp.Core
     public class Battlestation
     {
         public static EventHandler<BattlestationInviteEventArgs> Invited;
+        public static EventHandler<BattlestationScoreUpdateEventArgs> ScoreUpdated;
 
+        [Obsolete("AOSharp.Core.JoinQueue(AOSharp.Core.Battlestation.Side) is deprecated. Use AOSharp.Core.JoinQueue(AOSharp.Common.GameData.BattlestationSide) instead")]
         public static void JoinQueue(Side side)
+        {
+            JoinQueue((BattlestationSide)side);
+        }
+
+        public static void JoinQueue(BattlestationSide side)
         {
             Network.Send(new CharacterActionMessage
             {
@@ -46,10 +53,36 @@ namespace AOSharp.Core
             Invited?.Invoke(null, new BattlestationInviteEventArgs(battlestationIdentity));
         }
 
+        internal static void OnSendScore(SendScoreMessage message)
+        {
+            ScoreUpdated?.Invoke(null, new BattlestationScoreUpdateEventArgs(message.RedScore, message.BlueScore, message.A, message.B, message.C, message.Core));
+        }
+
+        [Obsolete("AOSharp.Core.Battlestation.Side is obsolete. Use AOSharp.Common.GameData.BattlestationSide instead.")]
         public enum Side
         {
             Red = 0,
-            Blue = 1
+            Blue = 1            
+        }
+    }
+
+    public class BattlestationScoreUpdateEventArgs : EventArgs
+    {
+        public int RedScore { get; }
+        public int BlueScore { get; }
+        public BattlestationSide A { get; }
+        public BattlestationSide B { get; }
+        public BattlestationSide C { get; }
+        public BattlestationSide Core { get; }
+
+        public BattlestationScoreUpdateEventArgs(int redScore, int blueScore, BattlestationSide a, BattlestationSide b, BattlestationSide c, BattlestationSide core)
+        {
+            RedScore = redScore;
+            BlueScore = blueScore;
+            A = a;
+            B = b;
+            C = c;
+            Core = core;
         }
     }
 
