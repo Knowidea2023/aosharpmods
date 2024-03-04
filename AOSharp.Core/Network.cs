@@ -42,6 +42,7 @@ namespace AOSharp.Core
             { N3MessageType.FormatFeedback, OnFormatFeedback},
             { N3MessageType.Trade, Trade.OnTradeMessage },
             { N3MessageType.Inspect, OnInspect},
+            { N3MessageType.SendScore, OnSendScore }
         };
 
         public static void Send(MessageBody message)
@@ -220,6 +221,12 @@ namespace AOSharp.Core
 
             if (infromPlayerMessage.UnkIdentity.Type == IdentityType.Battlestation)
                 Battlestation.OnBattlestationInvite(infromPlayerMessage.UnkIdentity);
+        }
+
+        private static void OnSendScore(N3Message n3Msg)
+        {
+            SendScoreMessage sendScoreMessage = (SendScoreMessage)n3Msg;
+            Battlestation.OnSendScore(sendScoreMessage);
         }
 
         private static void OnFormatFeedback(N3Message n3Msg)
