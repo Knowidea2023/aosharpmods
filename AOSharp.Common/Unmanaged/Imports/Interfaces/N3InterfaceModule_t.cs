@@ -13,6 +13,9 @@ namespace AOSharp.Common.Unmanaged.Imports
         [DllImport("Interfaces.dll", EntryPoint = "?GetClientInst@N3InterfaceModule_t@@QBEIXZ", CallingConvention = CallingConvention.Cdecl)]
         public static extern int GetClientInst();
 
+        [DllImport("Interfaces.dll", EntryPoint = "?ShutdownMessage@N3InterfaceModule_t@@CAXXZ", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ShutdownMessage();
+
         [DllImport("Interfaces.dll", EntryPoint = "?N3Msg_GetPFName@N3InterfaceModule_t@@QBEPBDI@Z", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr GetPFName(int pfId);
 

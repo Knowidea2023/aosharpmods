@@ -13,6 +13,9 @@ namespace AOSharp.Common.Unmanaged.Imports
         [DllImport("Gamecode.dll", EntryPoint = "?GetPlayfieldFactory@n3EngineClientAnarchy_t@@UAEPAVn3PlayfieldFactory_i@@ABVPlayfieldProxy_t@@@Z", CallingConvention = CallingConvention.ThisCall)]
         public static extern IntPtr GetPlayfieldFactory(IntPtr pThis, ref PlayfieldProxy playfieldProxy);
 
+        [DllImport("Gamecode.dll", CallingConvention = CallingConvention.ThisCall, EntryPoint = "?OpenClient@n3EngineClientAnarchy_t@@QAEXPAVResourceDatabase_t@@I@Z")]
+        public static extern void OpenClient(IntPtr pThis, IntPtr pResourceDatabase, int clientInst);
+
         //GetQuestWorldPos
         [return: MarshalAs(UnmanagedType.U1)]
         [DllImport("Gamecode.dll", EntryPoint = "?N3Msg_GetQuestWorldPos@n3EngineClientAnarchy_t@@QBE_NABVIdentity_t@@AAV2@AAVVector3_t@@2@Z", CallingConvention = CallingConvention.ThisCall)]

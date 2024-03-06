@@ -10,5 +10,8 @@ namespace AOSharp.Common.Unmanaged.Imports
 
         [DllImport("N3.dll", EntryPoint = "?GetRoot@n3Engine_t@@QAEAAVn3Root_t@@XZ", CallingConvention = CallingConvention.ThisCall)]
         public static extern IntPtr GetRoot(IntPtr pThis);
+
+        [DllImport("N3.dll", EntryPoint = "?Close@n3Engine_t@@QAEXXZ", CallingConvention = CallingConvention.ThisCall)]
+        public static extern void Close(IntPtr pThis);
     }
 }
