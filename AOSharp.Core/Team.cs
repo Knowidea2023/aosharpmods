@@ -28,6 +28,7 @@ namespace AOSharp.Core
 
         public static void Invite(Identity player)
         {
+
             Network.Send(new CharacterActionMessage()
             {
                 Action = CharacterActionType.TeamRequest,
@@ -165,16 +166,19 @@ namespace AOSharp.Core
             TeamRequestEventArgs args = new TeamRequestEventArgs(identity);
             TeamRequest?.Invoke(null, args);
 
-            //Kinda weird but basically this is to call the original event that spawns the team dialog box.
-            //We only want to spawn the dialog box if we didn't reply immediately via event.
-            if(!args.Responded)
+            if (!Game.IsAOLite)
             {
-                IntPtr pTeamViewModule = TeamViewModule_c.GetInstanceIfAny();
+                //Kinda weird but basically this is to call the original event that spawns the team dialog box.
+                //We only want to spawn the dialog box if we didn't reply immediately via event.
+                if (!args.Responded)
+                {
+                    IntPtr pTeamViewModule = TeamViewModule_c.GetInstanceIfAny();
 
-                if (pTeamViewModule == IntPtr.Zero)
-                    return;
+                    if (pTeamViewModule == IntPtr.Zero)
+                        return;
 
-                TeamViewModule_c.SlotJoinTeamRequest(pTeamViewModule, ref identity, pName);
+                    TeamViewModule_c.SlotJoinTeamRequest(pTeamViewModule, ref identity, pName);
+                }
             }
         }
 
