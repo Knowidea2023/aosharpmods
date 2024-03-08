@@ -29,5 +29,8 @@ namespace AOSharp.Common.Unmanaged.Imports
 
         [DllImport("N3.dll", EntryPoint = "?GetDoorPosRot@n3Room_t@@QAEXHABVn3Tilemap_t@@AAVVector3_t@@AAVQuaternion_t@@@Z", CallingConvention = CallingConvention.ThisCall)]
         public static extern void GetDoorPosRot(IntPtr pThis, int doorIdx, IntPtr pTilemap, out Vector3 pos, out Quaternion rot);
+
+        [DllImport("N3.dll", EntryPoint = "?GetDoorConnectZone@n3Room_t@@QBEHH@Z", CallingConvention = CallingConvention.ThisCall)]
+        public static extern int GetDoorConnectZone(IntPtr pThis, int doorIdx);
     }
 }
