@@ -196,7 +196,7 @@ namespace AOSharp.Core
                 case CharacterActionType.SpecialAvailable:
                     LocalCooldown.OnSpecialAvailable(n3Msg);
                     break;
-                case (CharacterActionType)0x84:
+                case CharacterActionType.SpecialUnavailable:
                     LocalCooldown.OnSpecialUnavailable(n3Msg);
                     break;
                 //case CharacterActionType.TeamKick:
