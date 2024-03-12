@@ -22,6 +22,7 @@
         Logout = 0x78,
         StopLogout = 0x7A,
         Equip = 0x83,
+        SpecialUnavailable = 0x84,
         Die = 0x98,
         StartedSneaking = 0xA2,
         StartSneak = 0xA3,
