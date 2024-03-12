@@ -94,8 +94,11 @@ namespace AOSharp.Bootstrap.IPC
             {
                 bytesRead = _server.EndRead(result);
 
-                if (bytesRead == 0)
-                    throw new IOException("bytesRead == 0");
+                if (bytesRead == 0 && OnDisconnected != null)
+                {
+                    OnDisconnected(this);
+                    return;
+                }
             }
             catch(IOException)
             {

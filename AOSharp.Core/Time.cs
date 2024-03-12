@@ -5,7 +5,7 @@ namespace AOSharp.Core
 {
     public static class Time
     {
-        private static DateTime InitTime = DateTime.Now;
+        private static DateTime InitTime = DateTime.UtcNow;
 
         public static double AONormalTime => GetAOTime();
         public static double NormalTime => GetSystemTime();
@@ -22,7 +22,7 @@ namespace AOSharp.Core
 
         private static double GetSystemTime()
         {
-            return (DateTime.Now - InitTime).TotalSeconds;
+            return (DateTime.UtcNow - InitTime).TotalSeconds;
         }
     }
 }
