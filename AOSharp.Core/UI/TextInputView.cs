@@ -22,19 +22,33 @@ namespace AOSharp.Core.UI
         {
         }
 
+
         private void SetText(string text)
         {
-            TextInputView_c.SetText(Pointer, StdString.Create(text).Pointer);
+            IntPtr pTextView = TextInputView_c.GetTextView(Pointer);
+
+            if (pTextView == IntPtr.Zero)
+                return;
+
+            TextView_c.SetText(pTextView, StdString.Create(text).Pointer);
         }
+
         private string GetText()
         {
-            IntPtr pStr = TextInputView_c.GetText(Pointer);
+            IntPtr pTextView = TextInputView_c.GetTextView(Pointer);
+
+            if (pTextView == IntPtr.Zero)
+                return string.Empty;
+
+            Variant var = Variant.Create();
+            IntPtr pStr = TextView_c.GetValue(pTextView, var.Pointer);
 
             if (pStr == IntPtr.Zero)
                 return string.Empty;
 
-            return StdString.FromPointer(pStr, false).ToString();
+            return var.AsString();
         }
+
         public override void Dispose()
         {
             throw new NotImplementedException();
