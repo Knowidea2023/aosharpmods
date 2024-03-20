@@ -190,6 +190,15 @@ namespace AOSharp.Core
                 case CharacterActionType.DuelUpdate:
                     Duel.OnDuelUpdate(charActionMessage.Target, (DuelUpdate)charActionMessage.Parameter1);
                     break;
+                case CharacterActionType.SpecialUsed:
+                    LocalCooldown.OnSpecialUsed(n3Msg);
+                    break;
+                case CharacterActionType.SpecialAvailable:
+                    LocalCooldown.OnSpecialAvailable(n3Msg);
+                    break;
+                case CharacterActionType.SpecialUnavailable:
+                    LocalCooldown.OnSpecialUnavailable(n3Msg);
+                    break;
                 //case CharacterActionType.TeamKick:
                 //    Team.OnMemberLeft(charActionMessage.Target);
                 //    break;

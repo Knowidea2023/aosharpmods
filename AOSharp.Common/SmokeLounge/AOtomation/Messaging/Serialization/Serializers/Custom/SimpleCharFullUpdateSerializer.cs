@@ -115,7 +115,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
 
                 if (scfu.Flags.HasFlag(SimpleCharFullUpdateFlags.HasOrgName))
                 {
-                    streamReader.ReadInt32();
+                    spc.OrgId = streamReader.ReadInt32();
                     streamReader.ReadByte();
                 }
 

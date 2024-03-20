@@ -31,7 +31,10 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 
         #region AoMember Properties
 
-        [AoMember(0, SerializeSize = ArraySizeType.Int16)]
+        [AoMember(0)]
+        public int OrgId { get; set; }
+
+        [AoMember(1, SerializeSize = ArraySizeType.Int16)]
         public string Name { get; set; }
 
         #endregion
