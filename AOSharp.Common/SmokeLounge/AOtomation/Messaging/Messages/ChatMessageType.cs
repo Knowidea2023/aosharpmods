@@ -27,6 +27,10 @@ namespace SmokeLounge.AOtomation.Messaging.Messages
         PrivateMessage = 30,
         VicinityMessage = 34,
         NpcMessage = 35,
+        PrivateGroupInvite = 50,
+        PrivateGroupInviteAccept = 52,
+        PrivateGroupInviteDecline = 53,
+        PrivateGroupMessage = 57,
         ChannelList = 60,
         GroupMessage = 65,
         Ping = 100

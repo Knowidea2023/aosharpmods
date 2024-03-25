@@ -33,6 +33,7 @@ namespace AOSharp.Core.UI
             TextView_c.GetValue(Pointer, value.Pointer);
             return value.AsString();
         }
+
         public void SetDefaultColor(uint unk)
         {
             TextView_c.SetDefaultColor(Pointer, unk);
