@@ -101,6 +101,11 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
             this.writer.Write(single);
         }
 
+        public void WriteDouble(double value)
+        {
+            this.writer.Write(value);
+        }
+
         public void WriteString(string str, int? padToLength = null)
         {
             var bytes = new byte[padToLength ?? str.Length];

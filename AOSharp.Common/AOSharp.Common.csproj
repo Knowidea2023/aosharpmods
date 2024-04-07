@@ -325,6 +325,7 @@
     <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\Serializers\Custom\SimpleCharFullUpdateSerializer.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\Serializers\DiagnosticSerializer.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\Serializers\ChatHeaderSerializer.cs" />
+    <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\Serializers\DoubleSerializer.cs.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\Serializers\HeaderSerializer.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\Serializers\Int16Serializer.cs" />
     <Compile Include="SmokeLounge\AOtomation\Messaging\Serialization\Serializers\Int32Serializer.cs" />
