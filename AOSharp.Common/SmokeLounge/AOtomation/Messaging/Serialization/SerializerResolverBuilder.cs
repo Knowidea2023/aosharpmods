@@ -60,6 +60,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
             this.serializers.TryAdd(typeof(long), new Int64Serializer());
             this.serializers.TryAdd(typeof(IPAddress), new IPAddressSerializer());
             this.serializers.TryAdd(typeof(float), new SingleSerializer());
+            this.serializers.TryAdd(typeof(double), new DoubleSerializer());
             this.serializers.TryAdd(typeof(string), new StringSerializer());
             this.serializers.TryAdd(typeof(ushort), new UInt16Serializer());
             this.serializers.TryAdd(typeof(uint), new UInt32Serializer());
