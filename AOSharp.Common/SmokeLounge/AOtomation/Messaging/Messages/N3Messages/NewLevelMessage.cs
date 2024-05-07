@@ -30,5 +30,33 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         }
 
         #endregion
+
+        #region AoMember Properties
+
+        [AoMember(0)]
+        public int Level { get; set; }
+
+        [AoMember(1)]
+        public int AvailableIp { get; set; }
+
+        [AoMember(2)]
+        public int CurrentXp { get; set; }
+
+        [AoMember(3)]
+        public int LastLevelXp { get; set; }
+
+        [AoMember(4)]
+        public int NextLevelXp { get; set; }
+
+        [AoMember(5)]
+        public int IpResetPointsGained { get; set; }
+
+        [AoMember(6)]
+        public int XpKillRange { get; set; }
+
+        [AoMember(7)]
+        public int LastAwardedXp { get; set; }
+
+        #endregion
     }
 }
