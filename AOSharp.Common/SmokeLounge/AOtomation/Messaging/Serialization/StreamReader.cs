@@ -101,6 +101,11 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
             return BitConverter.ToSingle(single, 0);
         }
 
+        public double ReadDouble()
+        {
+            return this.reader.ReadDouble();
+        }
+
         public string ReadString(int length)
         {
             var bytes = this.reader.ReadBytes(length);
