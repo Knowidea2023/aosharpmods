@@ -83,7 +83,7 @@ namespace AOSharp.Core.Combat
                     if (actionTarget.Target != null && !item.IsInRange(actionTarget.Target))
                         continue;
 
-                    Chat.WriteLine($"Queueing item {item.Name} -- actionQ.Count = {_actionQueue.Count}");
+                    //Chat.WriteLine($"Queueing item {item.Name} -- actionQ.Count = {_actionQueue.Count}");
                     float queueOffset = _actionQueue.Where(x => x.CombatAction is PerkAction).Sum(x => ((PerkAction)x.CombatAction).AttackDelay);
                     double timeoutOffset = item.AttackDelay + ACTION_TIMEOUT + queueOffset;
                     _actionQueue.Enqueue(new CombatActionQueueItem(item, actionTarget.Target, actionTarget.ShouldSetTarget, timeoutOffset));
@@ -112,7 +112,7 @@ namespace AOSharp.Core.Combat
                     if (actionTarget.Target != null && !item.IsInRange(actionTarget.Target))
                         continue;
 
-                    Chat.WriteLine($"Queueing item {item.Name} -- actionQ.Count = {_actionQueue.Count}");
+                    //Chat.WriteLine($"Queueing item {item.Name} -- actionQ.Count = {_actionQueue.Count}");
                     float queueOffset = _actionQueue.Where(x => x.CombatAction is PerkAction).Sum(x => ((PerkAction)x.CombatAction).AttackDelay);
                     double timeoutOffset = item.AttackDelay + ACTION_TIMEOUT + queueOffset;
                     _actionQueue.Enqueue(new CombatActionQueueItem(item, actionTarget.Target, actionTarget.ShouldSetTarget, timeoutOffset));
@@ -146,7 +146,7 @@ namespace AOSharp.Core.Combat
                         if (actionTarget.Target != null && !perk.IsInRange(actionTarget.Target))
                             continue;
 
-                        Chat.WriteLine($"Queueing perk {perk.Name} -- actionQ.Count = {_actionQueue.Count}");
+                        //Chat.WriteLine($"Queueing perk {perk.Name} -- actionQ.Count = {_actionQueue.Count}");
                         _actionQueue.Enqueue(new CombatActionQueueItem(perk, actionTarget.Target, actionTarget.ShouldSetTarget));
                     }
                 }
